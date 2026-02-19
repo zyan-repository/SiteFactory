@@ -1,19 +1,17 @@
 ---
-title: "About"
-description: "Learn more about {{SITE_TITLE}}"
+title: "关于我们"
+description: "了解更多关于 {{SITE_TITLE}} 的信息"
 hideDate: true
 ---
 
-## About {{SITE_TITLE}}
+## 关于 {{SITE_TITLE}}
 
-Welcome to {{SITE_TITLE}}. We provide high-quality content about topics that
-matter to our readers.
+欢迎访问 {{SITE_TITLE}}。我们致力于为读者提供高质量的内容。
 
-### Our Mission
+### 我们的使命
 
-We aim to deliver useful, accurate, and well-researched information to help
-our readers make informed decisions.
+我们的目标是提供实用、准确、经过深入研究的信息，帮助读者做出明智的决策。
 
-### Contact Us
+### 联系我们
 
-Have questions or suggestions? Visit our [contact page](/contact/).
+有任何问题或建议？请访问我们的[联系页面](/contact/)。

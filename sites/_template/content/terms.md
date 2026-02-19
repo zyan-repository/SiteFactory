@@ -1,42 +1,35 @@
 ---
-title: "Terms of Service"
-description: "Terms of service for {{SITE_TITLE}}"
+title: "服务条款"
+description: "{{SITE_TITLE}} 的服务条款"
 hideDate: true
 ---
 
-## Terms of Service
+## 服务条款
 
-**Last updated: {{DATE}}**
+**最后更新：{{DATE}}**
 
-By accessing and using {{SITE_TITLE}}, you agree to the following terms.
+访问和使用 {{SITE_TITLE}} 即表示您同意以下条款。
 
-### Content
+### 内容
 
-The information provided on this website is for general informational purposes
-only. We make no guarantees about the accuracy, completeness, or reliability
-of any content.
+本网站提供的信息仅供一般参考之用。我们不对任何内容的准确性、完整性或可靠性做出保证。
 
-### Intellectual Property
+### 知识产权
 
-All original content on this site is protected by copyright. You may share
-links to our content but may not reproduce it without permission.
+本网站上的所有原创内容均受版权保护。您可以分享我们内容的链接，但未经许可不得转载。
 
-### Third-Party Links
+### 第三方链接
 
-Our site may contain links to external websites. We are not responsible for
-the content or privacy practices of these sites.
+本网站可能包含指向外部网站的链接。我们不对这些网站的内容或隐私做法承担责任。
 
-### Advertisements
+### 广告
 
-This site displays advertisements through Google AdSense. These ads are
-provided by third parties and are subject to their own terms and policies.
+本网站通过 Google AdSense 展示广告。这些广告由第三方提供，受其各自的条款和政策约束。
 
-### Disclaimer
+### 免责声明
 
-This website is provided "as is" without warranties of any kind. We are not
-liable for any damages arising from the use of this site.
+本网站按"现状"提供，不作任何形式的保证。对于因使用本网站而产生的任何损害，我们不承担责任。
 
-### Changes
+### 条款变更
 
-We reserve the right to modify these terms at any time. Continued use of the
-site constitutes acceptance of updated terms.
+我们保留随时修改这些条款的权利。继续使用本网站即表示接受更新后的条款。

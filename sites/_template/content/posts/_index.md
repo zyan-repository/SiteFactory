@@ -1,4 +1,4 @@
 ---
-title: "Posts"
-description: "All articles and posts"
+title: "文章"
+description: "所有文章和帖子"
 ---

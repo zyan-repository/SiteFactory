@@ -1,5 +1,5 @@
-<nav class="breadcrumb" aria-label="Breadcrumb">
-  <a href="{{ .Site.BaseURL }}">Home</a>
+<nav class="breadcrumb" aria-label="面包屑导航">
+  <a href="{{ .Site.BaseURL }}">首页</a>
   {{ range .Ancestors.Reverse }}
     {{ if ne .Kind "home" }}
     &rsaquo; <a href="{{ .Permalink }}">{{ .Title }}</a>
@@ -16,7 +16,7 @@
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "Home",
+      "name": "首页",
       "item": "{{ .Site.BaseURL }}"
     }
     {{ $pos := 1 }}

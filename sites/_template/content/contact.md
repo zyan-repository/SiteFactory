@@ -1,20 +1,17 @@
 ---
-title: "Contact"
-description: "Get in touch with us"
+title: "联系我们"
+description: "与我们取得联系"
 hideDate: true
 ---
 
-## Contact Us
+## 联系我们
 
-We'd love to hear from you. Whether you have a question, suggestion, or just
-want to say hello, feel free to reach out.
+我们很乐意听到您的声音。无论您有任何问题、建议，或者只是想打个招呼，都欢迎随时联系我们。
 
-### Email
+### 电子邮件
 
-You can reach us at: **{{AUTHOR_EMAIL}}**
+您可以通过以下方式联系我们：**{{AUTHOR_EMAIL}}**
 
-### About This Site
+### 关于本站
 
-{{SITE_TITLE}} is dedicated to providing useful and accurate content for our
-readers. If you notice any errors or have suggestions for improvement, please
-let us know.
+{{SITE_TITLE}} 致力于为读者提供实用且准确的内容。如果您发现任何错误或有改进建议，请告知我们。
