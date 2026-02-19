@@ -321,6 +321,8 @@ All repeatable operations must be n8n workflows, exported as JSON in `n8n/`.
 | Deploying without mobile check | Test responsive layout at 375px width minimum |
 | Using client-side rendering | Everything must be pre-rendered. No SPA patterns |
 | Forking without checking license | Verify open-source license allows commercial use + modification |
+| Using third-party GitHub Actions for tool installation | Prefer direct download scripts — third-party actions go unmaintained and break when upstream changes download URLs (e.g., `peaceiris/actions-hugo` broke when Hugo changed archive naming in v0.103.0+) |
+| Using `hugo-version: 'latest'` in CI | Pin Hugo to a specific version (e.g., `0.156.0`) so builds are reproducible and you control when to upgrade |
 
 ## Code Quality
 
@@ -349,6 +351,20 @@ npx eslint .
 - A `.shellcheckrc` in the project root ensures local runs match CI behavior
 - Pre-commit hook auto-runs ShellCheck on staged `.sh` files (installed via `scripts/setup.sh`)
 - To suppress a legitimate false positive, use inline `# shellcheck disable=SCXXXX` with a comment explaining why
+
+### CI: Hugo Setup
+
+CI installs Hugo via direct download (not third-party actions). When upgrading Hugo:
+
+1. Check the new version's release assets at `https://github.com/gohugoio/hugo/releases`
+2. Update `HUGO_VERSION` in `.github/workflows/build-check.yml`
+3. Verify archive filenames match (Hugo may change naming conventions between major versions)
+
+Current asset naming convention (Hugo v0.103.0+):
+- Linux: `hugo_extended_{version}_linux-amd64.tar.gz`
+- macOS: `hugo_extended_{version}_darwin-universal.tar.gz`
+
+**Do NOT use `peaceiris/actions-hugo`** — it is unmaintained and breaks with Hugo v0.103.0+ due to archive naming changes.
 
 ### Pre-deploy Check
 
