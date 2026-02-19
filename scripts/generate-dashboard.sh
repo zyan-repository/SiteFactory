@@ -78,8 +78,6 @@ if [[ ! -f "$DASHBOARD_DIR/template.html" ]]; then
   exit 1
 fi
 
-# Read metrics and escape for sed
-METRICS_CONTENT=$(cat "$METRICS_FILE")
 # Use python for safe replacement (sed struggles with JSON)
 python3 -c "
 import sys

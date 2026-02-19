@@ -17,6 +17,7 @@ command -v yq &>/dev/null || MISSING+=("yq (brew install yq)")
 command -v jq &>/dev/null || MISSING+=("jq (brew install jq)")
 command -v npx &>/dev/null || MISSING+=("node/npx (brew install node)")
 command -v git &>/dev/null || MISSING+=("git")
+command -v shellcheck &>/dev/null || MISSING+=("shellcheck (brew install shellcheck)")
 
 if [[ ${#MISSING[@]} -gt 0 ]]; then
   log_error "Missing required tools:"
@@ -28,6 +29,16 @@ if [[ ${#MISSING[@]} -gt 0 ]]; then
   exit 1
 fi
 log_ok "All prerequisites installed"
+
+# Install pre-commit hook for ShellCheck
+if [[ -d "$REPO_ROOT/.git" ]] && [[ ! -f "$REPO_ROOT/.git/hooks/pre-commit" ]]; then
+  log_step "Installing pre-commit hook (ShellCheck)..."
+  cp "$REPO_ROOT/scripts/pre-commit-hook.sh" "$REPO_ROOT/.git/hooks/pre-commit"
+  chmod +x "$REPO_ROOT/.git/hooks/pre-commit"
+  log_ok "Pre-commit hook installed"
+elif [[ -f "$REPO_ROOT/.git/hooks/pre-commit" ]]; then
+  log_ok "Pre-commit hook already installed"
+fi
 
 # 2. Config file
 if [[ ! -f "$REPO_ROOT/config.yaml" ]]; then

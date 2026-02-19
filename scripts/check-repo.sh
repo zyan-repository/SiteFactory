@@ -16,6 +16,7 @@ SCORE=0
 ISSUES=()
 WARNINGS=()
 
+# shellcheck disable=SC2317,SC2329 # Called indirectly via trap
 cleanup() { rm -rf "$TMPDIR"; }
 trap cleanup EXIT
 

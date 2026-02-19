@@ -53,7 +53,7 @@ cp -r "$TEMPLATE_DIR" "$SITE_DIR"
 
 # Step 2: Configure hugo.toml
 log_step "Configuring site..."
-PUB_NUMERIC=$(echo "$SF_ADSENSE_PUB_ID" | sed 's/ca-pub-//')
+PUB_NUMERIC="${SF_ADSENSE_PUB_ID#ca-pub-}"
 
 # Replace values in hugo.toml
 sed -i '' \

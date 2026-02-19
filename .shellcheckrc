@@ -1,0 +1,3 @@
+# .shellcheckrc - ShellCheck configuration for SiteFactory
+# Matches CI behavior: all severity levels enabled (default)
+shell=bash

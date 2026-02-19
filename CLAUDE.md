@@ -337,17 +337,23 @@ hugo server --bind 0.0.0.0
 ### Scripts (Bash/Node.js)
 
 ```bash
-# ShellCheck for bash scripts
-shellcheck scripts/*.sh
+# ShellCheck for bash scripts (MUST pass before push — CI runs this)
+shellcheck scripts/*.sh scripts/lib/*.sh
 
 # ESLint for any JS (if applicable)
 npx eslint .
 ```
 
+**ShellCheck rules:**
+- CI runs ShellCheck with default severity (info + style + warning + error all fail the build)
+- A `.shellcheckrc` in the project root ensures local runs match CI behavior
+- Pre-commit hook auto-runs ShellCheck on staged `.sh` files (installed via `scripts/setup.sh`)
+- To suppress a legitimate false positive, use inline `# shellcheck disable=SCXXXX` with a comment explaining why
+
 ### Pre-deploy Check
 
 ```bash
-hugo --gc --minify && scripts/lighthouse-check.sh
+shellcheck scripts/*.sh scripts/lib/*.sh && hugo --gc --minify && scripts/lighthouse-check.sh
 ```
 
 ## Git Conventions

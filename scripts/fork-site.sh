@@ -99,7 +99,7 @@ for page in privacy-policy.html about.html; do
 done
 
 # Step 5: Create ads.txt
-PUB_NUMERIC=$(echo "$SF_ADSENSE_PUB_ID" | sed 's/ca-pub-//')
+PUB_NUMERIC="${SF_ADSENSE_PUB_ID#ca-pub-}"
 if [[ -n "$PUB_NUMERIC" ]] && [[ "$PUB_NUMERIC" != *"XXXX"* ]]; then
   echo "google.com, $PUB_NUMERIC, DIRECT, f08c47fec0942fa0" > "$SITE_DIR/ads.txt"
   log_ok "  Created ads.txt"
