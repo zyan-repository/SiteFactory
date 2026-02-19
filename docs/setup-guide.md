@@ -17,9 +17,9 @@ Before starting, prepare these accounts and credentials:
 | Google AdSense | [adsense.google.com](https://adsense.google.com/) | Free |
 | Google Analytics | [analytics.google.com](https://analytics.google.com/) | Free |
 | UptimeRobot (optional) | [uptimerobot.com](https://uptimerobot.com/) | Free |
-| Claude API key (optional) | [console.anthropic.com](https://console.anthropic.com/) | Pay-as-you-go |
+| AI API key (optional) | See supported providers below | Pay-as-you-go |
 
-**Don't have all of these yet?** That's OK — follow the detailed instructions in the next section to get each one. You can also skip optional items (UptimeRobot, Claude API) and add them later.
+**Don't have all of these yet?** That's OK — follow the detailed instructions in the next section to get each one. You can also skip optional items (UptimeRobot, AI API) and add them later.
 
 ## How to Get Each Credential
 
@@ -183,18 +183,22 @@ UptimeRobot monitors whether your sites are online and alerts you if they go dow
 
 **What it looks like:** Starts with `u` followed by ~39 characters. Example: `u1234567-abcdef1234567890abcdef12`
 
-### 8. Claude API Key (optional)
+### 8. AI API Key (optional — supports multiple providers)
 
-Only needed if you want to use AI to auto-generate blog articles via n8n workflows.
+Only needed if you want to use AI to auto-generate blog articles. Pick any one provider:
 
-**Steps:**
-1. Go to [https://console.anthropic.com/](https://console.anthropic.com/)
-2. Create an account or sign in
-3. **Add a payment method first** (Settings → Billing) — the API is pay-as-you-go (~$0.01-0.05 per article)
-4. Click **"API Keys"** in the left sidebar
-5. Click **"Create Key"** → name it anything → copy the key
+| Provider | Get API key at | Key format |
+|----------|---------------|------------|
+| OpenAI | [platform.openai.com/api-keys](https://platform.openai.com/api-keys) | `sk-...` |
+| Claude (Anthropic) | [console.anthropic.com](https://console.anthropic.com/) → API Keys | `sk-ant-...` |
+| Gemini (Google) | [aistudio.google.com/apikey](https://aistudio.google.com/apikey) | `AIza...` |
+| DeepSeek | [platform.deepseek.com/api_keys](https://platform.deepseek.com/api_keys) | `sk-...` |
+| Moonshot (Kimi) | [platform.moonshot.cn/console/api-keys](https://platform.moonshot.cn/console/api-keys) | `sk-...` |
+| Zhipu (GLM) | [open.bigmodel.cn/usercenter/apikeys](https://open.bigmodel.cn/usercenter/apikeys) | alphanumeric |
 
-**What it looks like:** Starts with `sk-ant-` followed by a long string. Example: `sk-ant-api03-abc123...`
+**Configuration:** Set `ai.provider` in `config.yaml` to your chosen provider, then fill in the API key under `ai.providers.{provider}.api_key`.
+
+> Cost: ~$0.01-0.05 per article. DeepSeek and GLM are the cheapest.
 
 ---
 

@@ -64,5 +64,4 @@ fi
 log_ok "Deployed: $DEPLOY_URL"
 log_ok "Custom domain: https://$CUSTOM_DOMAIN"
 echo ""
-echo "  Note: DNS propagation may take up to 48 hours."
 echo "  Check status: npx vercel ls --token \$SF_VERCEL_TOKEN"

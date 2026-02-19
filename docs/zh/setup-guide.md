@@ -17,7 +17,7 @@
 | Google AdSense | [adsense.google.com](https://adsense.google.com/) | 免费 | 注册后获取发布者 ID |
 | Google Analytics | [analytics.google.com](https://analytics.google.com/) | 免费 | 创建媒体资源 → 获取衡量 ID |
 | UptimeRobot（可选） | [uptimerobot.com](https://uptimerobot.com/) | 免费 | 注册后在设置里找 API Key |
-| Claude API（可选） | [console.anthropic.com](https://console.anthropic.com/) | 按量付费 | 用于 AI 自动生成文章 |
+| AI API Key（可选） | 见下方支持列表 | 按量付费 | 用于 AI 自动生成文章（支持 OpenAI/Claude/Gemini/DeepSeek/Kimi/GLM） |
 
 > 如果你还没有 GitHub 账号，先去 [github.com](https://github.com/) 注册一个（免费的），后面的 Vercel 需要用 GitHub 登录。
 
@@ -187,18 +187,22 @@ UptimeRobot 用来监控你的网站是不是在线，如果挂了会发邮件�
 
 **长什么样：** 以 `u` 开头，后面跟大约 39 个字符。例如：`u1234567-abcdef1234567890abcdef12`
 
-### 8. Claude API Key（可选）
+### 8. AI API Key（可选 — 支持多家模型）
 
-只有你想用 AI 自动生成博客文章（通过 n8n 工作流）时才需要。
+只有你想用 AI 自动生成博客文章时才需要。支持以下任意一家，选一个填 API Key 即可：
 
-**操作步骤：**
-1. 打开 [https://console.anthropic.com/](https://console.anthropic.com/)
-2. 注册账号或登录
-3. **先设置付款方式**（Settings → Billing）——API 按使用量收费，生成一篇文章大约 $0.01-0.05
-4. 点击左侧 **"API Keys"**
-5. 点击 **"Create Key"** → 名称随便填 → 复制生成的 Key
+| 提供商 | 获取地址 | API Key 格式 |
+|--------|---------|-------------|
+| OpenAI | [platform.openai.com/api-keys](https://platform.openai.com/api-keys) | `sk-...` |
+| Claude (Anthropic) | [console.anthropic.com](https://console.anthropic.com/) → API Keys | `sk-ant-...` |
+| Gemini (Google) | [aistudio.google.com/apikey](https://aistudio.google.com/apikey) | `AIza...` |
+| DeepSeek | [platform.deepseek.com/api_keys](https://platform.deepseek.com/api_keys) | `sk-...` |
+| Moonshot (Kimi) | [platform.moonshot.cn/console/api-keys](https://platform.moonshot.cn/console/api-keys) | `sk-...` |
+| Zhipu (GLM) | [open.bigmodel.cn/usercenter/apikeys](https://open.bigmodel.cn/usercenter/apikeys) | 字母数字串 |
 
-**长什么样：** 以 `sk-ant-` 开头，后面跟一长串字符。例如：`sk-ant-api03-abc123...`
+**配置方法：** 在 `config.yaml` 中设置 `ai.provider` 为你选择的提供商，然后在对应的 `ai.providers.{provider}.api_key` 里填入 Key。
+
+> 生成一篇文章大约 $0.01-0.05。DeepSeek 和 GLM 最便宜。
 
 ---
 

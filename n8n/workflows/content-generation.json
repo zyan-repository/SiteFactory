@@ -17,7 +17,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Validate content generation request\nconst body = $input.first().json.body;\nconst errors = [];\n\nif (!body.site_name || typeof body.site_name !== 'string') {\n  errors.push('\"site_name\" is required');\n}\nif (body.site_name && !/^[a-z0-9][a-z0-9-]*[a-z0-9]$/.test(body.site_name)) {\n  errors.push('\"site_name\" must be lowercase alphanumeric with hyphens');\n}\nif (!body.topic || typeof body.topic !== 'string') {\n  errors.push('\"topic\" is required');\n}\n\nconst keywords = Array.isArray(body.keywords) ? body.keywords : [];\nconst wordCount = parseInt(body.word_count) || 1200;\n\nif (wordCount < 300 || wordCount > 5000) {\n  errors.push('\"word_count\" must be between 300 and 5000');\n}\n\nif (errors.length > 0) {\n  return [{\n    json: {\n      valid: false,\n      errors: errors,\n      statusCode: 400\n    }\n  }];\n}\n\n// Generate slug from topic\nconst slug = body.topic\n  .toLowerCase()\n  .replace(/[^a-z0-9\\s-]/g, '')\n  .replace(/\\s+/g, '-')\n  .replace(/-+/g, '-')\n  .replace(/^-|-$/g, '')\n  .substring(0, 60);\n\nreturn [{\n  json: {\n    valid: true,\n    site_name: body.site_name,\n    topic: body.topic,\n    keywords: keywords,\n    word_count: wordCount,\n    slug: slug,\n    statusCode: 200\n  }\n}];"
+        "jsCode": "// Validate content generation request\nconst body = $input.first().json.body;\nconst errors = [];\n\nif (!body.site_name || typeof body.site_name !== 'string') {\n  errors.push('\"site_name\" is required');\n}\nif (body.site_name && !/^[a-z0-9][a-z0-9-]*[a-z0-9]$/.test(body.site_name)) {\n  errors.push('\"site_name\" must be lowercase alphanumeric with hyphens');\n}\nif (!body.topic || typeof body.topic !== 'string') {\n  errors.push('\"topic\" is required');\n}\n\nconst keywords = Array.isArray(body.keywords) ? body.keywords.join(',') : (body.keywords || '');\nconst wordCount = parseInt(body.word_count) || 1200;\n\nif (wordCount < 300 || wordCount > 5000) {\n  errors.push('\"word_count\" must be between 300 and 5000');\n}\n\nif (errors.length > 0) {\n  return [{\n    json: {\n      valid: false,\n      errors: errors,\n      statusCode: 400\n    }\n  }];\n}\n\nreturn [{\n  json: {\n    valid: true,\n    site_name: body.site_name,\n    topic: body.topic,\n    keywords: keywords,\n    word_count: wordCount,\n    statusCode: 200\n  }\n}];"
       },
       "id": "b1b2c3d4-0002-4000-8000-000000000002",
       "name": "Validate Input",
@@ -70,105 +70,40 @@
     },
     {
       "parameters": {
-        "method": "POST",
-        "url": "https://api.anthropic.com/v1/messages",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "x-api-key",
-              "value": "={{ $credentials.httpHeaderAuth.value }}"
-            },
-            {
-              "name": "anthropic-version",
-              "value": "2023-06-01"
-            },
-            {
-              "name": "content-type",
-              "value": "application/json"
-            }
-          ]
-        },
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={\n  \"model\": \"claude-sonnet-4-20250514\",\n  \"max_tokens\": 4096,\n  \"system\": \"You are an expert SEO content writer. Generate a high-quality, SEO-optimized blog article in Markdown format. The article MUST begin with Hugo-compatible YAML frontmatter enclosed in --- delimiters. Follow these rules:\\n\\n1. Frontmatter must include: title, date (today's date in YYYY-MM-DD format), description (compelling meta description under 160 chars), tags (array of relevant tags), categories (array), draft: false\\n2. Use proper heading hierarchy (H2, H3 - never H1 since the title serves as H1)\\n3. Include a compelling introduction that hooks the reader\\n4. Use short paragraphs (2-3 sentences) for readability\\n5. Include bullet points and numbered lists where appropriate\\n6. Add a conclusion with a call-to-action\\n7. Naturally incorporate the provided keywords without keyword stuffing\\n8. Target the specified word count (approximate is fine)\\n9. Write in a professional yet accessible tone\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Write a blog article about the following topic:\\n\\nTopic: {{ $json.topic }}\\n\\nTarget keywords: {{ $json.keywords.join(', ') }}\\n\\nTarget word count: {{ $json.word_count }}\\n\\nPlease output ONLY the markdown content (with frontmatter). No explanations or extra text.\"\n    }\n  ]\n}",
+        "command": "=cd {{ $env.SF_PROJECT_ROOT }} && ./scripts/generate-content.sh \"{{ $json.site_name }}\" \"{{ $json.topic }}\" \"{{ $json.keywords }}\" {{ $json.word_count }} 2>&1",
         "options": {
-          "timeout": 120000
+          "timeout": 180000
         }
       },
       "id": "b1b2c3d4-0002-4000-8000-000000000005",
-      "name": "Call Claude API",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [940, 160],
-      "credentials": {
-        "httpHeaderAuth": {
-          "id": "",
-          "name": "Claude API Key"
-        }
-      }
+      "name": "Run generate-content.sh",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [940, 160]
     },
     {
       "parameters": {
-        "jsCode": "// Extract markdown content from Claude API response\nconst response = $input.first().json;\nconst validationData = $('Is Valid?').first().json;\n\n// Claude API returns content as an array of content blocks\nlet markdown = '';\nif (response.content && Array.isArray(response.content)) {\n  markdown = response.content\n    .filter(block => block.type === 'text')\n    .map(block => block.text)\n    .join('\\n');\n}\n\nif (!markdown || markdown.trim().length === 0) {\n  return [{\n    json: {\n      success: false,\n      error: 'Claude API returned empty content',\n      statusCode: 502\n    }\n  }];\n}\n\n// Ensure the markdown starts with frontmatter\nif (!markdown.trim().startsWith('---')) {\n  markdown = `---\\ntitle: \"${validationData.topic}\"\\ndate: ${new Date().toISOString().split('T')[0]}\\ndescription: \"${validationData.topic}\"\\ntags: [${validationData.keywords.map(k => `\"${k}\"`).join(', ')}]\\ncategories: [\"blog\"]\\ndraft: false\\n---\\n\\n${markdown}`;\n}\n\nreturn [{\n  json: {\n    success: true,\n    site_name: validationData.site_name,\n    slug: validationData.slug,\n    markdown: markdown,\n    word_count: markdown.split(/\\s+/).length,\n    statusCode: 200\n  }\n}];"
+        "jsCode": "const item = $input.first().json;\nconst exitCode = item.exitCode;\nconst stdout = item.stdout || '';\nconst stderr = item.stderr || '';\n\nconst validationData = $('Is Valid?').first().json;\n\nif (exitCode !== 0) {\n  return [{\n    json: {\n      success: false,\n      error: stderr || stdout || 'Content generation failed',\n      exitCode: exitCode,\n      statusCode: 500\n    }\n  }];\n}\n\n// Extract file path from output\nconst fileMatch = stdout.match(/Article saved: (.+\\.md)/);\nconst filePath = fileMatch ? fileMatch[1] : '';\nconst wordMatch = stdout.match(/(\\d+) words/);\nconst wordCount = wordMatch ? parseInt(wordMatch[1]) : 0;\n\nreturn [{\n  json: {\n    success: true,\n    site_name: validationData.site_name,\n    topic: validationData.topic,\n    file_path: filePath,\n    word_count: wordCount,\n    output: stdout,\n    message: `Article generated for ${validationData.site_name}`,\n    statusCode: 200\n  }\n}];"
       },
       "id": "b1b2c3d4-0002-4000-8000-000000000006",
-      "name": "Parse Claude Response",
+      "name": "Format Result",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [1200, 160]
     },
     {
       "parameters": {
-        "command": "=SITE_DIR=\"{{ $env.SF_PROJECT_ROOT }}/sites/{{ $json.site_name }}\"\nPOST_DIR=\"$SITE_DIR/content/posts\"\nFILE_PATH=\"$POST_DIR/{{ $json.slug }}.md\"\n\n# Verify site exists\nif [ ! -d \"$SITE_DIR\" ]; then\n  echo \"ERROR: Site directory not found: $SITE_DIR\" >&2\n  exit 1\nfi\n\n# Create posts directory if needed\nmkdir -p \"$POST_DIR\"\n\n# Write the markdown file\ncat > \"$FILE_PATH\" << 'CONTENT_EOF'\n{{ $json.markdown }}\nCONTENT_EOF\n\necho \"Written to: $FILE_PATH\"\necho \"File size: $(wc -c < \"$FILE_PATH\") bytes\"",
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ success: $json.success, site_name: $json.site_name, topic: $json.topic, file_path: $json.file_path, word_count: $json.word_count, message: $json.message, error: $json.error || undefined }) }}",
         "options": {
-          "timeout": 10000
+          "responseCode": "={{ $json.statusCode }}"
         }
       },
       "id": "b1b2c3d4-0002-4000-8000-000000000007",
-      "name": "Write Markdown File",
-      "type": "n8n-nodes-base.executeCommand",
-      "typeVersion": 1,
-      "position": [1440, 160]
-    },
-    {
-      "parameters": {
-        "command": "=cd {{ $env.SF_PROJECT_ROOT }} && git add \"sites/{{ $('Parse Claude Response').first().json.site_name }}/content/posts/{{ $('Parse Claude Response').first().json.slug }}.md\" && git commit -m \"feat(content): add article '{{ $('Parse Claude Response').first().json.slug }}' to {{ $('Parse Claude Response').first().json.site_name }}\" && git push 2>&1 || echo 'GIT_PUSH_SKIPPED: No remote configured or push failed (site still created locally)'",
-        "options": {
-          "timeout": 30000
-        }
-      },
-      "id": "b1b2c3d4-0002-4000-8000-000000000008",
-      "name": "Git Commit & Push",
-      "type": "n8n-nodes-base.executeCommand",
-      "typeVersion": 1,
-      "position": [1680, 160]
-    },
-    {
-      "parameters": {
-        "jsCode": "// Build final response\nconst parseData = $('Parse Claude Response').first().json;\nconst gitResult = $input.first().json;\n\nreturn [{\n  json: {\n    success: true,\n    site_name: parseData.site_name,\n    slug: parseData.slug,\n    file_path: `sites/${parseData.site_name}/content/posts/${parseData.slug}.md`,\n    word_count: parseData.word_count,\n    git_output: gitResult.stdout || '',\n    message: `Article '${parseData.slug}' generated and saved to ${parseData.site_name}`\n  }\n}];"
-      },
-      "id": "b1b2c3d4-0002-4000-8000-000000000009",
-      "name": "Format Response",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [1920, 160]
-    },
-    {
-      "parameters": {
-        "respondWith": "json",
-        "responseBody": "={{ JSON.stringify($json) }}",
-        "options": {
-          "responseCode": 200
-        }
-      },
-      "id": "b1b2c3d4-0002-4000-8000-000000000010",
-      "name": "Respond Success",
+      "name": "Respond Result",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
-      "position": [2160, 160]
+      "position": [1460, 160]
     }
   ],
   "connections": {
@@ -198,7 +133,7 @@
       "main": [
         [
           {
-            "node": "Call Claude API",
+            "node": "Run generate-content.sh",
             "type": "main",
             "index": 0
           }
@@ -212,55 +147,22 @@
         ]
       ]
     },
-    "Call Claude API": {
+    "Run generate-content.sh": {
       "main": [
         [
           {
-            "node": "Parse Claude Response",
+            "node": "Format Result",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Parse Claude Response": {
+    "Format Result": {
       "main": [
         [
           {
-            "node": "Write Markdown File",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Write Markdown File": {
-      "main": [
-        [
-          {
-            "node": "Git Commit & Push",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Git Commit & Push": {
-      "main": [
-        [
-          {
-            "node": "Format Response",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Format Response": {
-      "main": [
-        [
-          {
-            "node": "Respond Success",
+            "node": "Respond Result",
             "type": "main",
             "index": 0
           }
@@ -280,5 +182,5 @@
   ],
   "triggerCount": 1,
   "updatedAt": "2026-02-19T00:00:00.000Z",
-  "versionId": "1"
+  "versionId": "2"
 }

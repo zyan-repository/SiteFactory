@@ -1,23 +1,23 @@
 {
-  "name": "SiteFactory - New Site Pipeline",
+  "name": "SiteFactory - Launch Site Pipeline",
   "nodes": [
     {
       "parameters": {
         "httpMethod": "POST",
-        "path": "new-site",
+        "path": "launch-site",
         "responseMode": "responseNode",
         "options": {}
       },
       "id": "a1b2c3d4-0001-4000-8000-000000000001",
-      "name": "Webhook - New Site",
+      "name": "Webhook - Launch Site",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [220, 300],
-      "webhookId": "new-site"
+      "webhookId": "launch-site"
     },
     {
       "parameters": {
-        "jsCode": "// Validate incoming request for new site creation\nconst body = $input.first().json.body;\n\nconst errors = [];\n\n// Required fields\nif (!body.type || !['hugo', 'fork'].includes(body.type)) {\n  errors.push('\"type\" must be \"hugo\" or \"fork\"');\n}\nif (!body.name || typeof body.name !== 'string') {\n  errors.push('\"name\" is required');\n}\nif (!body.title || typeof body.title !== 'string') {\n  errors.push('\"title\" is required');\n}\n\n// Validate site name format: lowercase alphanumeric with hyphens\nif (body.name && !/^[a-z0-9][a-z0-9-]*[a-z0-9]$/.test(body.name)) {\n  errors.push('\"name\" must be lowercase alphanumeric with hyphens (e.g. \"tech-tips\")');\n}\n\n// For fork type, source URL is required\nif (body.type === 'fork' && !body.source) {\n  errors.push('\"source\" (GitHub URL) is required for fork type');\n}\n\nif (body.type === 'fork' && body.source && !/^https:\\/\\/github\\.com\\//.test(body.source)) {\n  errors.push('\"source\" must be a valid GitHub URL (https://github.com/...)');\n}\n\nif (errors.length > 0) {\n  return [{\n    json: {\n      valid: false,\n      errors: errors,\n      statusCode: 400\n    }\n  }];\n}\n\nreturn [{\n  json: {\n    valid: true,\n    type: body.type,\n    name: body.name,\n    title: body.title,\n    description: body.description || '',\n    source: body.source || '',\n    statusCode: 200\n  }\n}];"
+        "jsCode": "// Validate incoming request for site launch\nconst body = $input.first().json.body;\n\nconst errors = [];\n\n// Required fields\nif (!body.type || !['hugo', 'fork'].includes(body.type)) {\n  errors.push('\"type\" must be \"hugo\" or \"fork\"');\n}\nif (!body.name || typeof body.name !== 'string') {\n  errors.push('\"name\" is required');\n}\n\n// Validate site name format: lowercase alphanumeric with hyphens\nif (body.name && !/^[a-z0-9][a-z0-9-]*[a-z0-9]$/.test(body.name)) {\n  errors.push('\"name\" must be lowercase alphanumeric with hyphens (e.g. \"tech-tips\")');\n}\n\n// For fork type, source URL is required\nif (body.type === 'fork' && !body.source) {\n  errors.push('\"source\" (GitHub URL) is required for fork type');\n}\n\nif (body.type === 'fork' && body.source && !/^https:\\/\\/github\\.com\\//.test(body.source)) {\n  errors.push('\"source\" must be a valid GitHub URL (https://github.com/...)');\n}\n\nif (errors.length > 0) {\n  return [{\n    json: {\n      valid: false,\n      errors: errors,\n      statusCode: 400\n    }\n  }];\n}\n\nreturn [{\n  json: {\n    valid: true,\n    type: body.type,\n    name: body.name,\n    title: body.title || body.name,\n    description: body.description || '',\n    source: body.source || '',\n    language: body.language || 'en',\n    statusCode: 200\n  }\n}];"
       },
       "id": "a1b2c3d4-0001-4000-8000-000000000002",
       "name": "Validate Input",
@@ -70,73 +70,31 @@
     },
     {
       "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict"
-          },
-          "conditions": [
-            {
-              "id": "condition-type",
-              "leftValue": "={{ $json.type }}",
-              "rightValue": "hugo",
-              "operator": {
-                "type": "string",
-                "operation": "equals"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
+        "command": "={{ (() => { const d = $json; const root = $env.SF_PROJECT_ROOT; if (d.type === 'fork') { return `cd ${root} && ./scripts/launch-site.sh fork \"${d.source}\" \"${d.name}\" \"${d.title}\" \"${d.description}\" 2>&1`; } else { return `cd ${root} && ./scripts/launch-site.sh hugo \"${d.name}\" \"${d.title}\" \"${d.description}\" \"${d.language}\" 2>&1`; } })() }}",
+        "options": {
+          "timeout": 300000
+        }
       },
-      "id": "a1b2c3d4-0001-4000-8000-000000000005",
-      "name": "Hugo or Fork?",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2,
+      "id": "a1b2c3d4-0001-4000-8000-000000000006",
+      "name": "Run launch-site.sh",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
       "position": [940, 180]
     },
     {
       "parameters": {
-        "command": "=cd {{ $env.SF_PROJECT_ROOT }} && ./scripts/new-site.sh \"{{ $json.name }}\" \"{{ $json.title }}\" \"{{ $json.description }}\" 2>&1",
-        "options": {
-          "timeout": 60000
-        }
-      },
-      "id": "a1b2c3d4-0001-4000-8000-000000000006",
-      "name": "Run new-site.sh",
-      "type": "n8n-nodes-base.executeCommand",
-      "typeVersion": 1,
-      "position": [1200, 80]
-    },
-    {
-      "parameters": {
-        "command": "=cd {{ $env.SF_PROJECT_ROOT }} && ./scripts/fork-site.sh \"{{ $json.source }}\" \"{{ $json.name }}\" \"{{ $json.title }}\" \"{{ $json.description }}\" 2>&1",
-        "options": {
-          "timeout": 120000
-        }
-      },
-      "id": "a1b2c3d4-0001-4000-8000-000000000007",
-      "name": "Run fork-site.sh",
-      "type": "n8n-nodes-base.executeCommand",
-      "typeVersion": 1,
-      "position": [1200, 280]
-    },
-    {
-      "parameters": {
-        "jsCode": "const item = $input.first().json;\nconst exitCode = item.exitCode;\nconst stdout = item.stdout || '';\nconst stderr = item.stderr || '';\n\n// Retrieve original request data from earlier node\nconst validationData = $('Is Valid?').first().json;\nconst siteName = validationData.name;\nconst siteType = validationData.type;\n\nif (exitCode !== 0) {\n  return [{\n    json: {\n      success: false,\n      error: stderr || stdout || 'Script execution failed',\n      exitCode: exitCode,\n      statusCode: 500\n    }\n  }];\n}\n\nreturn [{\n  json: {\n    success: true,\n    site_name: siteName,\n    site_type: siteType,\n    site_directory: `sites/${siteName}`,\n    message: `Site '${siteName}' created successfully`,\n    output: stdout,\n    statusCode: 200\n  }\n}];"
+        "jsCode": "const item = $input.first().json;\nconst exitCode = item.exitCode;\nconst stdout = item.stdout || '';\nconst stderr = item.stderr || '';\n\n// Retrieve original request data from earlier node\nconst validationData = $('Is Valid?').first().json;\nconst siteName = validationData.name;\nconst siteType = validationData.type;\nconst domain = $env.SF_DOMAIN || 'example.com';\n\nif (exitCode !== 0) {\n  return [{\n    json: {\n      success: false,\n      error: stderr || stdout || 'Launch pipeline failed',\n      exitCode: exitCode,\n      statusCode: 500\n    }\n  }];\n}\n\nreturn [{\n  json: {\n    success: true,\n    site_name: siteName,\n    site_type: siteType,\n    url: `https://${siteName}.${domain}`,\n    site_directory: `sites/${siteName}`,\n    message: `Site '${siteName}' launched successfully (created + deployed)`,\n    output: stdout,\n    statusCode: 200\n  }\n}];"
       },
       "id": "a1b2c3d4-0001-4000-8000-000000000008",
       "name": "Format Result",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [1460, 180]
+      "position": [1200, 180]
     },
     {
       "parameters": {
         "respondWith": "json",
-        "responseBody": "={{ JSON.stringify({ success: $json.success, site_name: $json.site_name, site_type: $json.site_type, site_directory: $json.site_directory, message: $json.message, error: $json.error || undefined }) }}",
+        "responseBody": "={{ JSON.stringify({ success: $json.success, site_name: $json.site_name, site_type: $json.site_type, url: $json.url, site_directory: $json.site_directory, message: $json.message, error: $json.error || undefined }) }}",
         "options": {
           "responseCode": "={{ $json.statusCode }}"
         }
@@ -145,11 +103,11 @@
       "name": "Respond Result",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
-      "position": [1700, 180]
+      "position": [1460, 180]
     }
   ],
   "connections": {
-    "Webhook - New Site": {
+    "Webhook - Launch Site": {
       "main": [
         [
           {
@@ -175,7 +133,7 @@
       "main": [
         [
           {
-            "node": "Hugo or Fork?",
+            "node": "Run launch-site.sh",
             "type": "main",
             "index": 0
           }
@@ -189,36 +147,7 @@
         ]
       ]
     },
-    "Hugo or Fork?": {
-      "main": [
-        [
-          {
-            "node": "Run new-site.sh",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Run fork-site.sh",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Run new-site.sh": {
-      "main": [
-        [
-          {
-            "node": "Format Result",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Run fork-site.sh": {
+    "Run launch-site.sh": {
       "main": [
         [
           {
@@ -253,5 +182,5 @@
   ],
   "triggerCount": 1,
   "updatedAt": "2026-02-19T00:00:00.000Z",
-  "versionId": "1"
+  "versionId": "2"
 }
