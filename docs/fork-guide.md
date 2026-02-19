@@ -4,6 +4,20 @@
 
 The core philosophy: **"Copy before Create"** — why build from scratch when thousands of useful tools exist on GitHub?
 
+## Key Terms
+
+If you're new to web development, here are terms used in this guide:
+
+| Term | What it means |
+|------|--------------|
+| **Frontend** | The part of a website that runs in your browser (HTML, CSS, JavaScript files). This is what we need. |
+| **Backend** | Server-side code that runs on a remote computer (Node.js, Python, etc.). We can't use these — free hosting doesn't support servers. |
+| **API** | A way for code to request data from a server. "Public API" = anyone can use it (OK for us). "Internal API" = the project's own server (not OK). |
+| **SSR** | Server-Side Rendering — pages are generated on a server before being sent to the browser. Requires a running server, which we can't host for free. |
+| **Static site** | A website made of plain files (HTML, CSS, JS) that don't need a server to generate pages. This is what we need. |
+| **package.json** | A file listing a JavaScript project's dependencies. We check this file for server-related entries. |
+| **License** | Legal terms for using someone's code. MIT/Apache/BSD = OK for commercial use. GPL = has restrictions, avoid. No license = not allowed to use, skip. |
+
 ## The Process
 
 ```
@@ -14,7 +28,7 @@ Search GitHub → Evaluate (check-repo.sh) → Fork (fork-site.sh) → Deploy �
 
 ### Search Strategies
 
-**GitHub Search** — Use these queries:
+**GitHub Search** — Use these queries in the [GitHub search bar](https://github.com/search):
 
 ```
 # By tool type
@@ -24,11 +38,11 @@ weather app html css
 password generator html javascript
 color picker tool html
 
-# By "stars" for quality
+# By "stars" for quality (more stars = more people found it useful)
 calculator html stars:>10
 qr code generator html stars:>20
 
-# Exclude frameworks
+# Exclude frameworks (we need plain HTML, not complex frameworks)
 calculator html NOT react NOT vue NOT angular
 ```
 
@@ -61,18 +75,18 @@ site:github.com "MIT license" weather tool html
 
 ### Quick Exclusion Signals
 
-Skip a project immediately if you see:
+Skip a project immediately if you see any of these:
 
-| Signal | Why |
-|--------|-----|
-| `server.js` / `app.py` / `main.go` | Has a backend |
-| `docker-compose.yml` | Multi-service setup |
-| `requirements.txt` / `Gemfile` / `go.mod` | Non-frontend dependencies |
-| `DATABASE_URL` / `REDIS_URL` in `.env` | Needs database |
-| `next` / `nuxt` in package.json | SSR framework (needs server) |
-| `express` / `koa` / `fastify` in package.json | Server framework |
-| Login/signup pages | Needs auth backend |
-| `.env.example` with many API keys | Complex setup |
+| Signal | What it means (plain English) | Why we skip it |
+|--------|------------------------------|----------------|
+| `server.js` / `app.py` / `main.go` | The project has code that runs on a server | We only host static files; we can't run servers |
+| `docker-compose.yml` | The project runs multiple services together | Way too complex for our setup |
+| `requirements.txt` / `Gemfile` / `go.mod` | The project needs Python/Ruby/Go installed | We need pure HTML/CSS/JS only |
+| `DATABASE_URL` / `REDIS_URL` in `.env` | The project stores data in a database | Static sites can't have databases |
+| `next` / `nuxt` in package.json | Uses a framework that generates pages on a server (SSR) | Requires a Node.js server to run |
+| `express` / `koa` / `fastify` in package.json | Uses a web server framework | We need browser-only code |
+| Login/signup pages | The project requires user accounts | User accounts need a backend server |
+| `.env.example` with many API keys | Complex setup with many external dependencies | Too many things that can break |
 
 ## Step 2: Evaluate
 
@@ -96,22 +110,28 @@ The script checks 7 areas and gives a score out of 100:
 
 **Scoring:**
 - 70+ with no issues → **COMPATIBLE** — ready to fork
-- 40-69 or 1 issue → **NEEDS REVIEW** — check manually
-- <40 or multiple issues → **INCOMPATIBLE** — skip
+- 40-69 or 1 issue → **NEEDS REVIEW** — check manually (see below)
+- <40 or multiple issues → **INCOMPATIBLE** — skip this project
+
+**What counts as a "critical issue" (red flag)?**
+- License is GPL, AGPL, or "no license found" — means you can't use it commercially
+- Backend files detected (server.js, app.py, etc.) — project needs a server to run
+- Database dependency found — project needs a database we can't provide
+
+If the score is 70+ but has a **warning** (yellow text, not red), you can usually proceed. Read the warning to understand what it's about — common warnings are "many JS files" or "unknown license format" which are usually fine.
 
 ### Manual Review Checklist
 
-For "NEEDS REVIEW" projects:
+For "NEEDS REVIEW" projects, open the GitHub page and check:
 
 ```
-☐ Open the GitHub repo page
-☐ Check README for setup instructions — simple or complex?
-☐ Look at the demo (if available) — does it work?
-☐ Check file structure — is there a clear index.html?
-☐ Look at package.json scripts — "start" runs a server?
-☐ Check for API calls in JS — internal (/api/) or public?
-☐ Verify license text allows commercial use + modification
-☐ Count HTML/CSS/JS files — manageable size?
+☐ Does the README show simple setup? (just "open index.html" = good)
+☐ Is there a live demo link? Does it work in the browser?
+☐ Can you find index.html in the file list?
+☐ In package.json, does the "start" script run a server? (bad: "node server.js", ok: no start script)
+☐ Do JS files call internal APIs (look for "/api/" in the code)? (bad) Or public APIs (look for "https://api.xxx.com")? (ok)
+☐ Does the license text say "MIT" or "Apache" or "BSD"? (good)
+☐ Are there fewer than 30 HTML/CSS/JS files total? (manageable = good)
 ```
 
 ## Step 3: Fork and Adapt
@@ -142,22 +162,33 @@ The script automatically adds to all HTML files:
 
 ### Post-Fork Customization
 
-After forking, you may want to customize:
+After forking, review and customize:
 
+**1. Preview the site:**
 ```bash
-# 1. Preview the site
 open sites/bmi-calc/index.html
+```
 
-# 2. Check ad injection looks correct
+**2. Verify ad injection worked:**
+```bash
 grep "adsbygoogle" sites/bmi-calc/index.html
+# If this prints a line, injection succeeded.
+# If no output, re-run fork-site.sh or check for errors in the log.
+```
 
-# 3. Update title/branding if needed
-nano sites/bmi-calc/index.html
+**3. Update the title** (in `sites/bmi-calc/index.html`):
+1. Open the file in any text editor
+2. Find the `<title>` tag (near the top, inside `<head>`)
+3. Change the text between `<title>` and `</title>` to your desired title
+4. Also find `<meta property="og:title"` and update the `content` value to match
 
-# 4. Add navigation link to privacy policy
-# (inject.sh adds a link before </body>, but you may want it in the nav)
+**4. Update the description** (same file):
+1. Find `<meta name="description" content="...">`
+2. Change the `content` value to your description (150-160 characters recommended)
+3. Also update `<meta property="og:description" content="...">` to match
 
-# 5. Deploy
+**5. Deploy:**
+```bash
 ./scripts/deploy.sh bmi-calc
 ```
 
@@ -186,8 +217,17 @@ Fork sites need extra SEO work since they weren't built for it:
 The key to SiteFactory is volume. Each individual site earns very little, but together they add up:
 
 ```
-50 sites × $0.10/day average = $5/day = $150/month
+Optimistic: 50 sites x $0.10/day average = $5/day = $150/month
+Realistic:  50 sites x $0.03/day average = $1.50/day = $45/month
+Minimum:    50 sites x $0.01/day average = $0.50/day = $15/month
 ```
+
+**Reality check:**
+- Most new sites earn $0 for the first 1-3 months (no traffic yet)
+- Revenue depends heavily on niche, traffic volume, and visitor geography
+- US/UK/AU traffic earns 5-10x more per click than traffic from developing countries
+- The $0.10/day average is achievable but requires consistent content and SEO work
+- Treat SiteFactory as a long-term project, not a get-rich-quick scheme
 
 ### Diversify Categories
 
@@ -202,18 +242,18 @@ Don't put all sites in one category. Spread across:
 | Mistake | Why It's Bad |
 |---------|-------------|
 | Forking the same project twice | Google penalizes duplicate content |
-| Not checking the license | Legal risk |
-| Leaving broken features | Users bounce, hurts SEO |
-| Too many ads | AdSense policy violation |
-| No privacy policy | AdSense rejection |
-| Not testing on mobile | 60%+ of traffic is mobile |
+| Not checking the license | Legal risk — you could be forced to take the site down |
+| Leaving broken features | Users bounce immediately, hurts SEO rankings |
+| Too many ads | AdSense policy violation — can get your account banned |
+| No privacy policy | AdSense will reject your application |
+| Not testing on mobile | 60%+ of traffic is mobile — broken mobile = lost visitors |
 
 ### When NOT to Fork
 
 Some projects aren't worth the effort:
 
-- Requires a build step you can't replicate
-- Depends on a private API that might shut down
-- Has hardcoded API keys that you can't get
-- Poor UI/UX that would take hours to fix
-- Less than 5 GitHub stars (might have bugs)
+- Requires a build step you can't replicate (e.g., needs `npm run build` with complex webpack config)
+- Depends on a private API that might shut down or require payment
+- Has hardcoded API keys that you can't get your own version of
+- Poor UI/UX that would take more than 30 minutes to fix
+- Less than 5 GitHub stars (likely has bugs or is abandoned)

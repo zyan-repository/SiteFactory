@@ -79,13 +79,15 @@ nano config.yaml    # 在终端里编辑（Ctrl+O 保存，Ctrl+X 退出）
 
 需要填写的内容：
 
-| 配置项 | 去哪里获取 | 说明 |
-|--------|-----------|------|
-| `domain.name` | [NameSilo](https://www.namesilo.com/) 买一个域名 | 比如 `mysite.com`，约 $9/年 |
-| `domain.namesilo_api_key` | [NameSilo API 管理](https://www.namesilo.com/account/api-manager) | 点击生成一个 API Key |
-| `vercel.token` | [Vercel 令牌页](https://vercel.com/account/tokens) | 先用 GitHub 注册 Vercel，然后创建令牌 |
-| `adsense.publisher_id` | [AdSense](https://adsense.google.com/) | 格式 `ca-pub-数字`，初次申请需要等审核 |
-| `analytics.google_analytics_id` | [Google Analytics](https://analytics.google.com/) | 格式 `G-XXXXXXXXXX` |
+| 配置项 | 去哪里获取 | 怎么操作 | 值长什么样 |
+|--------|-----------|---------|-----------|
+| `domain.name` | [NameSilo](https://www.namesilo.com/) | 搜索域名 → 加购物车 → 付款（约 $9/年） | `mysite.com`（不带 https://） |
+| `domain.namesilo_api_key` | [API 管理页](https://www.namesilo.com/account/api-manager) | 点击 **"Generate"** → 复制出现的字符串 | 约 20-30 个字母数字，如 `a1b2c3...` |
+| `vercel.token` | [令牌页](https://vercel.com/account/tokens) | 点击 **"Create"** → 范围选 "Full Account" → **立即复制**（只显示一次！） | 约 24+ 个字符，如 `pZGwk...` |
+| `adsense.publisher_id` | [AdSense](https://adsense.google.com/) | 登录后看**地址栏** URL 里的 `pub-数字`，前面加 `ca-`；或者：设置 → 账号信息 | `ca-pub-5531531271065052` |
+| `analytics.google_analytics_id` | [Analytics](https://analytics.google.com/) | 管理 → 数据流 → 点击你的数据流 → 右上角**衡量 ID** | `G-A1B2C3D4E5` |
+
+> 每一步的详细图文教程见 [配置指南](docs/zh/setup-guide.md)，保证不用查任何资料就能跟着做。
 
 可选配置（不填也能用）：
 
@@ -93,6 +95,8 @@ nano config.yaml    # 在终端里编辑（Ctrl+O 保存，Ctrl+X 退出）
 |--------|------|
 | `claude.api_key` | AI 自动生成文章（需要 Claude API） |
 | `monitoring.uptimerobot_api_key` | 监控站点是否在线 |
+
+> **中国大陆用户注意**：Google 系列服务（AdSense、Analytics、Search Console）可能需要特殊网络环境才能访问。
 
 ### 第六步：验证配置
 

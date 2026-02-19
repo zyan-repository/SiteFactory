@@ -2,39 +2,83 @@
 # SiteFactory Configuration
 # Copy this file to config.yaml and fill in your values.
 # NEVER commit config.yaml to git (it is in .gitignore).
+#
+# For detailed step-by-step instructions on where to find each value,
+# see: docs/setup-guide.md (English) or docs/zh/setup-guide.md (中文)
 # =============================================================================
 
 # --- Domain & DNS ---
 domain:
   # Your main domain purchased from NameSilo
+  # WHERE: https://www.namesilo.com/account/domain-manager
+  # FORMAT: just the domain name, no https:// or www. Example: "mysite.com"
   name: "example.com"
+
+  # Your NameSilo API key for DNS management
+  # WHERE: https://www.namesilo.com/account/api-manager -> click "Generate"
+  # FORMAT: ~20-30 alphanumeric characters. Example: "a1b2c3d4e5f6g7h8i9j0k"
   namesilo_api_key: "YOUR_NAMESILO_API_KEY"
 
 # --- Hosting (Vercel) ---
 vercel:
+  # Your Vercel API token
+  # WHERE: https://vercel.com/account/tokens -> click "Create"
+  #        Name: anything, Scope: "Full Account", Expiration: your choice
+  # FORMAT: ~24+ character string. Example: "pZGwkE1JaBcDeFgHiJkLmN"
+  # NOTE: Token is shown only once when created. If lost, create a new one.
   token: "YOUR_VERCEL_TOKEN"
-  team_id: ""  # Leave empty for personal account (Hobby plan)
+
+  # Vercel team ID (leave empty for personal account on the free Hobby plan)
+  team_id: ""
 
 # --- Monetization (Google AdSense) ---
 adsense:
+  # Your AdSense publisher ID
+  # WHERE: Log in to https://adsense.google.com/ then either:
+  #   (a) Look at the browser URL bar — it contains pub-XXXXXXXXXXXXXXXX.
+  #       Prepend "ca-" to get the full ID: ca-pub-XXXXXXXXXXXXXXXX
+  #   (b) Settings (gear icon) -> Account -> Account Information -> "Publisher ID"
+  # FORMAT: always "ca-pub-" + 16 digits. Example: "ca-pub-5531531271065052"
+  # NOTE: If not yet approved for AdSense, keep placeholder and set enabled: false
   publisher_id: "ca-pub-XXXXXXXXXXXXXXXX"
-  # Set to false to disable ads during development
+
+  # Set to false to disable ads during development or before AdSense approval
   enabled: true
 
 # --- Analytics (Google) ---
 analytics:
+  # Google Analytics Measurement ID
+  # WHERE: https://analytics.google.com/ -> Admin (gear icon, bottom left)
+  #        -> Property column -> Data Streams -> click your stream
+  #        -> "Measurement ID" shown at top right of the stream details page
+  # FORMAT: "G-" + 10 uppercase letters/digits. Example: "G-A1B2C3D4E5"
   google_analytics_id: "G-XXXXXXXXXX"
+
+  # Google Search Console verification code
+  # WHERE: https://search.google.com/search-console -> Add property
+  #        -> URL prefix -> enter your URL -> choose "HTML tag" method
+  #        -> copy the content="..." value from the meta tag shown
+  # FORMAT: ~43 alphanumeric characters
+  # NOTE: Can be added later after site is live and DNS is set up
   google_search_console_verification: "XXXXXXXXXXXXXX"
 
-# --- Content Generation (Optional) ---
+# --- Content Generation (Optional — skip if not using AI content) ---
 claude:
+  # Anthropic API key for AI content generation via n8n
+  # WHERE: https://console.anthropic.com/ -> API Keys -> Create Key
+  # FORMAT: starts with "sk-ant-" followed by a long string
+  # NOTE: Requires billing/payment method setup at Anthropic first
   api_key: "sk-ant-XXXXXXXX"
   model: "claude-sonnet-4-20250514"
   # Maximum articles to generate per batch
   batch_size: 5
 
-# --- Monitoring ---
+# --- Monitoring (Optional — skip if not using UptimeRobot) ---
 monitoring:
+  # UptimeRobot API key for uptime monitoring
+  # WHERE: https://uptimerobot.com/ -> log in -> profile icon (top right)
+  #        -> My Settings -> scroll to "API Settings" -> Main API Key
+  # FORMAT: starts with "u" + ~39 characters. Example: "u1234567-abcdef..."
   uptimerobot_api_key: "YOUR_UPTIMEROBOT_API_KEY"
 
 # --- n8n (Workflow Automation, Optional) ---

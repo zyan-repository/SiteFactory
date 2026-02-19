@@ -78,12 +78,25 @@ cd SiteFactory
 ./scripts/setup.sh
 
 # 3. Edit config.yaml with your credentials
-#    (domain, Vercel token, AdSense ID, etc.)
+#    Each field has comments explaining WHERE to find the value.
+#    For full step-by-step instructions: docs/setup-guide.md
 nano config.yaml
 
 # 4. Re-run setup to verify
 ./scripts/setup.sh
 ```
+
+### Where to Find Your Credentials
+
+| Credential | Where to get it | Format |
+|------------|----------------|--------|
+| Domain | [NameSilo](https://www.namesilo.com/) → buy a `.com` domain | `mysite.com` (no https://) |
+| NameSilo API Key | [API Manager](https://www.namesilo.com/account/api-manager) → click "Generate" | ~20-30 alphanumeric chars |
+| Vercel Token | [Tokens page](https://vercel.com/account/tokens) → click "Create", scope "Full Account" | ~24+ chars (shown once!) |
+| AdSense Publisher ID | [AdSense](https://adsense.google.com/) → look at URL bar for `pub-XXXXX` → prepend `ca-` | `ca-pub-` + 16 digits |
+| GA Measurement ID | [Analytics](https://analytics.google.com/) → Admin → Data Streams → your stream | `G-XXXXXXXXXX` |
+
+Full step-by-step with click paths: see [Setup Guide](docs/setup-guide.md).
 
 ### Create Your First Site
 

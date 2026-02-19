@@ -101,7 +101,15 @@ This checks:
 - No server-side frameworks in package.json
 - Has index.html
 
-Score 70+ with no critical issues = ready to fork.
+**Understanding the result:**
+- Score 70+ with no red flags → **COMPATIBLE** — ready to fork
+- Score 40-69 or 1 yellow warning → **NEEDS REVIEW** — see [Fork Guide](fork-guide.md) manual checklist
+- Score <40 or red flags → **INCOMPATIBLE** — skip this project
+
+**What are "red flags" (critical issues)?**
+- License is GPL, AGPL, or missing — can't use commercially
+- Backend files detected (server.js, app.py) — needs a server to run
+- Database dependency — needs a database we can't provide
 
 ### 3. Fork and Adapt
 
@@ -123,19 +131,33 @@ What happens:
 
 ### 4. Review and Customize
 
+**Preview the site:**
 ```bash
-# Preview
 open sites/cool-tool/index.html
-
-# Check the injected code looks right
-grep "adsbygoogle" sites/cool-tool/index.html
 ```
 
-You may want to:
-- Update the title and description
-- Add a link to privacy policy in the navigation
-- Customize colors or branding
-- Add more SEO meta tags
+**Verify ad injection worked:**
+```bash
+grep "adsbygoogle" sites/cool-tool/index.html
+# If this prints a line containing "adsbygoogle", injection succeeded.
+# If no output, re-run fork-site.sh or check the error log.
+```
+
+**Update the title** (in `sites/cool-tool/index.html`):
+1. Open the file in any text editor (VS Code, nano, TextEdit, etc.)
+2. Find the `<title>` tag (near the top of the file, inside `<head>`)
+3. Change the text between `<title>` and `</title>` to your desired title
+4. Also find `<meta property="og:title"` and update the `content` value to match
+
+**Update the description** (same file):
+1. Find `<meta name="description" content="...">`
+2. Change the `content` value to your description (150-160 characters recommended)
+3. Also update `<meta property="og:description" content="...">` to match
+
+**Add navigation to privacy policy** (optional but recommended):
+- The fork script adds `privacy-policy.html` and `about.html` to the site directory
+- Find the navigation section (usually `<nav>` or a `<ul>` with links) in `index.html`
+- Add links: `<a href="privacy-policy.html">Privacy Policy</a>` and `<a href="about.html">About</a>`
 
 ### 5. Deploy
 
@@ -151,6 +173,32 @@ You may want to:
 ./scripts/dns-setup.sh <site-name>
 ```
 
+This creates a CNAME record pointing `<site-name>.yourdomain.com` to `cname.vercel-dns.com`.
+
+**How to check if DNS is working:**
+1. Visit [https://dnschecker.org/](https://dnschecker.org/)
+2. Enter `<site-name>.yourdomain.com`, select record type "CNAME", click search
+3. If results show `cname.vercel-dns.com` → DNS is working
+4. If no results → wait a few hours and check again (DNS can take up to 48 hours)
+
+### Submit to Google Search Console
+
+1. Go to [Google Search Console](https://search.google.com/search-console)
+2. Click **"Add property"** (in the top-left dropdown)
+3. Choose **"URL prefix"** (the right-hand option)
+4. Enter your site URL: `https://<site-name>.yourdomain.com`
+5. Click **"Continue"**
+6. For verification, choose **"DNS record"** method:
+   - Google shows you a TXT record value (a long string starting with `google-site-verification=`)
+   - Go to [NameSilo Domain Manager](https://www.namesilo.com/account/domain-manager) → click your domain → DNS Records
+   - Add a TXT record: Host = leave blank (or `@`), Value = paste the Google string, TTL = `3600`
+   - Go back to Search Console and click **"Verify"**
+   - If verification fails, wait 15-30 minutes for DNS to propagate, then try again
+7. Once verified, click **"Sitemaps"** in the left sidebar
+8. Enter your sitemap URL: `https://<site-name>.yourdomain.com/sitemap.xml`
+9. Click **"Submit"**
+10. Google will start crawling your site within a few days. Check indexing progress under **"Pages"** in the left sidebar.
+
 ### Add Monitoring
 
 If you have UptimeRobot configured, the monitoring dashboard will pick up the new site automatically next time you run:
@@ -159,13 +207,6 @@ If you have UptimeRobot configured, the monitoring dashboard will pick up the ne
 ./scripts/generate-dashboard.sh
 ```
 
-### Submit to Google
-
-1. Go to [Google Search Console](https://search.google.com/search-console)
-2. Add property: `https://<site-name>.yourdomain.com`
-3. Verify via DNS (TXT record) or HTML file
-4. Submit the sitemap: `https://<site-name>.yourdomain.com/sitemap.xml`
-
 ### Check Performance
 
 ```bash
@@ -173,6 +214,14 @@ If you have UptimeRobot configured, the monitoring dashboard will pick up the ne
 ```
 
 Target scores: Performance 90+, SEO 95+, Accessibility 85+, Best Practices 90+.
+
+**What these scores mean:**
+- **Performance (90+):** How fast your page loads. Below 90 usually means images are too large or there's too much JavaScript. Fix: compress images, remove unused scripts.
+- **SEO (95+):** Whether search engines can properly read your site. Below 95 usually means missing meta tags or heading issues. Fix: check that every page has a `<title>`, `<meta description>`, and one `<h1>`.
+- **Accessibility (85+):** Whether the site is usable by people with disabilities (screen readers, etc.). Below 85 means missing image alt text or poor color contrast. Fix: add `alt` attributes to all `<img>` tags.
+- **Best Practices (90+):** General web development quality. Below 90 means outdated APIs or security issues. Fix: check the specific warnings in the Lighthouse output.
+
+If any score is below target, the Lighthouse output lists specific issues and suggested fixes.
 
 ## Managing Sites
 
@@ -185,10 +234,14 @@ ls -la sites/ | grep -v _template | grep -v _shared
 ### Remove a Site
 
 ```bash
+# Remove local files
 rm -rf sites/<site-name>
-# Also remove from Vercel:
+
+# Also remove from Vercel (if already deployed):
 npx vercel rm <site-name> --token YOUR_TOKEN --yes
 ```
+
+> **Note:** Removing from Vercel stops the site from being accessible online. The DNS record will still exist but point to nothing — you can leave it or clean it up in NameSilo.
 
 ### Update a Site
 

@@ -101,7 +101,15 @@ site:github.com weather app html css javascript
 - package.json 里有没有服务端框架
 - 有没有 index.html
 
-得分 70+ 且没有严重问题 = 可以 Fork。
+**看懂结果：**
+- 分数 70+ 且没有红色标记 → **COMPATIBLE（兼容）** → 直接 Fork
+- 分数 40-69 或有 1 个黄色警告 → **NEEDS REVIEW（需人工检查）** → 看 [Fork 指南](fork-guide.md) 里的手动检查清单
+- 分数 <40 或有红色标记 → **INCOMPATIBLE（不兼容）** → 放弃这个项目
+
+**什么是"红色标记"（严重问题）？**
+- 许可证是 GPL、AGPL 或找不到 —— 不能商用
+- 检测到后端文件（server.js、app.py）—— 需要服务器才能跑
+- 发现数据库依赖 —— 需要数据库，我们提供不了
 
 ### 3. Fork 改造
 
@@ -123,19 +131,33 @@ site:github.com weather app html css javascript
 
 ### 4. 检查和自定义
 
+**预览效果：**
 ```bash
-# 预览
 open sites/cool-tool/index.html
-
-# 检查广告代码是否注入成功
-grep "adsbygoogle" sites/cool-tool/index.html
 ```
 
-你可能还想：
-- 修改标题和描述
-- 在导航栏添加隐私政策链接
-- 调整颜色或品牌
-- 添加更多 SEO 标签
+**确认广告代码注入成功：**
+```bash
+grep "adsbygoogle" sites/cool-tool/index.html
+# 如果输出了包含 "adsbygoogle" 的一行，说明注入成功
+# 如果没有输出，重新运行 fork-site.sh 或检查错误日志
+```
+
+**修改标题**（在 `sites/cool-tool/index.html` 里）：
+1. 用任意文本编辑器打开这个文件（VS Code、nano、记事本等）
+2. 搜索 `<title>` 标签（在文件靠前的 `<head>` 区域里）
+3. 把 `<title>` 和 `</title>` 之间的文字改成你想要的标题
+4. 同时找到 `<meta property="og:title"`，把 `content` 的值也改成一样的
+
+**修改描述**（同一个文件）：
+1. 找到 `<meta name="description" content="...">`
+2. 把 `content` 里的文字改成你的描述（建议 150-160 字符）
+3. 同时更新 `<meta property="og:description" content="...">` 保持一致
+
+**在导航栏添加隐私政策链接**（可选但推荐）：
+- fork 脚本已经在站点目录下添加了 `privacy-policy.html` 和 `about.html`
+- 在 `index.html` 里找到导航区域（通常是 `<nav>` 标签或包含链接的 `<ul>`）
+- 加上链接：`<a href="privacy-policy.html">隐私政策</a>` 和 `<a href="about.html">关于</a>`
 
 ### 5. 部署
 
@@ -151,12 +173,39 @@ grep "adsbygoogle" sites/cool-tool/index.html
 ./scripts/dns-setup.sh <站点名>
 ```
 
-### 提交到 Google
+这会创建一条 CNAME 记录，把 `<站点名>.你的域名.com` 指向 `cname.vercel-dns.com`。
+
+**怎么看 DNS 是不是生效了：**
+1. 打开 [https://dnschecker.org/](https://dnschecker.org/)
+2. 输入 `<站点名>.你的域名.com`，记录类型选 "CNAME"，点搜索
+3. 如果结果显示 `cname.vercel-dns.com` → DNS 已生效
+4. 如果什么都没有 → 再等几个小时重新检查（DNS 最多需要 48 小时）
+
+### 提交到 Google Search Console
 
 1. 打开 [Google Search Console](https://search.google.com/search-console)
-2. 添加网站：`https://<站点名>.你的域名.com`
-3. 验证所有权（DNS 验证最简单）
-4. 提交 sitemap：`https://<站点名>.你的域名.com/sitemap.xml`
+2. 点击左上角下拉菜单 → **"添加资源"**
+3. 选择右边的 **"网址前缀"**
+4. 输入你的站点地址：`https://<站点名>.你的域名.com`
+5. 点击 **"继续"**
+6. 验证方式选 **"DNS 记录"**：
+   - Google 会显示一个 TXT 记录值（一长串以 `google-site-verification=` 开头的字符）
+   - 登录 [NameSilo 域名管理](https://www.namesilo.com/account/domain-manager) → 点击你的域名 → DNS 记录
+   - 添加一条 TXT 记录：Host 留空（或填 `@`），Value 粘贴 Google 给的那串字符，TTL 填 `3600`
+   - 回到 Search Console 点击 **"验证"**
+   - 如果显示失败，等 15-30 分钟让 DNS 生效，再试一次
+7. 验证成功后，点击左侧 **"站点地图"**
+8. 输入站点地图地址：`https://<站点名>.你的域名.com/sitemap.xml`
+9. 点击 **"提交"**
+10. Google 会在几天内开始抓取你的站点。你可以在左侧 **"网页"** 里查看收录进度。
+
+### 添加监控
+
+如果你配置了 UptimeRobot，下次运行以下命令时监控面板会自动检测到新站点：
+
+```bash
+./scripts/generate-dashboard.sh
+```
 
 ### 检查性能
 
@@ -165,6 +214,14 @@ grep "adsbygoogle" sites/cool-tool/index.html
 ```
 
 目标分数：Performance 90+、SEO 95+、Accessibility 85+、Best Practices 90+。
+
+**这些分数代表什么：**
+- **Performance（90+）：** 页面加载速度。低于 90 通常是图片太大或 JavaScript 太多。解决：压缩图片、删掉没用的脚本。
+- **SEO（95+）：** 搜索引擎能不能正确读取你的网站。低于 95 通常是缺少 meta 标签或标题结构有问题。解决：确保每个页面都有 `<title>`、`<meta description>` 和一个 `<h1>`。
+- **Accessibility（85+）：** 网站对残障人士的友好程度（屏幕阅读器等）。低于 85 通常是图片缺少 alt 文字或颜色对比度不够。解决：给所有 `<img>` 标签加上 `alt` 属性。
+- **Best Practices（90+）：** Web 开发的通用质量标准。低于 90 通常是用了过时的 API 或有安全隐患。解决：查看 Lighthouse 输出里的具体警告。
+
+如果任何分数低于目标，Lighthouse 输出会列出具体问题和修复建议。
 
 ## 管理站点
 
@@ -177,8 +234,14 @@ ls sites/ | grep -v _template | grep -v _shared
 ### 删除站点
 
 ```bash
+# 删除本地文件
 rm -rf sites/<站点名>
+
+# 如果已经部署了，也从 Vercel 删除：
+npx vercel rm <站点名> --token YOUR_TOKEN --yes
 ```
+
+> **注意：** 从 Vercel 删除后，站点就不能在线访问了。DNS 记录还会留着但指向空——你可以不管它，或者去 NameSilo 手动删掉。
 
 ### 更新站点内容
 
