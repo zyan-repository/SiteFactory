@@ -59,10 +59,10 @@ if [[ ! -f "$REPO_ROOT/config.yaml" ]]; then
   echo "    - domain.name           (your NameSilo domain)"
   echo "    - domain.namesilo_api_key"
   echo "    - vercel.token          (from vercel.com/account/tokens)"
-  echo "    - adsense.publisher_id  (ca-pub-XXXXXXXX)"
-  echo "    - analytics.google_analytics_id (G-XXXXXXXXXX)"
   echo ""
-  echo "  Optional (for content generation):"
+  echo "  Optional (can set up later):"
+  echo "    - adsense.publisher_id  (ca-pub-XXXXXXXX, or set enabled: false)"
+  echo "    - analytics.google_analytics_id (G-XXXXXXXXXX)"
   echo "    - claude.api_key"
   echo "    - monitoring.uptimerobot_api_key"
   echo ""
@@ -79,8 +79,10 @@ ERRORS=()
 [[ "$SF_DOMAIN" == "example.com" ]] && ERRORS+=("domain.name is still the placeholder")
 [[ "$SF_NAMESILO_API_KEY" == YOUR_* ]] && ERRORS+=("domain.namesilo_api_key not set")
 [[ "$SF_VERCEL_TOKEN" == YOUR_* ]] && ERRORS+=("vercel.token not set")
-[[ "$SF_ADSENSE_PUB_ID" == *XXXX* ]] && ERRORS+=("adsense.publisher_id not set")
-[[ "$SF_GA_ID" == *XXXX* ]] && ERRORS+=("analytics.google_analytics_id not set")
+
+WARNINGS=()
+[[ "$SF_ADSENSE_PUB_ID" == *XXXX* ]] && WARNINGS+=("adsense.publisher_id not set (ads disabled until configured)")
+[[ "$SF_GA_ID" == *XXXX* ]] && WARNINGS+=("analytics.google_analytics_id not set (analytics disabled until configured)")
 
 if [[ ${#ERRORS[@]} -gt 0 ]]; then
   log_error "Config validation failed:"
@@ -90,6 +92,14 @@ if [[ ${#ERRORS[@]} -gt 0 ]]; then
   echo ""
   echo "  Edit: $REPO_ROOT/config.yaml"
   exit 1
+fi
+
+if [[ ${#WARNINGS[@]} -gt 0 ]]; then
+  log_warn "Optional credentials not yet configured:"
+  for w in "${WARNINGS[@]}"; do
+    echo "  - $w"
+  done
+  echo "  You can set these up later. See: docs/setup-guide.md"
 fi
 log_ok "Config values present"
 
