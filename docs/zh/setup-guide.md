@@ -328,16 +328,16 @@ analytics:
 
 ```bash
 # 先检查项目兼容性
-./scripts/check-repo.sh https://github.com/user/cool-tool
+./scripts/check-repo.sh https://github.com/evgeni/qifi
 
 # 如果显示 COMPATIBLE，就可以 fork
-./scripts/fork-site.sh https://github.com/user/cool-tool cool-tool "好用的工具"
+./scripts/fork-site.sh https://github.com/evgeni/qifi wifi-qr "WiFi 二维码生成器"
 ```
 
 在浏览器里预览：
 
 ```bash
-open sites/cool-tool/index.html
+open sites/wifi-qr/index.html
 ```
 
 ### 方式 B：创建一个 Hugo 博客站
@@ -357,17 +357,17 @@ hugo server -s sites/my-blog
 
 ```bash
 # 部署站点到 Vercel
-./scripts/deploy.sh cool-tool
+./scripts/deploy.sh wifi-qr
 
 # 添加 DNS 记录（让域名指向你的站点）
-./scripts/dns-setup.sh cool-tool
+./scripts/dns-setup.sh wifi-qr
 ```
 
-完成后你的站点会在 `https://cool-tool.mysite.com` 上线（DNS 生效需要几小时到 48 小时）。
+完成后你的站点会在 `https://wifi-qr.mysite.com` 上线（DNS 生效需要几小时到 48 小时）。
 
 **怎么看 DNS 是不是生效了：**
 - 打开 [https://dnschecker.org/](https://dnschecker.org/)
-- 输入 `cool-tool.你的域名.com`，记录类型选 "CNAME"，点搜索
+- 输入 `wifi-qr.你的域名.com`，记录类型选 "CNAME"，点搜索
 - 如果结果显示 `cname.vercel-dns.com`，说明 DNS 已生效
 - 如果什么都没有或显示错误，再等几个小时重新检查
 

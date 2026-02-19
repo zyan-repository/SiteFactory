@@ -329,19 +329,19 @@ hugo server -s sites/my-blog
 First, check if the project is compatible:
 
 ```bash
-./scripts/check-repo.sh https://github.com/user/cool-tool
+./scripts/check-repo.sh https://github.com/evgeni/qifi
 ```
 
 If it passes, fork it:
 
 ```bash
-./scripts/fork-site.sh https://github.com/user/cool-tool cool-tool "Cool Tool"
+./scripts/fork-site.sh https://github.com/evgeni/qifi wifi-qr "WiFi QR Generator"
 ```
 
 Preview:
 
 ```bash
-open sites/cool-tool/index.html
+open sites/wifi-qr/index.html
 ```
 
 ## Step 7: Deploy

@@ -114,13 +114,13 @@ nano config.yaml    # 在终端里编辑（Ctrl+O 保存，Ctrl+X 退出）
 
 ```bash
 # 先检查这个项目能不能用
-./scripts/check-repo.sh https://github.com/user/cool-tool
+./scripts/check-repo.sh https://github.com/evgeni/qifi
 
 # 通过检查后，一键 fork 改造
-./scripts/fork-site.sh https://github.com/user/cool-tool my-tool "好用的工具"
+./scripts/fork-site.sh https://github.com/evgeni/qifi wifi-qr "WiFi 二维码生成器"
 
 # 部署上线
-./scripts/deploy.sh my-tool
+./scripts/deploy.sh wifi-qr
 ```
 
 **方法 B：创建一个 Hugo 内容站（博客）**
@@ -186,8 +186,8 @@ source: template
 
 # Fork 的静态站（直接部署）
 type: static
-name: my-tool
-source: https://github.com/user/cool-tool
+name: wifi-qr
+source: https://github.com/evgeni/qifi
 license: MIT
 ```
 

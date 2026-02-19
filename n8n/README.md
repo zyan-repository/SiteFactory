@@ -95,7 +95,7 @@ The workflows use scripts from the SiteFactory repository, which read credential
   "name": "tech-blog",
   "title": "Tech Blog",
   "description": "A blog about technology",
-  "source": "https://github.com/user/repo"
+  "source": "https://github.com/evgeni/qifi"
 }
 ```
 

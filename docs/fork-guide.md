@@ -93,7 +93,7 @@ Skip a project immediately if you see any of these:
 ### Automated Check
 
 ```bash
-./scripts/check-repo.sh https://github.com/user/project
+./scripts/check-repo.sh https://github.com/evgeni/qifi
 ```
 
 The script checks 7 areas and gives a score out of 100:
@@ -145,7 +145,7 @@ For "NEEDS REVIEW" projects, open the GitHub page and check:
 Example:
 
 ```bash
-./scripts/fork-site.sh https://github.com/user/bmi-calculator bmi-calc "BMI Calculator" "Calculate your Body Mass Index"
+./scripts/fork-site.sh https://github.com/evgeni/qifi wifi-qr "WiFi QR Generator" "Generate QR codes to share your WiFi password"
 ```
 
 ### What Gets Injected
@@ -166,17 +166,17 @@ After forking, review and customize:
 
 **1. Preview the site:**
 ```bash
-open sites/bmi-calc/index.html
+open sites/wifi-qr/index.html
 ```
 
 **2. Verify ad injection worked:**
 ```bash
-grep "adsbygoogle" sites/bmi-calc/index.html
+grep "adsbygoogle" sites/wifi-qr/index.html
 # If this prints a line, injection succeeded.
 # If no output, re-run fork-site.sh or check for errors in the log.
 ```
 
-**3. Update the title** (in `sites/bmi-calc/index.html`):
+**3. Update the title** (in `sites/wifi-qr/index.html`):
 1. Open the file in any text editor
 2. Find the `<title>` tag (near the top, inside `<head>`)
 3. Change the text between `<title>` and `</title>` to your desired title
@@ -189,7 +189,7 @@ grep "adsbygoogle" sites/bmi-calc/index.html
 
 **5. Deploy:**
 ```bash
-./scripts/deploy.sh bmi-calc
+./scripts/deploy.sh wifi-qr
 ```
 
 ## Step 4: SEO Optimization for Fork Sites
@@ -257,3 +257,37 @@ Some projects aren't worth the effort:
 - Has hardcoded API keys that you can't get your own version of
 - Poor UI/UX that would take more than 30 minutes to fix
 - Less than 5 GitHub stars (likely has bugs or is abandoned)
+
+### Handling Projects That Need API Keys
+
+Not all static projects are equal. Some call external APIs that require registration and keys. `check-repo.sh` will warn you about this, but here's how to think about it:
+
+**Three tiers of API dependency:**
+
+| Tier | Description | Action |
+|------|-------------|--------|
+| No API | Fully self-contained (calculators, converters, generators) | Best choice — fork directly |
+| Free public API, no key | Uses open data endpoints that need no authentication | OK — works as-is |
+| Requires API key | Needs you to register for a key (weather, maps, AI) | Avoid unless key is free and stable |
+
+**Best practice: always prefer "No API" projects.** They never break, need zero maintenance, work offline, and cost nothing. A simple BMI calculator will earn money reliably for years. A weather app relying on a free API tier can break overnight when the provider changes their pricing.
+
+**If you must fork an API-dependent project:**
+
+1. Verify the API has a free tier with enough quota for your expected traffic
+2. Register your own API key — never reuse the project's hardcoded key (it will stop working)
+3. Store the key in a JS config file or as a variable the site reads on load
+4. Add error handling — show a friendly message if the API is unavailable or rate-limited
+5. Monitor regularly — free API tiers can change terms or shut down without notice
+
+**Example:** The project [net936/web_weather](https://github.com/net936/web_weather) is a clean frontend weather app, but it requires a WeatherAPI.com key. It passes `check-repo.sh` with a warning. You'd need to register at weatherapi.com (free tier: 1M calls/month), get a key, and inject it into `app.js`. It works, but it's more maintenance than a self-contained tool.
+
+### Recommended Fork Targets (Verified)
+
+These projects have been verified to work with SiteFactory — MIT/Apache licensed, pure frontend, no API keys needed:
+
+| Category | Project | Stars | Why it's good |
+|----------|---------|-------|---------------|
+| QR Code | [evgeni/qifi](https://github.com/evgeni/qifi) | 1,200+ | WiFi QR code generator. Single index.html, instant value |
+| QR Code | [ushelp/EasyQRCodeJS](https://github.com/ushelp/EasyQRCodeJS) | 800+ | Feature-rich QR generator with demos. Custom colors/logos |
+| JSON Tool | [josdejong/jsoneditor](https://github.com/josdejong/jsoneditor) | 12,000+ | Online JSON editor/formatter. Dev audience = high ad CPM |

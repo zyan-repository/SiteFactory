@@ -93,7 +93,7 @@ site:github.com "MIT license" weather tool html
 ### 运行检查脚本
 
 ```bash
-./scripts/check-repo.sh https://github.com/user/project
+./scripts/check-repo.sh https://github.com/evgeni/qifi
 ```
 
 脚本检查 7 个方面，给出 100 分制评分：
@@ -143,7 +143,7 @@ site:github.com "MIT license" weather tool html
 例子：
 
 ```bash
-./scripts/fork-site.sh https://github.com/user/bmi-calculator bmi-calc "BMI 计算器" "在线计算你的身体质量指数"
+./scripts/fork-site.sh https://github.com/evgeni/qifi wifi-qr "WiFi 二维码生成器" "生成二维码分享你的 WiFi 密码"
 ```
 
 ### 脚本自动完成的事情
@@ -160,17 +160,17 @@ site:github.com "MIT license" weather tool html
 
 **1. 预览效果：**
 ```bash
-open sites/bmi-calc/index.html
+open sites/wifi-qr/index.html
 ```
 
 **2. 确认广告代码注入成功：**
 ```bash
-grep "adsbygoogle" sites/bmi-calc/index.html
+grep "adsbygoogle" sites/wifi-qr/index.html
 # 如果输出了包含 "adsbygoogle" 的一行，说明注入成功
 # 如果没有输出，重新运行 fork-site.sh 或检查错误日志
 ```
 
-**3. 修改标题**（在 `sites/bmi-calc/index.html` 里）：
+**3. 修改标题**（在 `sites/wifi-qr/index.html` 里）：
 1. 用任意文本编辑器打开这个文件
 2. 搜索 `<title>` 标签（在文件靠前的 `<head>` 区域里）
 3. 把 `<title>` 和 `</title>` 之间的文字改成你想要的标题
@@ -183,7 +183,7 @@ grep "adsbygoogle" sites/bmi-calc/index.html
 
 **5. 部署上线：**
 ```bash
-./scripts/deploy.sh bmi-calc
+./scripts/deploy.sh wifi-qr
 ```
 
 ## 第四步：Fork 站的 SEO 优化
@@ -249,3 +249,37 @@ SiteFactory 的核心是数量。单个站赚得少，但加起来就多了：
 - 里面硬编码了你拿不到的 API Key
 - 界面太丑，改起来超过 30 分钟的
 - GitHub 星标 < 5 个（可能有 bug 或已经没人维护了）
+
+### 需要 API Key 的项目怎么处理
+
+不是所有静态项目都一样。有些项目会调用外部 API，需要你自己注册 Key 才能用。`check-repo.sh` 会警告你，但具体怎么判断：
+
+**API 依赖的三个等级：**
+
+| 等级 | 说明 | 怎么做 |
+|------|------|--------|
+| 无 API | 完全自包含（计算器、转换器、生成器） | 最佳选择——直接 Fork |
+| 免费公开 API，不需要 Key | 调用不需要认证的公开数据接口 | 可以用——直接能跑 |
+| 需要 API Key | 要去注册拿 Key（天气、地图、AI） | 尽量避免，除非 Key 免费且稳定 |
+
+**最佳实践：优先选"无 API"的项目。** 它们永远不会坏、零维护成本、离线也能用、不花钱。一个简单的 BMI 计算器可以稳定赚钱好几年。一个依赖免费 API 的天气应用，可能第二天 API 服务商改了价格就挂了。
+
+**如果非要 Fork 一个需要 API Key 的项目：**
+
+1. 确认 API 有免费额度，够你预期的流量用
+2. 注册你自己的 API Key——绝对不要用项目里硬编码的 Key（别人的 Key 随时会失效）
+3. 把 Key 存在一个 JS 配置文件或变量里，让页面加载时读取
+4. 加错误处理——API 挂了或超限时显示友好提示，别直接白屏
+5. 定期监控——免费 API 说改条款就改条款，说关就关
+
+**举例：** [net936/web_weather](https://github.com/net936/web_weather) 是一个干净的前端天气应用，但它需要 WeatherAPI.com 的 Key。它能通过 `check-repo.sh` 检查（会有警告）。你需要去 weatherapi.com 注册（免费额度：100 万次/月），拿到 Key 后注入到 `app.js` 里。能用，但比纯工具类项目多了维护成本。
+
+### 推荐的 Fork 目标（已验证）
+
+以下项目经过验证，确认可以配合 SiteFactory 使用——MIT/Apache 许可、纯前端、不需要 API Key：
+
+| 分类 | 项目 | 星标 | 为什么推荐 |
+|------|------|------|-----------|
+| 二维码 | [evgeni/qifi](https://github.com/evgeni/qifi) | 1,200+ | WiFi 二维码生成器。单个 index.html，即开即用 |
+| 二维码 | [ushelp/EasyQRCodeJS](https://github.com/ushelp/EasyQRCodeJS) | 800+ | 功能丰富的二维码生成器，支持自定义颜色/Logo |
+| JSON 工具 | [josdejong/jsoneditor](https://github.com/josdejong/jsoneditor) | 12,000+ | 在线 JSON 编辑器/格式化器。开发者受众 = 广告单价高 |

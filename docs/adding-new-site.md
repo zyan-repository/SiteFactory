@@ -91,7 +91,7 @@ See [Fork Guide](fork-guide.md) for detailed search strategies and recommended p
 ### 2. Check Compatibility
 
 ```bash
-./scripts/check-repo.sh https://github.com/user/cool-tool
+./scripts/check-repo.sh https://github.com/evgeni/qifi
 ```
 
 This checks:
@@ -114,12 +114,12 @@ This checks:
 ### 3. Fork and Adapt
 
 ```bash
-./scripts/fork-site.sh https://github.com/user/cool-tool cool-tool "Cool Tool" "A useful tool"
+./scripts/fork-site.sh https://github.com/evgeni/qifi wifi-qr "WiFi QR Generator" "Generate QR codes to share WiFi"
 ```
 
 What happens:
 1. Runs `check-repo.sh` (aborts if incompatible)
-2. Clones the repo to `sites/cool-tool/`
+2. Clones the repo to `sites/wifi-qr/`
 3. Removes `.git` directory
 4. Injects AdSense Auto-Ads into all HTML files
 5. Injects Google Analytics
@@ -133,17 +133,17 @@ What happens:
 
 **Preview the site:**
 ```bash
-open sites/cool-tool/index.html
+open sites/wifi-qr/index.html
 ```
 
 **Verify ad injection worked:**
 ```bash
-grep "adsbygoogle" sites/cool-tool/index.html
+grep "adsbygoogle" sites/wifi-qr/index.html
 # If this prints a line containing "adsbygoogle", injection succeeded.
 # If no output, re-run fork-site.sh or check the error log.
 ```
 
-**Update the title** (in `sites/cool-tool/index.html`):
+**Update the title** (in `sites/wifi-qr/index.html`):
 1. Open the file in any text editor (VS Code, nano, TextEdit, etc.)
 2. Find the `<title>` tag (near the top of the file, inside `<head>`)
 3. Change the text between `<title>` and `</title>` to your desired title
@@ -162,7 +162,7 @@ grep "adsbygoogle" sites/cool-tool/index.html
 ### 5. Deploy
 
 ```bash
-./scripts/deploy.sh cool-tool
+./scripts/deploy.sh wifi-qr
 ```
 
 ## After Deployment
@@ -259,8 +259,8 @@ For fork sites, edit files directly:
 
 ```bash
 # Make changes
-nano sites/cool-tool/index.html
+nano sites/wifi-qr/index.html
 
 # Deploy
-./scripts/deploy.sh cool-tool
+./scripts/deploy.sh wifi-qr
 ```

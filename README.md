@@ -29,11 +29,11 @@ Idea → Fork/Generate → Deploy → Earn
 
 ```bash
 # Check if a GitHub project is compatible
-./scripts/check-repo.sh https://github.com/user/cool-tool
+./scripts/check-repo.sh https://github.com/evgeni/qifi
 
 # Fork it: clone → inject AdSense/Analytics → deploy
-./scripts/fork-site.sh https://github.com/user/cool-tool my-tool "Cool Tool"
-./scripts/deploy.sh my-tool
+./scripts/fork-site.sh https://github.com/evgeni/qifi wifi-qr "WiFi QR Generator"
+./scripts/deploy.sh wifi-qr
 ```
 
 **Path B: Generate a Hugo content site** — Create an SEO-optimized blog with AI-generated content.
@@ -102,7 +102,7 @@ Full step-by-step with click paths: see [Setup Guide](docs/setup-guide.md).
 
 ```bash
 # Option A: Fork a GitHub project
-./scripts/fork-site.sh https://github.com/user/repo my-site "My Site"
+./scripts/fork-site.sh https://github.com/evgeni/qifi wifi-qr "WiFi QR Generator"
 
 # Option B: Hugo content site
 ./scripts/new-site.sh my-blog "My Blog" "A blog about things"
@@ -150,8 +150,8 @@ source: template
 
 # Forked static site (deploy as-is)
 type: static
-name: web-weather
-source: https://github.com/user/repo
+name: wifi-qr
+source: https://github.com/evgeni/qifi
 license: MIT
 ```
 

@@ -91,7 +91,7 @@ site:github.com weather app html css javascript
 ### 2. 检查兼容性
 
 ```bash
-./scripts/check-repo.sh https://github.com/user/cool-tool
+./scripts/check-repo.sh https://github.com/evgeni/qifi
 ```
 
 脚本会检查：
@@ -114,12 +114,12 @@ site:github.com weather app html css javascript
 ### 3. Fork 改造
 
 ```bash
-./scripts/fork-site.sh https://github.com/user/cool-tool cool-tool "好用的工具" "一个好用的在线工具"
+./scripts/fork-site.sh https://github.com/evgeni/qifi wifi-qr "WiFi 二维码生成器" "生成二维码分享你的 WiFi 密码"
 ```
 
 脚本自动完成：
 1. 运行兼容性检查（不通过则终止）
-2. 克隆仓库到 `sites/cool-tool/`
+2. 克隆仓库到 `sites/wifi-qr/`
 3. 删除 `.git` 目录
 4. 在所有 HTML 文件中注入 AdSense 广告代码
 5. 注入 Google Analytics 统计代码
@@ -133,17 +133,17 @@ site:github.com weather app html css javascript
 
 **预览效果：**
 ```bash
-open sites/cool-tool/index.html
+open sites/wifi-qr/index.html
 ```
 
 **确认广告代码注入成功：**
 ```bash
-grep "adsbygoogle" sites/cool-tool/index.html
+grep "adsbygoogle" sites/wifi-qr/index.html
 # 如果输出了包含 "adsbygoogle" 的一行，说明注入成功
 # 如果没有输出，重新运行 fork-site.sh 或检查错误日志
 ```
 
-**修改标题**（在 `sites/cool-tool/index.html` 里）：
+**修改标题**（在 `sites/wifi-qr/index.html` 里）：
 1. 用任意文本编辑器打开这个文件（VS Code、nano、记事本等）
 2. 搜索 `<title>` 标签（在文件靠前的 `<head>` 区域里）
 3. 把 `<title>` 和 `</title>` 之间的文字改成你想要的标题
@@ -162,7 +162,7 @@ grep "adsbygoogle" sites/cool-tool/index.html
 ### 5. 部署
 
 ```bash
-./scripts/deploy.sh cool-tool
+./scripts/deploy.sh wifi-qr
 ```
 
 ## 部署后要做的事
@@ -258,6 +258,6 @@ nano sites/my-blog/content/posts/new-post.md
 Fork 站 —— 直接修改文件后重新部署：
 
 ```bash
-nano sites/cool-tool/index.html
-./scripts/deploy.sh cool-tool
+nano sites/wifi-qr/index.html
+./scripts/deploy.sh wifi-qr
 ```

@@ -193,10 +193,55 @@ else
   SCORE=$((SCORE + 10))
 fi
 
+# --- Check 8: External API key requirements ---
+log_step "Checking for external API key dependencies..."
+API_KEY_HINTS=()
+
+# Check for .env.example / .env.sample / .env.template files
+for envfile in .env.example .env.sample .env.template; do
+  if [[ -f "$REPO/$envfile" ]]; then
+    key_count=$(grep -ciE 'api.?key|api.?secret|access.?token|app.?id|app.?key' "$REPO/$envfile" 2>/dev/null || echo "0")
+    if [[ "$key_count" -gt 0 ]]; then
+      API_KEY_HINTS+=("$envfile lists $key_count API key(s)")
+    fi
+  fi
+done
+
+# Scan JS/HTML for common API key variable patterns
+JS_HTML_FILES=$(find "$REPO" -maxdepth 3 \( -name "*.js" -o -name "*.html" \) 2>/dev/null \
+  | grep -v node_modules | head -50 || true)
+if [[ -n "$JS_HTML_FILES" ]]; then
+  # shellcheck disable=SC2086
+  key_matches=$(echo $JS_HTML_FILES | xargs grep -liE 'API_KEY|apiKey|api_key|appid=|access_token|API_SECRET' 2>/dev/null || true)
+  key_refs=$(echo "$key_matches" | grep -c . 2>/dev/null || true)
+  if [[ "$key_refs" -gt 0 ]]; then
+    API_KEY_HINTS+=("$key_refs file(s) reference API key variables")
+  fi
+
+  # Check for known API domains that require keys
+  # shellcheck disable=SC2086
+  api_domains=$(echo $JS_HTML_FILES \
+    | xargs grep -ohiE 'openweathermap\.org|weatherapi\.com|api\.openai\.com|coinmarketcap\.com|maps\.googleapis\.com|api\.mapbox\.com|api\.stripe\.com' 2>/dev/null \
+    | sort -u | tr '\n' ', ' | sed 's/,$//' || true)
+  if [[ -n "$api_domains" ]]; then
+    API_KEY_HINTS+=("Uses APIs that require keys: $api_domains")
+  fi
+fi
+
+if [[ ${#API_KEY_HINTS[@]} -eq 0 ]]; then
+  log_ok "  No API key requirements detected"
+  SCORE=$((SCORE + 5))
+else
+  for hint in "${API_KEY_HINTS[@]}"; do
+    log_warn "  $hint"
+  done
+  WARNINGS+=("External API keys may be required - verify free tier availability")
+fi
+
 # --- Final Verdict ---
 echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "  Score: $SCORE / 100"
+echo "  Score: $SCORE / 105"
 
 if [[ ${#ISSUES[@]} -gt 0 ]]; then
   echo ""
