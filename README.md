@@ -94,7 +94,7 @@ nano config.yaml
 | NameSilo API Key | [API Manager](https://www.namesilo.com/account/api-manager) → click "Generate" | ~20-30 alphanumeric chars |
 | Vercel Token | [Tokens page](https://vercel.com/account/tokens) → click "Create", scope "Full Account" | ~24+ chars (shown once!) |
 | AdSense Publisher ID | [AdSense](https://adsense.google.com/) → look at URL bar for `pub-XXXXX` → prepend `ca-` | `ca-pub-` + 16 digits |
-| GA Measurement ID | [Analytics](https://analytics.google.com/) → Admin → Data Streams → your stream | `G-XXXXXXXXXX` |
+| GA Measurement ID | [Analytics](https://analytics.google.com/) → **New account:** click "Start measuring" → create account & property → create stream → copy ID; **Existing:** Admin → Data Streams → your stream | `G-XXXXXXXXXX` |
 
 Full step-by-step with click paths: see [Setup Guide](docs/setup-guide.md).
 

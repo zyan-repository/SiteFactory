@@ -57,8 +57,9 @@ The API key lets SiteFactory's scripts automatically manage DNS records for your
 1. Log in to NameSilo
 2. Go to [https://www.namesilo.com/account/api-manager](https://www.namesilo.com/account/api-manager)
 3. If you see "You have not generated any API keys", click the **"Generate"** button
-4. A key appears on the page — it looks like a long string of letters and numbers (approximately 20-30 characters)
-5. **Copy it immediately** and paste into your config.yaml — you may not be able to see the full key again later
+4. **Do NOT check** "Generate key for read-only access" (SiteFactory needs write access to create DNS records)
+5. A key appears on the page — it looks like a long string of letters and numbers (approximately 20-30 characters)
+6. **Copy it immediately** and paste into your config.yaml — you may not be able to see the full key again later
 
 **What it looks like:** A string of ~20-30 alphanumeric characters, e.g., `a1b2c3d4e5f6g7h8i9j0k`
 
@@ -285,7 +286,7 @@ analytics:
 | `domain.namesilo_api_key` | [NameSilo API Manager](https://www.namesilo.com/account/api-manager) → Generate | ~20-30 alphanumeric chars | `a1b2c3d4e5f6...` |
 | `vercel.token` | [Vercel Tokens](https://vercel.com/account/tokens) → Create | ~24+ chars | `pZGwkE1J...` |
 | `adsense.publisher_id` | [AdSense](https://adsense.google.com/) → URL bar or Settings → Account Info | `ca-pub-` + 16 digits | `ca-pub-5531531271065052` |
-| `analytics.google_analytics_id` | [GA](https://analytics.google.com/) → Admin → Data Streams | `G-` + 10 chars | `G-A1B2C3D4E5` |
+| `analytics.google_analytics_id` | [GA](https://analytics.google.com/) → New: click "Start measuring" → create; Existing: Admin → Data Streams | `G-` + 10 chars | `G-A1B2C3D4E5` |
 | `analytics.google_search_console_verification` | [Search Console](https://search.google.com/search-console) → Add property → HTML tag | ~43 chars | `AbCdEf123...` |
 
 ## Step 5: Validate

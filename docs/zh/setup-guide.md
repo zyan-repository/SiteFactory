@@ -61,8 +61,9 @@ API Key 是一串密码，让 SiteFactory 的脚本能自动帮你管理域名�
 1. 登录 NameSilo
 2. 打开 [https://www.namesilo.com/account/api-manager](https://www.namesilo.com/account/api-manager)
 3. 如果页面显示 "You have not generated any API keys"，点击 **"Generate"** 按钮
-4. 页面上会出现一串字符——这就是你的 API Key
-5. **立即复制保存**到 config.yaml（之后可能看不到完整内容了）
+4. **不要勾选** "Generate key for read-only access"（SiteFactory 需要写入 DNS 记录，read-only 权限不够）
+5. 页面上会出现一串字符——这就是你的 API Key
+6. **立即复制保存**到 config.yaml（之后可能看不到完整内容了）
 
 **长什么样：** 大约 20-30 个字母和数字混合的字符串，比如 `a1b2c3d4e5f6g7h8i9j0k`
 
@@ -298,7 +299,7 @@ analytics:
 | `domain.namesilo_api_key` | [NameSilo API 管理](https://www.namesilo.com/account/api-manager) → Generate | 约 20-30 个字母数字 | `a1b2c3d4e5f6...` |
 | `vercel.token` | [Vercel 令牌页](https://vercel.com/account/tokens) → Create | 约 24+ 个字符 | `pZGwkE1J...` |
 | `adsense.publisher_id` | [AdSense](https://adsense.google.com/) → 地址栏或设置→账号信息 | `ca-pub-` + 16 位数字 | `ca-pub-5531531271065052` |
-| `analytics.google_analytics_id` | [GA](https://analytics.google.com/) → 管理 → 数据流 | `G-` + 10 个字符 | `G-A1B2C3D4E5` |
+| `analytics.google_analytics_id` | [GA](https://analytics.google.com/) → 新账号点"开始衡量"创建；已有账号点齿轮 → 数据流 | `G-` + 10 个字符 | `G-A1B2C3D4E5` |
 | `analytics.google_search_console_verification` | [Search Console](https://search.google.com/search-console) → 添加资源 → HTML 标记 | 约 43 个字符 | `AbCdEf123...` |
 
 ## 第五步：验证配置

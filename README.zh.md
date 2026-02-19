@@ -85,7 +85,7 @@ nano config.yaml    # 在终端里编辑（Ctrl+O 保存，Ctrl+X 退出）
 | `domain.namesilo_api_key` | [API 管理页](https://www.namesilo.com/account/api-manager) | 点击 **"Generate"** → 复制出现的字符串 | 约 20-30 个字母数字，如 `a1b2c3...` |
 | `vercel.token` | [令牌页](https://vercel.com/account/tokens) | 点击 **"Create"** → 范围选 "Full Account" → **立即复制**（只显示一次！） | 约 24+ 个字符，如 `pZGwk...` |
 | `adsense.publisher_id` | [AdSense](https://adsense.google.com/) | 登录后看**地址栏** URL 里的 `pub-数字`，前面加 `ca-`；或者：设置 → 账号信息 | `ca-pub-5531531271065052` |
-| `analytics.google_analytics_id` | [Analytics](https://analytics.google.com/) | 管理 → 数据流 → 点击你的数据流 → 右上角**衡量 ID** | `G-A1B2C3D4E5` |
+| `analytics.google_analytics_id` | [Analytics](https://analytics.google.com/) | **新账号：** 点击"开始衡量" → 创建账号和媒体资源 → 创建数据流 → 获取衡量 ID；**已有账号：** 左下角齿轮 → 数据流 → 右上角**衡量 ID** | `G-A1B2C3D4E5` |
 
 > 每一步的详细图文教程见 [配置指南](docs/zh/setup-guide.md)，保证不用查任何资料就能跟着做。
 
