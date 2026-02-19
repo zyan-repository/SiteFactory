@@ -5,7 +5,8 @@
 set -euo pipefail
 
 if ! command -v shellcheck &>/dev/null; then
-  echo "WARNING: shellcheck not installed, skipping lint (brew install shellcheck)"
+  echo "WARNING: shellcheck not installed, skipping lint"
+  echo "  macOS: brew install shellcheck | Linux: apt install shellcheck"
   exit 0
 fi
 

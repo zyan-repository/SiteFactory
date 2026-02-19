@@ -32,7 +32,7 @@
 
 ### 第二步：安装必要工具
 
-Mac 用户在终端里复制粘贴以下命令（每行一个，粘贴后按回车）：
+**macOS 用户**在终端里复制粘贴以下命令：
 
 ```bash
 # 安装 Homebrew（Mac 的软件包管理器，如果已经装了可以跳过）
@@ -41,6 +41,14 @@ Mac 用户在终端里复制粘贴以下命令（每行一个，粘贴后按回�
 # 安装项目所需的工具
 brew install hugo yq jq node git
 ```
+
+**Ubuntu/Debian 用户：**
+
+```bash
+sudo apt-get install hugo yq jq nodejs git
+```
+
+**Windows 用户：** 请先安装 [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install)，然后按照 Linux 说明操作。
 
 > 安装过程中可能会让你输入电脑密码（输入时屏幕不会显示），输完按回车就行。
 

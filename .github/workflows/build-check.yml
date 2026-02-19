@@ -8,7 +8,10 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
 
     steps:
       - name: Checkout
@@ -20,10 +23,12 @@ jobs:
           hugo-version: 'latest'
           extended: true
 
+      - name: Install ShellCheck (Linux)
+        if: runner.os == 'Linux'
+        run: sudo apt-get install -y shellcheck
+
       - name: ShellCheck
-        run: |
-          sudo apt-get install -y shellcheck
-          shellcheck scripts/*.sh scripts/lib/*.sh
+        run: shellcheck scripts/*.sh scripts/lib/*.sh
 
       - name: Build Hugo sites
         run: |

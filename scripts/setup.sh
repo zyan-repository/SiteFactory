@@ -5,6 +5,7 @@
 set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 source "$REPO_ROOT/scripts/lib/logging.sh"
+source "$REPO_ROOT/scripts/lib/platform.sh"
 
 log_info "=== SiteFactory Setup ==="
 
@@ -12,12 +13,12 @@ log_info "=== SiteFactory Setup ==="
 log_step "Checking prerequisites..."
 
 MISSING=()
-command -v /opt/homebrew/bin/hugo &>/dev/null || command -v hugo &>/dev/null || MISSING+=("hugo (brew install hugo)")
-command -v yq &>/dev/null || MISSING+=("yq (brew install yq)")
-command -v jq &>/dev/null || MISSING+=("jq (brew install jq)")
-command -v npx &>/dev/null || MISSING+=("node/npx (brew install node)")
+command -v hugo &>/dev/null || MISSING+=("$(suggest_install hugo hugo)")
+command -v yq &>/dev/null || MISSING+=("$(suggest_install yq yq)")
+command -v jq &>/dev/null || MISSING+=("$(suggest_install jq jq)")
+command -v npx &>/dev/null || MISSING+=("$(suggest_install node/npx node)")
 command -v git &>/dev/null || MISSING+=("git")
-command -v shellcheck &>/dev/null || MISSING+=("shellcheck (brew install shellcheck)")
+command -v shellcheck &>/dev/null || MISSING+=("$(suggest_install shellcheck shellcheck)")
 
 if [[ ${#MISSING[@]} -gt 0 ]]; then
   log_error "Missing required tools:"
@@ -25,7 +26,15 @@ if [[ ${#MISSING[@]} -gt 0 ]]; then
     echo "  - $tool"
   done
   echo ""
-  log_info "Install all with: brew install hugo yq jq node"
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    log_info "Install all with: brew install hugo yq jq node shellcheck"
+  elif command -v apt-get &>/dev/null; then
+    log_info "Install all with: sudo apt-get install hugo yq jq nodejs shellcheck"
+  elif command -v dnf &>/dev/null; then
+    log_info "Install all with: sudo dnf install hugo yq jq nodejs ShellCheck"
+  else
+    log_info "Install the missing tools using your system package manager."
+  fi
   exit 1
 fi
 log_ok "All prerequisites installed"
@@ -110,7 +119,12 @@ fi
 
 # 6. Hugo version
 log_step "Checking Hugo..."
-HUGO_VERSION=$(/opt/homebrew/bin/hugo version 2>/dev/null || hugo version 2>/dev/null || echo "unknown")
+HUGO_CMD=$(find_hugo)
+if [[ -n "$HUGO_CMD" ]]; then
+  HUGO_VERSION=$($HUGO_CMD version 2>/dev/null || echo "unknown")
+else
+  HUGO_VERSION="not found"
+fi
 log_ok "Hugo: $HUGO_VERSION"
 
 log_ok "=== Setup Complete ==="

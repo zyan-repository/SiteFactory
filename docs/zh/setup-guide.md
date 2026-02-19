@@ -27,6 +27,8 @@
 
 打开终端（按 `Command + 空格`，输入 `Terminal`，回车），然后逐行执行：
 
+### macOS
+
 ```bash
 # 安装 Homebrew（Mac 的软件包管理器）
 # 如果提示"Already installed"说明已经装了，跳过即可
@@ -36,7 +38,17 @@
 brew install hugo yq jq node git
 ```
 
-> 安装时如果让你输入密码，输入你的 Mac 登录密码（输入时屏幕不会显示任何字符，这是正常的），输完按回车。
+### Ubuntu/Debian
+
+```bash
+sudo apt-get install hugo yq jq nodejs git
+```
+
+### Windows
+
+请先安装 [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install)，然后按照 Ubuntu 说明操作。
+
+> 安装时如果让你输入密码，输入你的登录密码（输入时屏幕不会显示任何字符，这是正常的），输完按回车。
 
 ### 验证安装
 
@@ -175,11 +187,15 @@ Hugo 可能不在系统路径里。试试：
 
 ```bash
 # 查看 Hugo 的安装位置
-/opt/homebrew/bin/hugo version
+which hugo || find /usr -name hugo 2>/dev/null
 
-# 如果上面的命令可以运行，把路径加到你的 shell 配置
+# macOS (Homebrew)：如果 Hugo 在 /opt/homebrew/bin
 echo 'export PATH="/opt/homebrew/bin:$PATH"' >> ~/.zshrc
 source ~/.zshrc
+
+# Linux：重新安装
+sudo apt-get install hugo  # Ubuntu/Debian
+sudo dnf install hugo      # Fedora
 ```
 
 ### Vercel Token 无效

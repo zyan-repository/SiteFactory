@@ -13,7 +13,7 @@ if [[ ! -f "$CONFIG_FILE" ]]; then
 fi
 
 if ! command -v yq &>/dev/null; then
-  echo "ERROR: yq is required. Install: brew install yq"
+  echo "ERROR: yq is required. Install: brew install yq (macOS) / apt install yq (Linux)"
   exit 1
 fi
 

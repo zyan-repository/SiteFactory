@@ -99,7 +99,7 @@
     },
     {
       "parameters": {
-        "command": "=cd /Users/zyan/work/SiteFactory && ./scripts/new-site.sh \"{{ $json.name }}\" \"{{ $json.title }}\" \"{{ $json.description }}\" 2>&1",
+        "command": "=cd {{ $env.SF_PROJECT_ROOT }} && ./scripts/new-site.sh \"{{ $json.name }}\" \"{{ $json.title }}\" \"{{ $json.description }}\" 2>&1",
         "options": {
           "timeout": 60000
         }
@@ -112,7 +112,7 @@
     },
     {
       "parameters": {
-        "command": "=cd /Users/zyan/work/SiteFactory && ./scripts/fork-site.sh \"{{ $json.source }}\" \"{{ $json.name }}\" \"{{ $json.title }}\" \"{{ $json.description }}\" 2>&1",
+        "command": "=cd {{ $env.SF_PROJECT_ROOT }} && ./scripts/fork-site.sh \"{{ $json.source }}\" \"{{ $json.name }}\" \"{{ $json.title }}\" \"{{ $json.description }}\" 2>&1",
         "options": {
           "timeout": 120000
         }

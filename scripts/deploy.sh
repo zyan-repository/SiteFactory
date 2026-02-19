@@ -6,6 +6,7 @@ set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 source "$REPO_ROOT/scripts/lib/config.sh"
 source "$REPO_ROOT/scripts/lib/logging.sh"
+source "$REPO_ROOT/scripts/lib/platform.sh"
 
 SITE_NAME="${1:?Usage: deploy.sh <site-name> [--preview]}"
 PREVIEW_FLAG="${2:-}"
@@ -28,7 +29,11 @@ fi
 DEPLOY_DIR="$SITE_DIR"
 if [[ "$SITE_TYPE" == "hugo" ]]; then
   log_step "Building Hugo site '$SITE_NAME'..."
-  HUGO_CMD=$(/opt/homebrew/bin/hugo version >/dev/null 2>&1 && echo "/opt/homebrew/bin/hugo" || echo "hugo")
+  HUGO_CMD=$(find_hugo)
+  if [[ -z "$HUGO_CMD" ]]; then
+    log_error "Hugo not found. Install Hugo and ensure it is in your PATH."
+    exit 1
+  fi
   $HUGO_CMD -s "$SITE_DIR" --gc --minify --quiet
   DEPLOY_DIR="$SITE_DIR/public"
   log_ok "Build successful"

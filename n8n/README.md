@@ -219,11 +219,14 @@ Set the `SF_ALERT_WEBHOOK_URL` environment variable, or edit the "Send Alert" no
 
 ## Path Configuration
 
-The workflows reference the SiteFactory repository at `/Users/zyan/work/SiteFactory`. If your repository is at a different path, update the Execute Command nodes in each workflow:
+The workflows use the `SF_PROJECT_ROOT` environment variable to locate the SiteFactory repository.
 
-1. Open the workflow in n8n
-2. Click each "Execute Command" node
-3. Update the path from `/Users/zyan/work/SiteFactory` to your actual path
+Set this variable in your n8n environment:
+- **n8n Docker**: Add `-e SF_PROJECT_ROOT=/path/to/SiteFactory` to your `docker run` command
+- **n8n Desktop**: Set the environment variable in your shell before starting n8n
+- **n8n Cloud**: Configure in n8n Settings > Environment Variables
+
+If `SF_PROJECT_ROOT` is not set, workflow Execute Command nodes will fail with a path error.
 
 ## Troubleshooting
 

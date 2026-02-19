@@ -13,6 +13,7 @@
 set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 source "$REPO_ROOT/scripts/lib/logging.sh"
+source "$REPO_ROOT/scripts/lib/platform.sh"
 source "$REPO_ROOT/scripts/lib/inject.sh"
 
 REPO_URL="${1:?Usage: fork-site.sh <github-url> <site-name> [\"title\"] [\"description\"]}"
@@ -89,7 +90,7 @@ SHARED_DIR="$REPO_ROOT/sites/_shared"
 for page in privacy-policy.html about.html; do
   if [[ -f "$SHARED_DIR/$page" ]]; then
     cp "$SHARED_DIR/$page" "$SITE_DIR/$page"
-    sed -i '' \
+    sed_inplace \
       -e "s|{{SITE_TITLE}}|${SITE_TITLE}|g" \
       -e "s|{{AUTHOR_EMAIL}}|${SF_AUTHOR_EMAIL}|g" \
       -e "s|{{DATE}}|${DATE}|g" \

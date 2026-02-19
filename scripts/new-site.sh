@@ -11,6 +11,7 @@
 set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 source "$REPO_ROOT/scripts/lib/logging.sh"
+source "$REPO_ROOT/scripts/lib/platform.sh"
 
 SITE_NAME="${1:?Usage: new-site.sh <site-name> \"<title>\" \"<description>\" [language]}"
 SITE_TITLE="${2:?Please provide a site title}"
@@ -56,7 +57,7 @@ log_step "Configuring site..."
 PUB_NUMERIC="${SF_ADSENSE_PUB_ID#ca-pub-}"
 
 # Replace values in hugo.toml
-sed -i '' \
+sed_inplace \
   -e "s|SITE_NAME.example.com|${SITE_NAME}.${SF_DOMAIN}|g" \
   -e "s|languageCode = \"en\"|languageCode = \"${SITE_LANG}\"|g" \
   -e "s|title = \"Site Title\"|title = \"${SITE_TITLE}\"|g" \
@@ -70,7 +71,7 @@ sed -i '' \
 
 # Replace placeholders in content files
 find "$SITE_DIR/content" -name "*.md" -type f | while read -r file; do
-  sed -i '' \
+  sed_inplace \
     -e "s|{{SITE_TITLE}}|${SITE_TITLE}|g" \
     -e "s|{{SITE_NAME}}|${SITE_NAME}|g" \
     -e "s|{{SITE_DESCRIPTION}}|${SITE_DESC}|g" \
@@ -82,7 +83,7 @@ done
 
 # Replace in ads.txt
 if [[ -n "$PUB_NUMERIC" ]]; then
-  sed -i '' "s|{{ADSENSE_PUB_ID_NUMERIC}}|${PUB_NUMERIC}|g" "$SITE_DIR/static/ads.txt"
+  sed_inplace "s|{{ADSENSE_PUB_ID_NUMERIC}}|${PUB_NUMERIC}|g" "$SITE_DIR/static/ads.txt"
 else
   echo "# AdSense ads.txt - configure publisher ID in config.yaml" > "$SITE_DIR/static/ads.txt"
 fi
@@ -100,7 +101,12 @@ EOF
 
 # Verify build
 log_step "Verifying build..."
-if /opt/homebrew/bin/hugo -s "$SITE_DIR" --gc --minify --quiet 2>/dev/null; then
+HUGO_CMD=$(find_hugo)
+if [[ -z "$HUGO_CMD" ]]; then
+  log_error "Hugo not found. Install Hugo and ensure it is in your PATH."
+  exit 1
+fi
+if $HUGO_CMD -s "$SITE_DIR" --gc --minify --quiet 2>/dev/null; then
   log_ok "Site '$SITE_NAME' created successfully at $SITE_DIR"
   echo ""
   echo "  Preview:  hugo server -s sites/$SITE_NAME"

@@ -55,9 +55,17 @@ Both paths produce sites that:
 
 ### Prerequisites
 
+**macOS:**
 ```bash
 brew install hugo yq jq node
 ```
+
+**Ubuntu/Debian:**
+```bash
+sudo apt-get install hugo yq jq nodejs
+```
+
+**Windows:** Use [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install) with Ubuntu, then follow the Linux instructions above.
 
 ### Setup (One Time)
 

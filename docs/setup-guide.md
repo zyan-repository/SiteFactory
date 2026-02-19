@@ -21,7 +21,7 @@ Before starting, prepare these accounts and credentials:
 
 ## Step 1: Install Tools
 
-Open Terminal and run:
+### macOS
 
 ```bash
 # Install Homebrew (if not already installed)
@@ -30,6 +30,22 @@ Open Terminal and run:
 # Install required tools
 brew install hugo yq jq node git
 ```
+
+### Ubuntu/Debian
+
+```bash
+sudo apt-get install hugo yq jq nodejs git
+```
+
+### Fedora/RHEL
+
+```bash
+sudo dnf install hugo yq jq nodejs git
+```
+
+### Windows
+
+Install [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install) with Ubuntu, then follow the Ubuntu instructions above.
 
 Verify everything installed:
 
@@ -194,14 +210,16 @@ Run Lighthouse audits:
 Hugo might not be in your PATH. Try:
 
 ```bash
-/opt/homebrew/bin/hugo version
-```
+# Check where Hugo is installed
+which hugo || find /usr -name hugo 2>/dev/null
 
-If that works, add to your shell config:
-
-```bash
+# macOS (Homebrew): if Hugo is in /opt/homebrew/bin
 echo 'export PATH="/opt/homebrew/bin:$PATH"' >> ~/.zshrc
 source ~/.zshrc
+
+# Linux: reinstall via package manager
+sudo apt-get install hugo  # Ubuntu/Debian
+sudo dnf install hugo      # Fedora
 ```
 
 ### "Vercel token invalid"

@@ -122,7 +122,7 @@
     },
     {
       "parameters": {
-        "command": "=SITE_DIR=\"/Users/zyan/work/SiteFactory/sites/{{ $json.site_name }}\"\nPOST_DIR=\"$SITE_DIR/content/posts\"\nFILE_PATH=\"$POST_DIR/{{ $json.slug }}.md\"\n\n# Verify site exists\nif [ ! -d \"$SITE_DIR\" ]; then\n  echo \"ERROR: Site directory not found: $SITE_DIR\" >&2\n  exit 1\nfi\n\n# Create posts directory if needed\nmkdir -p \"$POST_DIR\"\n\n# Write the markdown file\ncat > \"$FILE_PATH\" << 'CONTENT_EOF'\n{{ $json.markdown }}\nCONTENT_EOF\n\necho \"Written to: $FILE_PATH\"\necho \"File size: $(wc -c < \"$FILE_PATH\") bytes\"",
+        "command": "=SITE_DIR=\"{{ $env.SF_PROJECT_ROOT }}/sites/{{ $json.site_name }}\"\nPOST_DIR=\"$SITE_DIR/content/posts\"\nFILE_PATH=\"$POST_DIR/{{ $json.slug }}.md\"\n\n# Verify site exists\nif [ ! -d \"$SITE_DIR\" ]; then\n  echo \"ERROR: Site directory not found: $SITE_DIR\" >&2\n  exit 1\nfi\n\n# Create posts directory if needed\nmkdir -p \"$POST_DIR\"\n\n# Write the markdown file\ncat > \"$FILE_PATH\" << 'CONTENT_EOF'\n{{ $json.markdown }}\nCONTENT_EOF\n\necho \"Written to: $FILE_PATH\"\necho \"File size: $(wc -c < \"$FILE_PATH\") bytes\"",
         "options": {
           "timeout": 10000
         }
@@ -135,7 +135,7 @@
     },
     {
       "parameters": {
-        "command": "=cd /Users/zyan/work/SiteFactory && git add \"sites/{{ $('Parse Claude Response').first().json.site_name }}/content/posts/{{ $('Parse Claude Response').first().json.slug }}.md\" && git commit -m \"feat(content): add article '{{ $('Parse Claude Response').first().json.slug }}' to {{ $('Parse Claude Response').first().json.site_name }}\" && git push 2>&1 || echo 'GIT_PUSH_SKIPPED: No remote configured or push failed (site still created locally)'",
+        "command": "=cd {{ $env.SF_PROJECT_ROOT }} && git add \"sites/{{ $('Parse Claude Response').first().json.site_name }}/content/posts/{{ $('Parse Claude Response').first().json.slug }}.md\" && git commit -m \"feat(content): add article '{{ $('Parse Claude Response').first().json.slug }}' to {{ $('Parse Claude Response').first().json.site_name }}\" && git push 2>&1 || echo 'GIT_PUSH_SKIPPED: No remote configured or push failed (site still created locally)'",
         "options": {
           "timeout": 30000
         }

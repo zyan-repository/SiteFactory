@@ -5,11 +5,18 @@
 set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 source "$REPO_ROOT/scripts/lib/logging.sh"
+source "$REPO_ROOT/scripts/lib/platform.sh"
 
 SITES_DIR="$REPO_ROOT/sites"
 FAILED=()
 SUCCEEDED=0
 SKIPPED=0
+
+HUGO_CMD=$(find_hugo)
+if [[ -z "$HUGO_CMD" ]]; then
+  log_error "Hugo not found. Install Hugo and ensure it is in your PATH."
+  exit 1
+fi
 
 log_info "=== Building all sites ==="
 
@@ -36,7 +43,7 @@ for site_dir in "$SITES_DIR"/*/; do
   fi
 
   log_info "Building: $site_name"
-  if /opt/homebrew/bin/hugo -s "$site_dir" --gc --minify --quiet 2>/dev/null; then
+  if $HUGO_CMD -s "$site_dir" --gc --minify --quiet 2>/dev/null; then
     log_ok "  OK"
     ((SUCCEEDED++))
   else

@@ -20,7 +20,7 @@
     },
     {
       "parameters": {
-        "command": "cd /Users/zyan/work/SiteFactory && ./scripts/generate-dashboard.sh 2>&1",
+        "command": "cd {{ $env.SF_PROJECT_ROOT }} && ./scripts/generate-dashboard.sh 2>&1",
         "options": {
           "timeout": 120000
         }
@@ -33,7 +33,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Parse the dashboard generation output and check for issues\nconst result = $input.first().json;\nconst exitCode = result.exitCode;\nconst stdout = result.stdout || '';\nconst stderr = result.stderr || '';\n\nconst output = {\n  dashboard_generated: exitCode === 0,\n  exit_code: exitCode,\n  output: stdout,\n  errors: stderr,\n  timestamp: new Date().toISOString()\n};\n\n// Try to read the metrics file for site count\ntry {\n  const fs = require('fs');\n  const metricsPath = '/Users/zyan/work/SiteFactory/dashboard/data/metrics.json';\n  if (fs.existsSync(metricsPath)) {\n    const metrics = JSON.parse(fs.readFileSync(metricsPath, 'utf8'));\n    output.total_sites = metrics.sites ? metrics.sites.length : 0;\n    output.domain = metrics.domain || 'unknown';\n    output.generated_at = metrics.generated_at;\n\n    // Check monitors for downtime\n    const monitors = metrics.monitors || [];\n    const downSites = monitors.filter(m => m.status !== 2);\n    output.monitors_total = monitors.length;\n    output.monitors_down = downSites.length;\n    output.down_sites = downSites.map(m => ({\n      name: m.friendly_name,\n      status: m.status,\n      url: m.url\n    }));\n    output.has_issues = downSites.length > 0;\n  }\n} catch (e) {\n  output.metrics_read_error = e.message;\n}\n\nreturn [{ json: output }];"
+        "jsCode": "// Parse the dashboard generation output and check for issues\nconst result = $input.first().json;\nconst exitCode = result.exitCode;\nconst stdout = result.stdout || '';\nconst stderr = result.stderr || '';\n\nconst output = {\n  dashboard_generated: exitCode === 0,\n  exit_code: exitCode,\n  output: stdout,\n  errors: stderr,\n  timestamp: new Date().toISOString()\n};\n\n// Try to read the metrics file for site count\ntry {\n  const fs = require('fs');\n  const metricsPath = '' + (process.env.SF_PROJECT_ROOT || '') + '/dashboard/data/metrics.json';\n  if (fs.existsSync(metricsPath)) {\n    const metrics = JSON.parse(fs.readFileSync(metricsPath, 'utf8'));\n    output.total_sites = metrics.sites ? metrics.sites.length : 0;\n    output.domain = metrics.domain || 'unknown';\n    output.generated_at = metrics.generated_at;\n\n    // Check monitors for downtime\n    const monitors = metrics.monitors || [];\n    const downSites = monitors.filter(m => m.status !== 2);\n    output.monitors_total = monitors.length;\n    output.monitors_down = downSites.length;\n    output.down_sites = downSites.map(m => ({\n      name: m.friendly_name,\n      status: m.status,\n      url: m.url\n    }));\n    output.has_issues = downSites.length > 0;\n  }\n} catch (e) {\n  output.metrics_read_error = e.message;\n}\n\nreturn [{ json: output }];"
       },
       "id": "c1b2c3d4-0003-4000-8000-000000000003",
       "name": "Parse Dashboard Results",
