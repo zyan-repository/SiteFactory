@@ -362,7 +362,7 @@ CI installs Hugo via direct download (not third-party actions). When upgrading H
 
 Current asset naming convention (Hugo v0.103.0+):
 - Linux: `hugo_extended_{version}_linux-amd64.tar.gz`
-- macOS: `hugo_extended_{version}_darwin-universal.tar.gz`
+- macOS: `hugo_extended_{version}_darwin-universal.pkg` (only `.pkg` — no `.tar.gz` for extended macOS builds)
 
 **Do NOT use `peaceiris/actions-hugo`** — it is unmaintained and breaks with Hugo v0.103.0+ due to archive naming changes.
 

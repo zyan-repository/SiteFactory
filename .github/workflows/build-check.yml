@@ -22,15 +22,14 @@ jobs:
           HUGO_VERSION: '0.156.0'
         run: |
           if [ "$RUNNER_OS" = "Linux" ]; then
-            wget -q "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.tar.gz" -O hugo.tar.gz
+            curl -sL "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.tar.gz" -o hugo.tar.gz
             tar -xzf hugo.tar.gz
             sudo mv hugo /usr/local/bin/
             rm hugo.tar.gz
           elif [ "$RUNNER_OS" = "macOS" ]; then
-            wget -q "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_darwin-universal.tar.gz" -O hugo.tar.gz
-            tar -xzf hugo.tar.gz
-            sudo mv hugo /usr/local/bin/
-            rm hugo.tar.gz
+            curl -sL "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_darwin-universal.pkg" -o hugo.pkg
+            sudo installer -pkg hugo.pkg -target /
+            rm hugo.pkg
           fi
           hugo version
 
