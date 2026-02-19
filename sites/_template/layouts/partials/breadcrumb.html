@@ -1,0 +1,42 @@
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="{{ .Site.BaseURL }}">Home</a>
+  {{ range .Ancestors.Reverse }}
+    {{ if ne .Kind "home" }}
+    &rsaquo; <a href="{{ .Permalink }}">{{ .Title }}</a>
+    {{ end }}
+  {{ end }}
+  &rsaquo; <span>{{ .Title }}</span>
+</nav>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "{{ .Site.BaseURL }}"
+    }
+    {{ $pos := 1 }}
+    {{ range .Ancestors.Reverse }}
+    {{ if ne .Kind "home" }}
+    {{ $pos = add $pos 1 }}
+    ,{
+      "@type": "ListItem",
+      "position": {{ $pos }},
+      "name": "{{ .Title }}",
+      "item": "{{ .Permalink }}"
+    }
+    {{ end }}
+    {{ end }}
+    {{ $pos = add $pos 1 }}
+    ,{
+      "@type": "ListItem",
+      "position": {{ $pos }},
+      "name": "{{ .Title }}"
+    }
+  ]
+}
+</script>

@@ -1,0 +1,23 @@
+[home]
+other = "Home"
+
+[posts]
+other = "Posts"
+
+[about]
+other = "About"
+
+[contact]
+other = "Contact"
+
+[privacy]
+other = "Privacy Policy"
+
+[terms]
+other = "Terms of Service"
+
+[readMore]
+other = "Read more"
+
+[postedOn]
+other = "Posted on"

@@ -1,0 +1,293 @@
+{
+  "name": "SiteFactory - Site Health Check",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 0,
+              "triggerAtMinute": 0
+            },
+            {
+              "triggerAtHour": 6,
+              "triggerAtMinute": 0
+            },
+            {
+              "triggerAtHour": 12,
+              "triggerAtMinute": 0
+            },
+            {
+              "triggerAtHour": 18,
+              "triggerAtMinute": 0
+            }
+          ]
+        }
+      },
+      "id": "d1b2c3d4-0004-4000-8000-000000000001",
+      "name": "Cron - Every 6 Hours",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [220, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// List all sites from the sites/ directory and build URLs\nconst fs = require('fs');\nconst path = require('path');\nconst yaml = require('js-yaml');\n\nconst sitesDir = '/Users/zyan/work/SiteFactory/sites';\nconst sites = [];\n\ntry {\n  const entries = fs.readdirSync(sitesDir, { withFileTypes: true });\n\n  for (const entry of entries) {\n    if (!entry.isDirectory()) continue;\n    if (entry.name.startsWith('_')) continue; // Skip _template, _shared\n\n    const siteYamlPath = path.join(sitesDir, entry.name, 'site.yaml');\n    if (!fs.existsSync(siteYamlPath)) continue;\n\n    let siteConfig = {};\n    try {\n      const content = fs.readFileSync(siteYamlPath, 'utf8');\n      // Simple YAML parsing for key: value pairs\n      content.split('\\n').forEach(line => {\n        const match = line.match(/^(\\w+):\\s*(.+)$/);\n        if (match) {\n          siteConfig[match[1]] = match[2].replace(/^\"|\"$/g, '');\n        }\n      });\n    } catch (e) {\n      // Skip sites with unreadable config\n      continue;\n    }\n\n    sites.push({\n      name: entry.name,\n      title: siteConfig.title || entry.name,\n      type: siteConfig.type || 'unknown',\n      // Domain is read from config.yaml via environment variable\n      // Falls back to example.com if not set\n      url: `https://${entry.name}.${$env.SF_DOMAIN || 'example.com'}`\n    });\n  }\n} catch (e) {\n  return [{ json: { error: `Failed to read sites directory: ${e.message}`, sites: [] } }];\n}\n\nif (sites.length === 0) {\n  return [{ json: { error: 'No sites found', sites: [] } }];\n}\n\n// Return each site as a separate item for SplitInBatches\nreturn sites.map(site => ({ json: site }));"
+      },
+      "id": "d1b2c3d4-0004-4000-8000-000000000002",
+      "name": "List All Sites",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "batchSize": 5,
+        "options": {}
+      },
+      "id": "d1b2c3d4-0004-4000-8000-000000000003",
+      "name": "SplitInBatches",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [700, 300]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $json.url }}",
+        "options": {
+          "timeout": 15000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": true,
+              "maxRedirects": 3
+            }
+          }
+        },
+        "onError": "continueRegularOutput"
+      },
+      "id": "d1b2c3d4-0004-4000-8000-000000000004",
+      "name": "HTTP Health Check",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [940, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Process health check result for this site\nconst input = $input.first().json;\nconst siteData = $('SplitInBatches').first().json;\n\nconst now = new Date().toISOString();\nlet status = 'unknown';\nlet responseTime = null;\nlet statusCode = null;\nlet error = null;\n\n// Check if the HTTP request succeeded\nif (input.statusCode) {\n  statusCode = input.statusCode;\n  status = (statusCode >= 200 && statusCode < 400) ? 'healthy' : 'unhealthy';\n} else if (input.error || input.message) {\n  status = 'down';\n  error = input.error || input.message || 'Request failed';\n}\n\nreturn [{\n  json: {\n    name: siteData.name,\n    title: siteData.title,\n    type: siteData.type,\n    url: siteData.url,\n    status: status,\n    status_code: statusCode,\n    error: error,\n    checked_at: now\n  }\n}];"
+      },
+      "id": "d1b2c3d4-0004-4000-8000-000000000005",
+      "name": "Process Health Result",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1180, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Aggregate all health check results\nconst items = $input.all();\nconst results = items.map(item => item.json);\n\nconst healthy = results.filter(r => r.status === 'healthy');\nconst unhealthy = results.filter(r => r.status !== 'healthy');\n\nreturn [{\n  json: {\n    total: results.length,\n    healthy_count: healthy.length,\n    unhealthy_count: unhealthy.length,\n    has_failures: unhealthy.length > 0,\n    results: results,\n    unhealthy_sites: unhealthy,\n    checked_at: new Date().toISOString()\n  }\n}];"
+      },
+      "id": "d1b2c3d4-0004-4000-8000-000000000006",
+      "name": "Aggregate Results",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1460, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "condition-failures",
+              "leftValue": "={{ $json.has_failures }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "d1b2c3d4-0004-4000-8000-000000000007",
+      "name": "Any Failures?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1700, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.SF_ALERT_WEBHOOK_URL || 'https://hooks.example.com/alert' }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"text\": \"SiteFactory Health Alert: {{ $json.unhealthy_count }} of {{ $json.total }} sites have issues!\",\n  \"sites_down\": {{ JSON.stringify($json.unhealthy_sites) }},\n  \"checked_at\": \"{{ $json.checked_at }}\"\n}",
+        "options": {
+          "timeout": 10000
+        }
+      },
+      "id": "d1b2c3d4-0004-4000-8000-000000000008",
+      "name": "Send Alert",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1960, 200]
+    },
+    {
+      "parameters": {
+        "command": "=cat > /Users/zyan/work/SiteFactory/dashboard/data/health.json << 'HEALTH_EOF'\n{{ JSON.stringify($json, null, 2) }}\nHEALTH_EOF\necho \"Health data updated at $(date -u +\"%Y-%m-%dT%H:%M:%SZ\")\"",
+        "options": {
+          "timeout": 5000
+        }
+      },
+      "id": "d1b2c3d4-0004-4000-8000-000000000009",
+      "name": "Update Health Data",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [1960, 420]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Log healthy status\nreturn [{ json: { status: 'all_healthy', message: 'All sites are healthy', checked_at: new Date().toISOString() } }];"
+      },
+      "id": "d1b2c3d4-0004-4000-8000-000000000010",
+      "name": "Log - All Healthy",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1960, 420]
+    }
+  ],
+  "connections": {
+    "Cron - Every 6 Hours": {
+      "main": [
+        [
+          {
+            "node": "List All Sites",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List All Sites": {
+      "main": [
+        [
+          {
+            "node": "SplitInBatches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SplitInBatches": {
+      "main": [
+        [
+          {
+            "node": "HTTP Health Check",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Aggregate Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Health Check": {
+      "main": [
+        [
+          {
+            "node": "Process Health Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Health Result": {
+      "main": [
+        [
+          {
+            "node": "SplitInBatches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate Results": {
+      "main": [
+        [
+          {
+            "node": "Any Failures?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Any Failures?": {
+      "main": [
+        [
+          {
+            "node": "Send Alert",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Log - All Healthy",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Alert": {
+      "main": [
+        [
+          {
+            "node": "Update Health Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log - All Healthy": {
+      "main": [
+        [
+          {
+            "node": "Update Health Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "SiteFactory"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2026-02-19T00:00:00.000Z",
+  "versionId": "1"
+}

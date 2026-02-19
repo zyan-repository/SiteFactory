@@ -1,0 +1,53 @@
+# =============================================================================
+# SiteFactory Configuration
+# Copy this file to config.yaml and fill in your values.
+# NEVER commit config.yaml to git (it is in .gitignore).
+# =============================================================================
+
+# --- Domain & DNS ---
+domain:
+  # Your main domain purchased from NameSilo
+  name: "example.com"
+  namesilo_api_key: "YOUR_NAMESILO_API_KEY"
+
+# --- Hosting (Vercel) ---
+vercel:
+  token: "YOUR_VERCEL_TOKEN"
+  team_id: ""  # Leave empty for personal account (Hobby plan)
+
+# --- Monetization (Google AdSense) ---
+adsense:
+  publisher_id: "ca-pub-XXXXXXXXXXXXXXXX"
+  # Set to false to disable ads during development
+  enabled: true
+
+# --- Analytics (Google) ---
+analytics:
+  google_analytics_id: "G-XXXXXXXXXX"
+  google_search_console_verification: "XXXXXXXXXXXXXX"
+
+# --- Content Generation (Optional) ---
+claude:
+  api_key: "sk-ant-XXXXXXXX"
+  model: "claude-sonnet-4-20250514"
+  # Maximum articles to generate per batch
+  batch_size: 5
+
+# --- Monitoring ---
+monitoring:
+  uptimerobot_api_key: "YOUR_UPTIMEROBOT_API_KEY"
+
+# --- n8n (Workflow Automation, Optional) ---
+n8n:
+  base_url: "http://localhost:5678"
+  webhooks:
+    new_site: ""
+    content_generation: ""
+
+# --- Site Defaults ---
+defaults:
+  language: "en"
+  timezone: "America/New_York"
+  author:
+    name: "Your Name"
+    email: "you@example.com"

@@ -1,0 +1,257 @@
+{
+  "name": "SiteFactory - New Site Pipeline",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "new-site",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "a1b2c3d4-0001-4000-8000-000000000001",
+      "name": "Webhook - New Site",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [220, 300],
+      "webhookId": "new-site"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Validate incoming request for new site creation\nconst body = $input.first().json.body;\n\nconst errors = [];\n\n// Required fields\nif (!body.type || !['hugo', 'fork'].includes(body.type)) {\n  errors.push('\"type\" must be \"hugo\" or \"fork\"');\n}\nif (!body.name || typeof body.name !== 'string') {\n  errors.push('\"name\" is required');\n}\nif (!body.title || typeof body.title !== 'string') {\n  errors.push('\"title\" is required');\n}\n\n// Validate site name format: lowercase alphanumeric with hyphens\nif (body.name && !/^[a-z0-9][a-z0-9-]*[a-z0-9]$/.test(body.name)) {\n  errors.push('\"name\" must be lowercase alphanumeric with hyphens (e.g. \"tech-tips\")');\n}\n\n// For fork type, source URL is required\nif (body.type === 'fork' && !body.source) {\n  errors.push('\"source\" (GitHub URL) is required for fork type');\n}\n\nif (body.type === 'fork' && body.source && !/^https:\\/\\/github\\.com\\//.test(body.source)) {\n  errors.push('\"source\" must be a valid GitHub URL (https://github.com/...)');\n}\n\nif (errors.length > 0) {\n  return [{\n    json: {\n      valid: false,\n      errors: errors,\n      statusCode: 400\n    }\n  }];\n}\n\nreturn [{\n  json: {\n    valid: true,\n    type: body.type,\n    name: body.name,\n    title: body.title,\n    description: body.description || '',\n    source: body.source || '',\n    statusCode: 200\n  }\n}];"
+      },
+      "id": "a1b2c3d4-0001-4000-8000-000000000002",
+      "name": "Validate Input",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "condition-valid",
+              "leftValue": "={{ $json.valid }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "a1b2c3d4-0001-4000-8000-000000000003",
+      "name": "Is Valid?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [700, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ success: false, errors: $json.errors }) }}",
+        "options": {
+          "responseCode": 400
+        }
+      },
+      "id": "a1b2c3d4-0001-4000-8000-000000000004",
+      "name": "Respond Error - Validation",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [940, 480]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "condition-type",
+              "leftValue": "={{ $json.type }}",
+              "rightValue": "hugo",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "a1b2c3d4-0001-4000-8000-000000000005",
+      "name": "Hugo or Fork?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [940, 180]
+    },
+    {
+      "parameters": {
+        "command": "=cd /Users/zyan/work/SiteFactory && ./scripts/new-site.sh \"{{ $json.name }}\" \"{{ $json.title }}\" \"{{ $json.description }}\" 2>&1",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "id": "a1b2c3d4-0001-4000-8000-000000000006",
+      "name": "Run new-site.sh",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [1200, 80]
+    },
+    {
+      "parameters": {
+        "command": "=cd /Users/zyan/work/SiteFactory && ./scripts/fork-site.sh \"{{ $json.source }}\" \"{{ $json.name }}\" \"{{ $json.title }}\" \"{{ $json.description }}\" 2>&1",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "id": "a1b2c3d4-0001-4000-8000-000000000007",
+      "name": "Run fork-site.sh",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [1200, 280]
+    },
+    {
+      "parameters": {
+        "jsCode": "const item = $input.first().json;\nconst exitCode = item.exitCode;\nconst stdout = item.stdout || '';\nconst stderr = item.stderr || '';\n\n// Retrieve original request data from earlier node\nconst validationData = $('Is Valid?').first().json;\nconst siteName = validationData.name;\nconst siteType = validationData.type;\n\nif (exitCode !== 0) {\n  return [{\n    json: {\n      success: false,\n      error: stderr || stdout || 'Script execution failed',\n      exitCode: exitCode,\n      statusCode: 500\n    }\n  }];\n}\n\nreturn [{\n  json: {\n    success: true,\n    site_name: siteName,\n    site_type: siteType,\n    site_directory: `sites/${siteName}`,\n    message: `Site '${siteName}' created successfully`,\n    output: stdout,\n    statusCode: 200\n  }\n}];"
+      },
+      "id": "a1b2c3d4-0001-4000-8000-000000000008",
+      "name": "Format Result",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1460, 180]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ success: $json.success, site_name: $json.site_name, site_type: $json.site_type, site_directory: $json.site_directory, message: $json.message, error: $json.error || undefined }) }}",
+        "options": {
+          "responseCode": "={{ $json.statusCode }}"
+        }
+      },
+      "id": "a1b2c3d4-0001-4000-8000-000000000009",
+      "name": "Respond Result",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1700, 180]
+    }
+  ],
+  "connections": {
+    "Webhook - New Site": {
+      "main": [
+        [
+          {
+            "node": "Validate Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Input": {
+      "main": [
+        [
+          {
+            "node": "Is Valid?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Valid?": {
+      "main": [
+        [
+          {
+            "node": "Hugo or Fork?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond Error - Validation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hugo or Fork?": {
+      "main": [
+        [
+          {
+            "node": "Run new-site.sh",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Run fork-site.sh",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run new-site.sh": {
+      "main": [
+        [
+          {
+            "node": "Format Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run fork-site.sh": {
+      "main": [
+        [
+          {
+            "node": "Format Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Result": {
+      "main": [
+        [
+          {
+            "node": "Respond Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "SiteFactory"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2026-02-19T00:00:00.000Z",
+  "versionId": "1"
+}

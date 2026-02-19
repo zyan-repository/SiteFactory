@@ -1,0 +1,70 @@
+# =============================================================================
+# SiteFactory .gitignore
+# =============================================================================
+
+# --- Secrets & Credentials ---
+config.yaml
+*.pem
+*.key
+*.secret
+.env
+.env.*
+!.env.example
+
+# --- Claude Code (private settings, not for repo) ---
+.claude/
+
+# --- IDE / Editor ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+Desktop.ini
+._*
+
+# --- Hugo ---
+public/
+resources/
+.hugo_build.lock
+
+# --- Node ---
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+npm-debug.log*
+
+# --- Vercel ---
+.vercel/
+
+# --- Dashboard (generated, not source) ---
+dashboard/index.html
+dashboard/data/
+
+# --- Lighthouse reports (generated) ---
+dashboard/data/lighthouse/
+
+# --- Site build artifacts ---
+sites/*/public/
+sites/*/resources/
+sites/*/.hugo_build.lock
+
+# --- Python ---
+__pycache__/
+*.pyc
+*.pyo
+
+# --- Temp files ---
+*.tmp
+*.bak
+*.log
+*.pid
+
+

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SiteFactory Dashboard</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0f172a; color: #e2e8f0; padding: 2rem; min-height: 100vh;
+    }
+    h1 { text-align: center; margin-bottom: 0.5rem; font-size: 1.8rem; }
+    .subtitle { text-align: center; color: #64748b; margin-bottom: 2rem; font-size: 0.9rem; }
+    .summary {
+      max-width: 1400px; margin: 0 auto 2rem;
+      display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+    }
+    .summary-item {
+      background: #1e293b; border-radius: 8px; padding: 1rem 2rem;
+      text-align: center; border: 1px solid #334155; min-width: 140px;
+    }
+    .summary-item .value { font-size: 2rem; font-weight: 700; }
+    .summary-item .label { font-size: 0.8rem; color: #94a3b8; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem; max-width: 1400px; margin: 0 auto;
+    }
+    .card {
+      background: #1e293b; border-radius: 12px; padding: 1.5rem;
+      border: 1px solid #334155; transition: border-color 0.2s;
+    }
+    .card:hover { border-color: #475569; }
+    .card .site-name { font-size: 1.2rem; font-weight: 700; color: #f1f5f9; }
+    .card .site-type {
+      display: inline-block; font-size: 0.7rem; padding: 0.15em 0.5em;
+      border-radius: 3px; margin-left: 0.5rem; vertical-align: middle;
+    }
+    .type-hugo { background: #7c3aed; color: white; }
+    .type-static { background: #0891b2; color: white; }
+    .card .url { color: #60a5fa; font-size: 0.85rem; margin-top: 0.3rem; }
+    .card .url a { color: #60a5fa; text-decoration: none; }
+    .card .url a:hover { text-decoration: underline; }
+    .metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 1rem; }
+    .metric { background: #0f172a; border-radius: 8px; padding: 0.75rem; text-align: center; }
+    .metric .value { font-size: 1.4rem; font-weight: 700; }
+    .metric .label { font-size: 0.7rem; color: #94a3b8; margin-top: 0.2rem; }
+    .up { color: #4ade80; }
+    .down { color: #f87171; }
+    .warn { color: #fbbf24; }
+    .updated { text-align: center; color: #475569; margin-top: 2rem; font-size: 0.8rem; }
+    .empty { text-align: center; color: #64748b; padding: 4rem 1rem; }
+    .empty p { margin-top: 1rem; }
+  </style>
+</head>
+<body>
+  <h1>SiteFactory Dashboard</h1>
+  <p class="subtitle">Mass production, massive returns.</p>
+
+  <div class="summary" id="summary"></div>
+  <div class="grid" id="sites"></div>
+  <div class="updated" id="updated"></div>
+
+  <script>
+    const DATA = {{METRICS_JSON}};
+
+    function uptimeClass(v) {
+      const n = parseFloat(v);
+      if (isNaN(n)) return '';
+      return n >= 99.5 ? 'up' : n >= 95 ? 'warn' : 'down';
+    }
+
+    function render() {
+      const sites = DATA.sites || [];
+      const monitors = DATA.monitors || [];
+
+      if (sites.length === 0) {
+        document.getElementById('sites').innerHTML =
+          '<div class="empty"><h2>No sites yet</h2><p>Run <code>./scripts/new-site.sh</code> or <code>./scripts/fork-site.sh</code> to create your first site.</p></div>';
+        return;
+      }
+
+      // Summary
+      const total = sites.length;
+      const up = monitors.filter(m => m.status === 2).length;
+      const down = total - up;
+      document.getElementById('summary').innerHTML = `
+        <div class="summary-item"><div class="value">${total}</div><div class="label">Total Sites</div></div>
+        <div class="summary-item"><div class="value ${up === total ? 'up' : 'warn'}">${up}</div><div class="label">Online</div></div>
+        <div class="summary-item"><div class="value ${down === 0 ? 'up' : 'down'}">${down}</div><div class="label">Offline</div></div>
+      `;
+
+      // Cards
+      document.getElementById('sites').innerHTML = sites.map(site => {
+        const name = typeof site === 'string' ? site : site.name;
+        const type = typeof site === 'string' ? 'unknown' : (site.type || 'unknown');
+        const monitor = monitors.find(m => m.url && m.url.includes(name));
+        const ratios = monitor?.custom_uptime_ratio?.split('-') || ['--', '--', '--'];
+        const status = monitor?.status === 2 ? 'UP' : (monitor ? 'DOWN' : 'N/A');
+        const statusClass = monitor?.status === 2 ? 'up' : (monitor ? 'down' : '');
+        const typeClass = type === 'hugo' ? 'type-hugo' : 'type-static';
+
+        return `
+          <div class="card">
+            <span class="site-name">${name}</span>
+            <span class="site-type ${typeClass}">${type}</span>
+            <div class="url"><a href="https://${name}.${DATA.domain}" target="_blank">${name}.${DATA.domain}</a></div>
+            <div class="metrics">
+              <div class="metric"><div class="value ${statusClass}">${status}</div><div class="label">Status</div></div>
+              <div class="metric"><div class="value ${uptimeClass(ratios[0])}">${ratios[0]}%</div><div class="label">7-day Uptime</div></div>
+              <div class="metric"><div class="value ${uptimeClass(ratios[1])}">${ratios[1]}%</div><div class="label">30-day Uptime</div></div>
+              <div class="metric"><div class="value ${uptimeClass(ratios[2])}">${ratios[2]}%</div><div class="label">90-day Uptime</div></div>
+            </div>
+          </div>`;
+      }).join('');
+
+      document.getElementById('updated').textContent =
+        'Last updated: ' + (DATA.generated_at || 'Unknown');
+    }
+
+    render();
+  </script>
+</body>
+</html>

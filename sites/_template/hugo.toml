@@ -1,0 +1,49 @@
+baseURL = "https://SITE_NAME.example.com/"
+languageCode = "en"
+title = "Site Title"
+
+# Performance
+enableEmoji = false
+enableGitInfo = false
+disableHugoGeneratorInject = true
+
+[params]
+  description = "Site description goes here"
+  author = "Author Name"
+  # AdSense
+  adsenseEnabled = false
+  adsensePubId = ""
+  # Analytics
+  googleAnalyticsId = ""
+  googleSearchConsoleVerification = ""
+  # SEO
+  ogImage = "/images/og-default.png"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = false
+  [markup.highlight]
+    noClasses = false
+
+[outputs]
+  home = ["HTML", "RSS"]
+  section = ["HTML", "RSS"]
+
+[sitemap]
+  changefreq = "weekly"
+  priority = 0.5
+  filename = "sitemap.xml"
+
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+
+[permalinks]
+  posts = "/posts/:slug/"
+
+[minify]
+  disableCSS = false
+  disableHTML = false
+  disableJS = false
+  minifyOutput = true

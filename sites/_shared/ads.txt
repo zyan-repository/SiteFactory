@@ -1,0 +1,1 @@
+google.com, {{ADSENSE_PUB_ID_NUMERIC}}, DIRECT, f08c47fec0942fa0
