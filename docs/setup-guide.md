@@ -135,15 +135,18 @@ Google Analytics tracks how many visitors your sites get and where they come fro
 8. Click **"Next"** → skip business details → click **"Create"**
 9. Accept the terms of service
 10. On the "Choose a platform" screen, select **"Web"**
-11. Enter your website URL (e.g., `https://mysite.com`) and a stream name (e.g., "Main")
-12. Click **"Create stream"**
-13. The **Measurement ID** is shown at the top right of the stream details page — it starts with `G-`
+11. **Website URL:** enter the domain you bought in step 1, as `https://yourdomain.com` (the site doesn't need to be live yet — GA just uses the URL to create a tracking ID, it won't check if the site is accessible)
+12. **Stream name:** enter anything (e.g., "Main")
+13. Click **"Create stream"**
+14. The **Measurement ID** is shown at the top right of the stream details page — it starts with `G-`
 
-**If you already have a Google Analytics account:**
+> **Haven't bought a domain yet? Or want to set this up later?** No problem. Keep `google_analytics_id` as the placeholder value `"G-XXXXXXXXXX"` in config.yaml. You can come back to create a data stream and fill in the real Measurement ID after your first site is deployed.
+
+**If you already have a Google Analytics account but no data stream:**
 1. Click the **gear icon** (Admin) in the bottom left
 2. In the Property column, click **"Data Streams"**
-3. Click your web stream
-4. The **Measurement ID** is at the top right
+3. If the page shows "Start collecting data" and asks you to choose a platform — you haven't created a data stream yet. Click **"Web"** and follow steps 11-14 above
+4. If a data stream already exists, click it — the **Measurement ID** is at the top right
 
 **What it looks like:** `G-` followed by 10 uppercase letters or digits. Example: `G-A1B2C3D4E5`
 
