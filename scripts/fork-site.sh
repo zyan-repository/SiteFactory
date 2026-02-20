@@ -59,8 +59,13 @@ echo ""
 
 # Step 2: Clone
 log_step "Cloning repository..."
-git clone --depth 1 --quiet "$REPO_URL" "$SITE_DIR"
+git clone --depth 1 --quiet --recurse-submodules --shallow-submodules "$REPO_URL" "$SITE_DIR"
 rm -rf "$SITE_DIR/.git"
+
+# Clean up upstream artifacts that don't belong in our deployment
+rm -f "$SITE_DIR/CNAME" "$SITE_DIR/.gitmodules" "$SITE_DIR/.nojekyll"
+# Remove Google site verification files from the original project
+find "$SITE_DIR" -maxdepth 1 -name "google*.html" -size -1k -delete
 
 # Detect license
 LICENSE_TYPE="Unknown"
