@@ -11,8 +11,8 @@ config.yaml
 .env.*
 !.env.example
 
-# --- Content Plans (personal strategy, not for public repo) ---
-content-plans/*.yaml
+# --- Content Plans ---
+# Tracked in git so CI can manage publishing schedule and forkers get examples
 
 # --- Claude Code (private settings, not for repo) ---
 .claude/

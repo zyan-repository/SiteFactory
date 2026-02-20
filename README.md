@@ -140,12 +140,70 @@ You can also set `root_domain: true` in a site's `site.yaml` — deploy scripts 
 
 For details see [Root Domain Management](docs/root-domain.md).
 
+## Fork & Deploy (For Other Users)
+
+Want to use SiteFactory with your own domain and sites? Fork it — you get the full automation pipeline, and you can sync upstream improvements at any time.
+
+### Step 1: Fork on GitHub
+
+Click the **Fork** button on the repo page. This gives you your own copy with GitHub Actions enabled.
+
+### Step 2: Configure GitHub Secrets
+
+In **your fork's** Settings → Secrets and variables → Actions, add these secrets:
+
+| Secret | Value |
+|--------|-------|
+| `SF_DOMAIN` | Your domain (e.g., `mysite.com`) |
+| `SF_VERCEL_TOKEN` | Vercel API token |
+| `SF_NAMESILO_API_KEY` | NameSilo API key |
+| `SF_ADSENSE_PUB_ID` | AdSense publisher ID |
+| `SF_GA_ID` | Google Analytics measurement ID |
+| `SF_AI_API_KEY` | AI provider API key (for content generation) |
+
+### Step 3: Local Setup
+
+```bash
+git clone https://github.com/YOUR_USERNAME/SiteFactory.git
+cd SiteFactory
+./scripts/setup.sh        # Creates config.yaml, validates tools
+nano config.yaml           # Fill in your credentials
+```
+
+### Step 4: Create Your Sites
+
+```bash
+# Create and push — GitHub Actions auto-deploys
+./scripts/launch-site.sh fork https://github.com/user/repo my-tool "My Tool"
+git push
+```
+
+Any push that changes `sites/` triggers auto-deploy via GitHub Actions.
+
+### Step 5: Sync Upstream Updates
+
+Add the original repo as `upstream` to pull script improvements, template updates, and CI fixes:
+
+```bash
+# One-time setup
+git remote add upstream https://github.com/ORIGINAL_OWNER/SiteFactory.git
+
+# Sync whenever you want
+git fetch upstream
+git merge upstream/main
+```
+
+**Why this works without conflicts:** Your sites have unique names (e.g., `sites/my-tool/`), so upstream changes to scripts, templates, and CI merge cleanly. Only `SITES.md` and `root-domain.yaml` may need manual merging — these are simple files with one line per site.
+
+> For full CI/CD details, see [Deployment Automation](docs/deployment-automation.md).
+
 ## Architecture
 
 ```
 SiteFactory/
 ├── config.yaml              # Your credentials (git-ignored)
 ├── SITES.md                 # Registry of all integrated sites
+├── content-plans/           # AI content generation schedules & topic lists
 ├── sites/
 │   ├── _template/           # Hugo site template (SEO-optimized)
 │   ├── _shared/             # Shared pages for fork sites (privacy policy, about)

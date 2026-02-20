@@ -94,6 +94,7 @@ Before forking, run `./scripts/check-repo.sh <url>`. A project MUST pass:
 ```
 SiteFactory/
 ├── config.yaml              # Credentials (git-ignored)
+├── content-plans/           # AI content schedules & topic lists
 ├── sites/
 │   ├── _template/           # Hugo site template (SEO-optimized)
 │   ├── _shared/             # Shared pages for fork sites

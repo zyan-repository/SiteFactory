@@ -187,10 +187,11 @@ if [[ -n "$PLAN_INDEX" && "$PLAN_INDEX" != "null" ]]; then
   log_info "Content plan updated: topic marked as published"
 fi
 
-# Git commit (only the article; plan file is gitignored and managed locally)
+# Git commit (article + content plan update)
 log_step "Committing to git..."
 cd "$REPO_ROOT"
 git add "$FILE_PATH" 2>/dev/null || true
+git add "$PLAN_FILE" 2>/dev/null || true
 git commit -m "content(${SITE_NAME}): add article '${SLUG}'" --quiet 2>/dev/null || log_warn "Git commit skipped (nothing to commit or not a git repo)"
 
 log_ok "Done! Article '${SLUG}' generated for ${SITE_NAME}"

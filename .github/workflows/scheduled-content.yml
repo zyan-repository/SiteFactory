@@ -42,7 +42,7 @@ jobs:
           TODAY_EPOCH=$(date -d "$TODAY" +%s 2>/dev/null || echo "0")
           DEFAULT_SCHEDULE="${GLOBAL_SCHEDULE:-weekly}"
 
-          # Scan Hugo sites (not content-plans/, since plans are gitignored)
+          # Scan Hugo sites with content plans
           for site_dir in sites/*/; do
             name=$(basename "$site_dir")
             [[ "$name" == "_template" || "$name" == "_shared" ]] && continue
@@ -177,8 +177,8 @@ jobs:
         run: |
           git config user.name "SiteFactory Bot"
           git config user.email "bot@sitefactory.dev"
-          # Only commit the article (content-plans/ is gitignored)
           git add "sites/${{ matrix.site }}/content/" || true
+          git add "content-plans/${{ matrix.site }}.yaml" || true
           git commit -m "content(${{ matrix.site }}): auto-generate scheduled article" || echo "Nothing to commit"
           git pull --rebase || true
           git push

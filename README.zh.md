@@ -164,6 +164,63 @@ Google AdSense 会访问 `https://你的域名.com/` 来验证站点。如果所
 
 详细说明见 [主域名管理](docs/zh/root-domain.md)。
 
+## Fork 部署（其他用户使用）
+
+想用 SiteFactory 搭建自己的站群？Fork 本项目即可 —— 完整的自动化流水线开箱即用，还能随时同步上游的脚本和模板更新。
+
+### 第一步：Fork 仓库
+
+在 GitHub 仓库页面点击 **Fork** 按钮，获得你自己的副本（GitHub Actions 自动启用）。
+
+### 第二步：配置 GitHub Secrets
+
+进入**你的 Fork 仓库** → Settings → Secrets and variables → Actions，添加以下密钥：
+
+| Secret 名称 | 值 |
+|-------------|-----|
+| `SF_DOMAIN` | 你的域名（如 `mysite.com`） |
+| `SF_VERCEL_TOKEN` | Vercel API 令牌 |
+| `SF_NAMESILO_API_KEY` | NameSilo API 密钥 |
+| `SF_ADSENSE_PUB_ID` | AdSense 发布者 ID |
+| `SF_GA_ID` | Google Analytics 衡量 ID |
+| `SF_AI_API_KEY` | AI 服务的 API 密钥（用于内容生成） |
+
+### 第三步：本地配置
+
+```bash
+git clone https://github.com/你的用户名/SiteFactory.git
+cd SiteFactory
+./scripts/setup.sh        # 创建 config.yaml，检查工具
+nano config.yaml           # 填写你的凭证
+```
+
+### 第四步：创建你的站点
+
+```bash
+# 创建站点并推送 — GitHub Actions 自动部署
+./scripts/launch-site.sh fork https://github.com/user/repo my-tool "我的工具"
+git push
+```
+
+任何对 `sites/` 目录的推送都会自动触发 GitHub Actions 部署。
+
+### 第五步：同步上游更新
+
+添加原始仓库为 `upstream`，随时拉取脚本改进、模板更新和 CI 修复：
+
+```bash
+# 一次性设置
+git remote add upstream https://github.com/原作者/SiteFactory.git
+
+# 需要时同步
+git fetch upstream
+git merge upstream/main
+```
+
+**为什么不会冲突：** 你的站点使用独立的目录名（如 `sites/my-tool/`），上游对脚本、模板和 CI 的更新可以干净合并。只有 `SITES.md` 和 `root-domain.yaml` 可能需要手动处理 —— 这些文件每个站点只占一行，很容易解决。
+
+> 完整的 CI/CD 配置详情见 [部署自动化](docs/zh/deployment-automation.md)。
+
 ## 工作原理
 
 ### 两条路线建站
@@ -185,6 +242,7 @@ Google AdSense 会访问 `https://你的域名.com/` 来验证站点。如果所
 SiteFactory/
 ├── config.yaml              # 你的凭证配置（不会上传到 git）
 ├── SITES.md                 # 所有已集成站点的清单
+├── content-plans/           # AI 内容生成计划和主题列表
 ├── sites/
 │   ├── _template/           # Hugo 站点模板
 │   ├── _shared/             # Fork 站共用文件（隐私政策、关于页面）
