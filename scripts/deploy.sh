@@ -48,12 +48,20 @@ fi
 CUSTOM_DOMAIN="${SITE_NAME}.${SF_DOMAIN}"
 
 log_step "Deploying to Vercel${PROD_FLAG:+ (production)}..."
+log_info "This may take a minute, showing Vercel output below..."
+echo ""
 
 # Build vercel command
 VERCEL_ARGS=("$DEPLOY_DIR" "--token" "$SF_VERCEL_TOKEN" "--yes" "--name" "$SITE_NAME")
 [[ -n "$PROD_FLAG" ]] && VERCEL_ARGS+=("$PROD_FLAG")
 
-DEPLOY_URL=$(npx vercel "${VERCEL_ARGS[@]}" 2>&1 | tail -1)
+# Stream output in real-time while capturing the deploy URL (last line)
+VERCEL_OUTPUT_FILE=$(mktemp)
+npx vercel "${VERCEL_ARGS[@]}" 2>&1 | tee "$VERCEL_OUTPUT_FILE"
+DEPLOY_URL=$(tail -1 "$VERCEL_OUTPUT_FILE")
+rm -f "$VERCEL_OUTPUT_FILE"
+
+echo ""
 
 # Add custom domain for production deploys
 if [[ -n "$PROD_FLAG" ]]; then
