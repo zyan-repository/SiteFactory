@@ -8,6 +8,7 @@ SiteFactory 中所有已集成的站点。**贡献者添加或移除站点时必
 
 | 名称 | 类型 | 来源 | 许可证 | 说明 |
 |------|------|------|--------|------|
+| adsense-home | hugo | template | — | 搜索与工具聚合首页（Search123），部署在根域名 |
 | wifi-qr | static | [evgeni/qifi](https://github.com/evgeni/qifi) | MIT | WiFi 二维码生成器 — 输入 SSID 和密码，生成可扫描的二维码 |
 
 ## 如何更新

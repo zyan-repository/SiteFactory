@@ -8,6 +8,7 @@ All integrated sites in SiteFactory. **Contributors must update this file when a
 
 | Name | Type | Source | License | Description |
 |------|------|--------|---------|-------------|
+| adsense-home | hugo | template | — | Search & tools hub homepage (Search123), deployed on root domain |
 | wifi-qr | static | [evgeni/qifi](https://github.com/evgeni/qifi) | MIT | WiFi QR code generator — enter SSID & password, get a scannable QR code |
 
 ## How to Update
