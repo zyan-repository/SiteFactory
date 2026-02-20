@@ -5,3 +5,4 @@ description: "Your go-to search and tools hub"
 source: template
 language: en
 created: 2026-02-19
+root_domain: true

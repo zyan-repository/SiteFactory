@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# deploy-all.sh - Deploy all sites to Vercel.
+# deploy-all.sh - Deploy all sites to Vercel with DNS setup.
 
 set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -19,8 +19,16 @@ for site_dir in "$SITES_DIR"/*/; do
   [[ "$site_name" == "_shared" ]] && continue
   [[ ! -f "$site_dir/site.yaml" ]] && continue
 
-  log_info "Deploying: $site_name"
-  if "$REPO_ROOT/scripts/deploy.sh" "$site_name" 2>&1; then
+  # Detect root domain flag from site.yaml
+  ROOT_FLAG=""
+  if grep -q "^root_domain: true" "$site_dir/site.yaml" 2>/dev/null; then
+    ROOT_FLAG="--root"
+  fi
+
+  log_info "Deploying: $site_name${ROOT_FLAG:+ (root domain)}"
+  if "$REPO_ROOT/scripts/deploy.sh" "$site_name" $ROOT_FLAG 2>&1; then
+    # Setup DNS after successful deploy
+    "$REPO_ROOT/scripts/dns-setup.sh" "$site_name" $ROOT_FLAG 2>&1 || true
     ((SUCCEEDED++))
   else
     log_error "  Deploy failed for $site_name"

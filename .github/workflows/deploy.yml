@@ -13,6 +13,11 @@ on:
         description: 'Site name to deploy (leave empty for all changed sites)'
         required: false
         type: string
+      deploy_all:
+        description: 'Deploy ALL sites (for initial setup after fork)'
+        required: false
+        type: boolean
+        default: false
 
 env:
   HUGO_VERSION: '0.156.0'
@@ -32,6 +37,14 @@ jobs:
         run: |
           if [ -n "${{ inputs.site_name }}" ]; then
             echo "sites=[\"${{ inputs.site_name }}\"]" >> "$GITHUB_OUTPUT"
+          elif [ "${{ inputs.deploy_all }}" = "true" ]; then
+            SITES=$(ls -d sites/*/ 2>/dev/null | while read -r dir; do
+              name=$(basename "$dir")
+              [ "$name" = "_template" ] && continue
+              [ "$name" = "_shared" ] && continue
+              [ -f "$dir/site.yaml" ] && echo "$name"
+            done | jq -R -c -s 'split("\n") | map(select(length > 0))')
+            echo "sites=$SITES" >> "$GITHUB_OUTPUT"
           else
             SITES=$(git diff --name-only HEAD~1 -- 'sites/' | \
               grep -v '_template\|_shared' | \
