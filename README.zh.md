@@ -140,6 +140,30 @@ nano config.yaml    # 在终端里编辑（Ctrl+O 保存，Ctrl+X 退出）
 
 > DNS 生效需要最多 48 小时，耐心等待。生效后访问 `https://my-tool.你的域名.com` 就能看到你的站点了。
 
+### 第九步：绑定主域名（AdSense 必需）
+
+Google AdSense 会访问 `https://你的域名.com/` 来验证站点。如果所有站点都只在子域名（如 `wifi-qr.你的域名.com`），主域名没有内容，**AdSense 验证会失败**。
+
+**解决方案：** 把其中一个站点分配到主域名，让它同时在 `https://你的域名.com` 和 `https://站点名.你的域名.com` 提供服务：
+
+```bash
+# 方法 1：部署时加 --root 参数
+./scripts/launch-site.sh fork https://github.com/evgeni/qifi wifi-qr "WiFi 二维码生成器" --root
+
+# 方法 2：把主域名切换到已部署的站点
+./scripts/swap-root.sh wifi-qr --verify
+```
+
+也可以在站点的 `site.yaml` 中设置 `root_domain: true`，部署脚本会自动检测。
+
+**注意事项：**
+- 同一时间只有**一个站点**可以占据主域名
+- 所有部署**默认只部署到子域名** —— 主域名需要手动启用
+- `swap-root.sh` 自动处理所有操作：Vercel 绑定、DNS A 记录、www 重定向
+- 切换时旧站点保留其子域名，不受影响
+
+详细说明见 [主域名管理](docs/zh/root-domain.md)。
+
 ## 工作原理
 
 ### 两条路线建站
@@ -239,10 +263,11 @@ license: MIT
 | `new-site.sh <名字> <标题> <描述>` | 创建 Hugo 内容站 |
 | `fork-site.sh <链接> <名字> [标题]` | Fork 改造 GitHub 项目 |
 | `check-repo.sh <链接>` | 检查 GitHub 项目兼容性 |
-| `deploy.sh <名字> [--preview] [--verify]` | 部署单个站点到 Vercel |
+| `deploy.sh <名字> [--preview] [--verify] [--root]` | 部署单个站点到 Vercel |
 | `deploy-all.sh` | 部署所有站点 |
 | `build-all.sh` | 构建所有 Hugo 站点 |
-| `dns-setup.sh <名字> [--verify]` | 通过 NameSilo API 添加 DNS 记录 |
+| `dns-setup.sh <名字> [--verify] [--root]` | 通过 NameSilo API 添加 DNS 记录 |
+| `swap-root.sh <名字> [--verify]` | 切换主域名绑定的站点 |
 | `generate-content.sh <名字> <主题>` | AI 生成 SEO 文章 |
 | `generate-dashboard.sh` | 生成监控面板 |
 | `lighthouse-check.sh <名字\|--all>` | 运行 Lighthouse 性能审计 |

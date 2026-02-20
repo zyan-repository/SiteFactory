@@ -116,6 +116,30 @@ Or step by step:
 ./scripts/dns-setup.sh wifi-qr
 ```
 
+### Root Domain Setup (Required for AdSense)
+
+Google AdSense verifies your site by visiting `https://yourdomain.com/`. If all your sites only live on subdomains (e.g., `wifi-qr.yourdomain.com`), the root domain has no content and **AdSense verification will fail**.
+
+**Solution:** Assign one site to the root domain so it serves content at both `https://yourdomain.com` and `https://site-name.yourdomain.com`:
+
+```bash
+# Option 1: Assign during deployment with --root flag
+./scripts/launch-site.sh fork https://github.com/evgeni/qifi wifi-qr "WiFi QR Generator" --root
+
+# Option 2: Swap root domain to an existing site
+./scripts/swap-root.sh wifi-qr --verify
+```
+
+You can also set `root_domain: true` in a site's `site.yaml` — deploy scripts will auto-detect it.
+
+**Key points:**
+- Only **one site** can occupy the root domain at a time
+- All deploys **default to subdomain only** — root domain is opt-in
+- `swap-root.sh` handles everything: Vercel binding, DNS A record, www redirect
+- The old site keeps its subdomain when you swap
+
+For details see [Root Domain Management](docs/root-domain.md).
+
 ## Architecture
 
 ```
@@ -218,10 +242,11 @@ Revenue potential: Even modest AdSense earnings of $0.50/day across all sites = 
 | `new-site.sh <name> <title> <desc>` | Create Hugo content site |
 | `fork-site.sh <url> <name> [title]` | Fork & adapt GitHub project |
 | `check-repo.sh <url>` | Evaluate GitHub project compatibility |
-| `deploy.sh <name> [--preview] [--verify]` | Deploy single site to Vercel |
+| `deploy.sh <name> [--preview] [--verify] [--root]` | Deploy single site to Vercel |
 | `deploy-all.sh` | Deploy all sites |
 | `build-all.sh` | Build all Hugo sites |
-| `dns-setup.sh <name> [--verify]` | Add CNAME via NameSilo API |
+| `dns-setup.sh <name> [--verify] [--root]` | Add DNS record via NameSilo API |
+| `swap-root.sh <name> [--verify]` | Swap which site occupies the root domain |
 | `generate-content.sh <name> <topic>` | AI-generate SEO articles |
 | `generate-dashboard.sh` | Generate monitoring dashboard |
 | `lighthouse-check.sh <name\|--all>` | Run Lighthouse audit |
