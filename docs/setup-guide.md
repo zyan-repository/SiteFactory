@@ -150,9 +150,41 @@ Google Analytics tracks how many visitors your sites get and where they come fro
 
 **What it looks like:** `G-` followed by 10 uppercase letters or digits. Example: `G-A1B2C3D4E5`
 
-### 6. Google Search Console Verification Code (optional — can add later)
+### 6. Google Search Console Verification (optional — can add later)
 
 Google Search Console lets you submit your sitemap so Google indexes your pages faster.
+
+There are two verification methods. Choose the one that fits your situation:
+
+#### Option A: Domain property via DNS TXT record (Recommended)
+
+Covers your entire domain and all subdomains at once — no need to verify each site separately.
+
+**Steps:**
+1. Go to [https://search.google.com/search-console](https://search.google.com/search-console)
+2. Click **"Add property"** (in the top-left dropdown)
+3. Choose **"Domain"** (the left-hand option)
+4. Enter your domain name: `yourdomain.com` (no `https://`)
+5. Click **"Continue"**
+6. Google shows you a TXT record value like: `google-site-verification=AbCdEf123456789...`
+7. Add this TXT record to your DNS. You can do this via NameSilo API:
+   ```bash
+   # Replace the values with your own domain, API key, and verification string
+   curl -s "https://www.namesilo.com/api/dnsAddRecord?version=1&type=xml \
+     &key=YOUR_NAMESILO_API_KEY \
+     &domain=yourdomain.com \
+     &rrtype=TXT&rrhost= \
+     &rrvalue=google-site-verification=YOUR_VERIFICATION_STRING \
+     &rrttl=3600"
+   ```
+   Or add it manually in the [NameSilo DNS Manager](https://www.namesilo.com/account/domain-manager) → click your domain → DNS Records → add a TXT record with an empty host.
+8. Wait a few minutes for DNS propagation, then click **"Verify"** in Search Console
+
+> **Note:** This method does NOT require the `google_search_console_verification` field in `config.yaml` — that field is only for the HTML tag method below.
+
+#### Option B: URL prefix via HTML meta tag
+
+Verifies a single URL prefix (e.g., `https://yourdomain.com`). You'll need to verify each subdomain separately.
 
 **Steps:**
 1. Go to [https://search.google.com/search-console](https://search.google.com/search-console)
@@ -163,6 +195,8 @@ Google Search Console lets you submit your sitemap so Google indexes your pages 
 6. Choose the **"HTML tag"** verification method
 7. Google shows you a meta tag like: `<meta name="google-site-verification" content="AbCdEf123456789..." />`
 8. Copy just the value inside `content="..."` — that's your verification code
+9. Paste it into `config.yaml` → `analytics.google_search_console_verification`
+10. Redeploy your site — the meta tag will be injected automatically
 
 **What it looks like:** A string of ~43 alphanumeric characters
 
@@ -294,7 +328,7 @@ analytics:
 | `vercel.token` | [Vercel Tokens](https://vercel.com/account/tokens) → Create | ~24+ chars | `pZGwkE1J...` |
 | `adsense.publisher_id` | [AdSense](https://adsense.google.com/) → URL bar or Settings → Account Info | `ca-pub-` + 16 digits | `ca-pub-5531531271065052` |
 | `analytics.google_analytics_id` | [GA](https://analytics.google.com/) → New: click "Start measuring" → create; Existing: Admin → Data Streams | `G-` + 10 chars | `G-A1B2C3D4E5` |
-| `analytics.google_search_console_verification` | [Search Console](https://search.google.com/search-console) → Add property → HTML tag | ~43 chars | `AbCdEf123...` |
+| `analytics.google_search_console_verification` | [Search Console](https://search.google.com/search-console) → Add property → URL prefix → HTML tag (only needed for Option B; skip if using DNS TXT) | ~43 chars | `AbCdEf123...` |
 
 ## Step 5: Validate
 

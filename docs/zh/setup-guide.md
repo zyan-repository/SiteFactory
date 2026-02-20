@@ -154,9 +154,41 @@ Google Analytics 用来追踪你的网站有多少访客、访客从哪来。
 
 **长什么样：** `G-` 后面跟 10 个大写字母或数字。例如：`G-A1B2C3D4E5`
 
-### 6. Google Search Console 验证码（可选——以后再配也行）
+### 6. Google Search Console 验证（可选——以后再配也行）
 
 Google Search Console 让你提交网站地图，让 Google 更快收录你的页面。
+
+有两种验证方式，选适合你的一种：
+
+#### 方式 A：网域验证——通过 DNS TXT 记录（推荐）
+
+一次验证覆盖整个域名和所有子域名，不用每个站点单独验证。
+
+**操作步骤：**
+1. 打开 [https://search.google.com/search-console](https://search.google.com/search-console)
+2. 点击左上角下拉菜单 → **"添加资源"**
+3. 选择左边的 **"网域"**
+4. 输入你的域名：`你的域名.com`（不带 `https://`）
+5. 点击 **"继续"**
+6. Google 会显示一条 TXT 记录值，类似：`google-site-verification=AbCdEf123456789...`
+7. 把这条 TXT 记录添加到你的 DNS。可以通过 NameSilo API 操作：
+   ```bash
+   # 把下面的值替换成你自己的域名、API Key 和验证字符串
+   curl -s "https://www.namesilo.com/api/dnsAddRecord?version=1&type=xml \
+     &key=你的NAMESILO_API_KEY \
+     &domain=你的域名.com \
+     &rrtype=TXT&rrhost= \
+     &rrvalue=google-site-verification=你的验证字符串 \
+     &rrttl=3600"
+   ```
+   或者在 [NameSilo DNS 管理](https://www.namesilo.com/account/domain-manager)里手动添加：点你的域名 → DNS Records → 新增一条 TXT 记录，Host 留空。
+8. 等几分钟 DNS 生效后，回到 Search Console 点 **"验证"**
+
+> **注意：** 这种方式**不需要**在 `config.yaml` 里填 `google_search_console_verification` 字段——那个字段是给下面的 HTML 标记方式用的。
+
+#### 方式 B：网址前缀验证——通过 HTML meta 标签
+
+只验证一个网址前缀（如 `https://你的域名.com`），每个子域名需要单独验证。
 
 **操作步骤：**
 1. 打开 [https://search.google.com/search-console](https://search.google.com/search-console)
@@ -167,6 +199,8 @@ Google Search Console 让你提交网站地图，让 Google 更快收录你的�
 6. 选择 **"HTML 标记"** 验证方式
 7. Google 会显示一个 meta 标签，类似 `<meta name="google-site-verification" content="AbCdEf123456789..." />`
 8. 只复制 `content="..."` 里面的那串字符——这就是你的验证码
+9. 粘贴到 `config.yaml` → `analytics.google_search_console_verification`
+10. 重新部署站点——meta 标签会自动注入
 
 **长什么样：** 大约 43 个字母数字混合的字符串
 
@@ -305,7 +339,7 @@ analytics:
 | `vercel.token` | [Vercel 令牌页](https://vercel.com/account/tokens) → Create | 约 24+ 个字符 | `pZGwkE1J...` |
 | `adsense.publisher_id` | [AdSense](https://adsense.google.com/) → 地址栏或设置→账号信息 | `ca-pub-` + 16 位数字 | `ca-pub-5531531271065052` |
 | `analytics.google_analytics_id` | [GA](https://analytics.google.com/) → 新账号点"开始衡量"创建；已有账号点齿轮 → 数据流 | `G-` + 10 个字符 | `G-A1B2C3D4E5` |
-| `analytics.google_search_console_verification` | [Search Console](https://search.google.com/search-console) → 添加资源 → HTML 标记 | 约 43 个字符 | `AbCdEf123...` |
+| `analytics.google_search_console_verification` | [Search Console](https://search.google.com/search-console) → 添加资源 → 网址前缀 → HTML 标记（仅方式 B 需要；用 DNS TXT 验证的可跳过） | 约 43 个字符 | `AbCdEf123...` |
 
 ## 第五步：验证配置
 
