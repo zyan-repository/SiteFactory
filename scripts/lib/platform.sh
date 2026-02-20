@@ -14,6 +14,28 @@ sed_inplace() {
   fi
 }
 
+# Insert content before a closing HTML tag (case-insensitive, in-place).
+# Portable replacement for: sed "s|</tag>|CONTENT\n</tag>|i"
+# Uses awk + ENVIRON to avoid BSD sed incompatibilities and escaping issues.
+# Usage: inject_before_tag "</head>" "$snippet" "$file"
+#   $1 = closing tag to match (e.g., "</head>", "</body>")
+#   $2 = content to insert before the tag (can be multi-line)
+#   $3 = file to modify in-place
+inject_before_tag() {
+  local tag="$1"
+  local content="$2"
+  local file="$3"
+  local tag_lower
+  tag_lower=$(printf '%s' "$tag" | tr '[:upper:]' '[:lower:]')
+
+  INJECT_CONTENT="$content" INJECT_TAG="$tag_lower" \
+    awk '
+      BEGIN { content = ENVIRON["INJECT_CONTENT"]; tag = ENVIRON["INJECT_TAG"] }
+      tolower($0) ~ tag && !done { print content; done = 1 }
+      { print }
+    ' "$file" > "${file}.tmp" && mv "${file}.tmp" "$file"
+}
+
 # Resolve the Hugo binary. Prints path if found, empty string if not.
 # Usage: HUGO_CMD=$(find_hugo)
 find_hugo() {
