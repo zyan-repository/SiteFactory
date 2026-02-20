@@ -11,7 +11,7 @@
 #   --root          Also bind root/apex domain to this site
 #
 # Environment:
-#   SF_JSON_OUTPUT=true   Output machine-readable JSON summary (for n8n)
+#   SF_JSON_OUTPUT=true   Output machine-readable JSON summary
 
 set -euo pipefail
 SECONDS=0
@@ -181,7 +181,7 @@ echo "    1. Submit sitemap to Google Search Console"
 echo "    2. Wait 1-2 weeks, then apply for AdSense"
 echo "    3. Monitor: ./scripts/lighthouse-check.sh $SITE_NAME"
 
-# JSON output for automation (n8n, CI, etc.)
+# JSON output for automation (CI, etc.)
 if [[ "${SF_JSON_OUTPUT:-false}" == "true" ]] && command -v jq &>/dev/null; then
   ROOT_URL_VAL=""
   [[ -n "$ROOT_FLAG" ]] && ROOT_URL_VAL="https://$ROOT_DOMAIN"

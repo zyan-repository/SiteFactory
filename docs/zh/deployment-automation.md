@@ -2,13 +2,12 @@
 
 # 部署自动化
 
-SiteFactory 提供三种部署自动化方式，根据需求选择：
+SiteFactory 提供两种部署自动化方式，根据需求选择：
 
 | 方式 | 适用场景 | 配置量 | 基础设施 |
 |------|---------|--------|---------|
 | **一键脚本** | 本地快速部署 | 无 | 本机 |
 | **GitHub Actions** | 推送自动部署、定时任务 | 配置 Secrets | 免费（GitHub） |
-| **n8n 工作流** | 可视化自动化、复杂流水线 | Docker | 自托管 |
 
 ## 方式一：一键脚本（推荐）
 
@@ -170,36 +169,6 @@ SiteFactory 提供三种部署自动化方式，根据需求选择：
 
 工作流自动生成文章、提交到 git、推送 —— 推送会自动触发部署工作流。
 
-## 方式三：n8n 工作流（可选）
-
-适合可视化工作流自动化，需要运行 n8n 实例。
-
-### 快速配置
-
-```bash
-# 用 Docker 启动 n8n
-docker run -d --name n8n \
-  -p 5678:5678 \
-  -v ~/.n8n:/home/node/.n8n \
-  -v /path/to/SiteFactory:/data/SiteFactory \
-  -e SF_PROJECT_ROOT=/data/SiteFactory \
-  -e SF_DOMAIN=search123.top \
-  n8nio/n8n
-```
-
-### 导入工作流
-
-1. 打开 http://localhost:5678
-2. 进入 Workflows → Import from file
-3. 依次导入 `n8n/workflows/` 下的 JSON 文件：
-   - `new-site-pipeline.json` — Webhook 触发：创建 + 部署站点
-   - `content-generation.json` — Webhook 触发：AI 内容生成
-   - `monitoring-report.json` — 定时：每日监控报告
-   - `site-health-check.json` — 定时：每 6 小时健康检查
-4. 激活每个工作流
-
-详见 [n8n/README.md](../n8n/README.md)。
-
 ## 选择哪种方式
 
 | 场景 | 推荐 |
@@ -208,5 +177,3 @@ docker run -d --name n8n \
 | 通过 git 推送定期更新内容 | GitHub Actions（自动部署） |
 | 每日 AI 生成内容 | GitHub Actions（内容工作流） |
 | 10+ 站点需要监控 | GitHub Actions（健康检查） |
-| 复杂的多步骤自动化 | n8n |
-| 需要可视化编辑工作流 | n8n |

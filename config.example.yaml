@@ -64,7 +64,7 @@ analytics:
   google_search_console_verification: "XXXXXXXXXXXXXX"
 
 # --- AI Content Generation (Optional — skip if not using AI content) ---
-# Used by: scripts/generate-content.sh and n8n content-generation workflow
+# Used by: scripts/generate-content.sh and GitHub Actions content-generation workflow
 # PURPOSE: Auto-generate SEO blog articles in Markdown with Hugo frontmatter
 ai:
   # Which provider to use. Options: openai | claude | gemini | deepseek | moonshot | zhipu
@@ -129,17 +129,6 @@ monitoring:
   #        -> My Settings -> scroll to "API Settings" -> Main API Key
   # FORMAT: starts with "u" + ~39 characters. Example: "u1234567-abcdef..."
   uptimerobot_api_key: "YOUR_UPTIMEROBOT_API_KEY"
-
-# --- n8n (Workflow Automation, Optional) ---
-n8n:
-  # Your n8n instance URL (local Docker or n8n Cloud)
-  base_url: "http://localhost:5678"
-
-  # Webhook URLs — filled in automatically after activating workflows in n8n.
-  # To find them: open the workflow in n8n -> click the Webhook node -> copy "Production URL"
-  webhooks:
-    new_site: ""              # From: SiteFactory - Launch Site Pipeline workflow
-    content_generation: ""    # From: SiteFactory - Content Generation workflow
 
 # --- Site Defaults ---
 defaults:

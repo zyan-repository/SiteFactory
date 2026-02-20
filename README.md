@@ -165,7 +165,6 @@ SiteFactory/
 │   ├── generate-content.sh  # AI-generate SEO articles
 │   ├── lighthouse-check.sh  # Run Lighthouse audit
 │   └── lib/                 # Shared functions (config, logging, injection, verify)
-├── n8n/                     # Automation workflows (import into n8n)
 ├── dashboard/               # Monitoring dashboard (auto-generated HTML)
 └── docs/                    # Documentation
 ```
@@ -251,19 +250,6 @@ Revenue potential: Even modest AdSense earnings of $0.50/day across all sites = 
 | `generate-dashboard.sh` | Generate monitoring dashboard |
 | `lighthouse-check.sh <name\|--all>` | Run Lighthouse audit |
 
-## n8n Workflows
-
-Import the JSON files from `n8n/workflows/` into your n8n instance:
-
-| Workflow | Trigger | What it does |
-|----------|---------|-------------|
-| `new-site-pipeline` | Webhook | Creates and deploys a new site |
-| `content-generation` | Cron (daily) | AI-generates SEO articles via Claude API |
-| `monitoring-report` | Cron (6h) | Updates monitoring dashboard |
-| `site-health-check` | Cron (daily) | Checks DNS, SSL, uptime for all sites |
-
-See [n8n/README.md](n8n/README.md) for setup instructions.
-
 ## Monitoring Dashboard
 
 Auto-generated single HTML file showing all sites' status, uptime, and Lighthouse scores.
@@ -297,8 +283,8 @@ open dashboard/index.html
 | Tool sites | Pure HTML/CSS/JS | Zero build, fork from GitHub |
 | Hosting | Vercel Hobby | Free, 100GB bandwidth, auto SSL |
 | Domain | NameSilo | ~$9/year, REST API for DNS |
-| Automation | n8n (self-hosted) | Visual workflows, 400+ integrations |
-| Content AI | Claude API (via n8n) | SEO-optimized article generation |
+| Automation | GitHub Actions | Auto-deploy, health checks, content generation |
+| Content AI | Claude / OpenAI / Gemini / DeepSeek | SEO-optimized article generation |
 | Monitoring | UptimeRobot | Free 50 monitors, 5-min intervals |
 | Ads | Google AdSense Auto-Ads | Single tag, auto-optimized placement |
 

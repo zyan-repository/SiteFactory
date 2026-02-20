@@ -486,4 +486,4 @@ domain:
 - 创建更多站点 → [添加新站点](adding-new-site.md)
 - 找适合 Fork 的项目 → [Fork 指南](fork-guide.md)
 - 通过 AdSense 审核 → [内容策略](content-strategy.md)
-- 设置自动化 → [n8n 使用说明](../../n8n/README.md)
+- 设置自动化 → [部署自动化](deployment-automation.md)

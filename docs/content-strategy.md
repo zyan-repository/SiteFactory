@@ -84,12 +84,12 @@ Structure:
 
 ### Using AI for Content Generation
 
-SiteFactory includes an n8n workflow for AI content generation via Claude API:
+SiteFactory includes AI content generation via scripts and GitHub Actions:
 
-1. Import `n8n/workflows/content-generation.json` into n8n
-2. Configure the Claude API key
-3. Set the cron schedule (e.g., daily)
-4. The workflow generates SEO-optimized markdown articles
+1. Run `./scripts/generate-content.sh <site-name> <topic>` locally
+2. Or use the "Generate Content" GitHub Actions workflow (Actions tab → Run workflow)
+3. Configure your AI provider in `config.yaml` (supports Claude, OpenAI, Gemini, DeepSeek, Moonshot, Zhipu)
+4. For scheduled generation, the "Scheduled Content Generation" workflow runs daily
 
 ### How to Review AI Content Before Publishing
 
@@ -190,7 +190,7 @@ SiteFactory uses **Auto-Ads** — Google automatically places ads where they per
 | Add new content | Weekly | New posts or pages |
 | Check AdSense dashboard | Weekly | Look for warnings or banners at the top |
 | Run Lighthouse | Monthly | `./scripts/lighthouse-check.sh --all` |
-| Update dashboard | Daily (via n8n) | `./scripts/generate-dashboard.sh` |
+| Update dashboard | Daily (via GitHub Actions) | `./scripts/generate-dashboard.sh` |
 | Review traffic sources | Monthly | Google Analytics → Acquisition → Traffic acquisition |
 | Check for broken links | Monthly | Browser DevTools console (look for 404 errors) |
 

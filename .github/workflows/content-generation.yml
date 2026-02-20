@@ -93,8 +93,6 @@ jobs:
                 base_url: "${BASE_URL}"
           monitoring:
             uptimerobot_api_key: ""
-          n8n:
-            base_url: ""
           defaults:
             language: "en"
             timezone: "America/New_York"

@@ -92,12 +92,12 @@ Google 在批准你之前会审查你的网站。以下是审核标准：
 
 ### 用 AI 自动生成文章
 
-SiteFactory 的 n8n 工作流可以通过 Claude API 自动生成文章：
+SiteFactory 支持通过脚本和 GitHub Actions 自动生成文章：
 
-1. 把 `n8n/workflows/content-generation.json` 导入 n8n
-2. 配置 Claude API Key
-3. 设置定时任务（比如每天运行）
-4. 工作流会自动生成 SEO 优化的 Markdown 文章
+1. 本地运行 `./scripts/generate-content.sh <站点名> <主题>`
+2. 或使用 GitHub Actions 的 "Generate Content" 工作流（Actions 标签 → Run workflow）
+3. 在 `config.yaml` 中配置 AI 服务（支持 Claude、OpenAI、Gemini、DeepSeek、Moonshot、Zhipu）
+4. 定时生成可用 "Scheduled Content Generation" 工作流，每天自动运行
 
 ### AI 内容审阅指南
 
@@ -197,7 +197,7 @@ SiteFactory 使用 **Auto-Ads**（自动广告），Google 会自动在最优位
 | 添加新内容 | 每周 | 新文章或页面 |
 | 检查 AdSense 后台 | 每周 | 登录看页面顶部有没有警告横幅 |
 | 运行 Lighthouse | 每月 | `./scripts/lighthouse-check.sh --all` |
-| 更新监控面板 | 每天（通过 n8n 自动化） | `./scripts/generate-dashboard.sh` |
+| 更新监控面板 | 每天（通过 GitHub Actions） | `./scripts/generate-dashboard.sh` |
 | 查看流量来源 | 每月 | Google Analytics → 流量获取 → 流量获取概览 |
 | 检查死链 | 每月 | 浏览器开发者工具控制台（找 404 错误） |
 

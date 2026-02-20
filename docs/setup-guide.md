@@ -507,4 +507,4 @@ domain:
 - Create more sites: see [Adding a New Site](adding-new-site.md)
 - Find projects to fork: see [Fork Guide](fork-guide.md)
 - Get AdSense approved: see [Content Strategy](content-strategy.md)
-- Set up automation: see [n8n/README.md](../n8n/README.md)
+- Set up automation: see [Deployment Automation](deployment-automation.md)

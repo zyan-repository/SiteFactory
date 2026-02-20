@@ -2,7 +2,7 @@
 
 Static site mass production system for AdSense monetization.
 
-**Tech stack**: Hugo | Vercel | n8n | NameSilo
+**Tech stack**: Hugo | Vercel | NameSilo
 
 **Philosophy**: Ship fast, monetize faster. Good enough beats perfect.
 
@@ -13,7 +13,7 @@ Static site mass production system for AdSense monetization.
 | **Speed over Perfection** | A "good enough" site that earns money beats a "perfect" site still in development |
 | **Cost is King** | Every decision starts with: is the free tier sufficient? |
 | **Scale by Multiplication** | Don't build one big site. Build 100 small sites. Each simple, volume wins |
-| **Automate Everything** | Manual operation = can't scale. Everything goes through n8n workflows |
+| **Automate Everything** | Manual operation = can't scale. Everything goes through scripts and GitHub Actions |
 | **SEO is the Product** | The site itself doesn't matter. Search engine ranking is what matters |
 | **Compliance First** | AdSense ban = zero revenue. Compliance is the bottom line, not optional |
 | **Copy before Create** | Find existing open-source sites to fork/adapt. Check licenses to avoid legal risk |
@@ -125,7 +125,6 @@ SiteFactory/
 │       ├── llm.sh           # Unified LLM API wrapper (6+ providers)
 │       ├── platform.sh      # Cross-platform utilities
 │       └── verify.sh        # DNS polling + HTTP health check
-├── n8n/workflows/           # n8n workflow exports (JSON)
 ├── dashboard/               # Monitoring dashboard
 │   ├── template.html        # Dashboard template
 │   └── data/                # Metrics JSON (git-ignored)
@@ -277,13 +276,12 @@ Format rules:
 
 When approaching bandwidth limit: optimize images (WebP, lazy loading), minimize bundles, or split high-traffic sites to separate projects.
 
-## n8n Workflow Integration
+## Automation
 
-Automation is handled at three levels:
+Automation is handled at two levels:
 
 1. **Bash scripts** — Core execution layer (`launch-site.sh`, `deploy.sh`, etc.)
 2. **GitHub Actions** — Auto-deploy on push, scheduled health checks, AI content generation
-3. **n8n** (optional) — Visual workflow automation, webhook-triggered pipelines
 
 ### GitHub Actions Workflows
 
@@ -293,26 +291,6 @@ Automation is handled at three levels:
 | Auto Deploy | `deploy.yml` | Push to `sites/`, manual dispatch | Deploys changed sites to Vercel + DNS |
 | Health Check | `health-check.yml` | Every 6 hours, manual | HTTP check all sites, warn if down |
 | Content Gen | `content-generation.yml` | Manual dispatch | AI article generation → commit → push → auto-deploy |
-
-### n8n Workflows (Optional)
-
-All repeatable operations can also be n8n workflows, exported as JSON in `n8n/`.
-
-### Core Workflows
-
-| Workflow | Trigger | What it does |
-|----------|---------|-------------|
-| `new-site-pipeline` | Webhook | Creates Hugo or fork site, deploys to Vercel, sets up DNS + monitoring |
-| `content-generation` | Cron (daily) | Claude API generates SEO articles → git commit → auto-deploy |
-| `monitoring-report` | Cron (6h) | Collects UptimeRobot + Lighthouse data → updates dashboard |
-| `site-health-check` | Cron (daily) | Checks DNS, SSL, HTTP status for all sites → alerts on failures |
-
-### Adding a New Workflow
-
-1. Build and test in n8n UI
-2. Export as JSON to `n8n/` directory
-3. Remove hardcoded API keys from the JSON before committing
-4. Document trigger, inputs, outputs in the JSON description field
 
 ## Monitoring
 
@@ -446,11 +424,10 @@ Format: `<type>(<scope>): <subject>`
 | `seo` | SEO improvements |
 | `perf` | Performance optimizations |
 | `deploy` | Deployment config changes |
-| `n8n` | Workflow changes |
 | `docs` | Documentation |
 | `chore` | Tooling, scripts, dependencies |
 
-Scope examples: `template`, `tech-blog`, `ads`, `i18n`, `vercel`, `n8n`, `monitoring`
+Scope examples: `template`, `tech-blog`, `ads`, `i18n`, `vercel`, `monitoring`
 
 Examples:
 ```

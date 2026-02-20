@@ -90,8 +90,6 @@ jobs:
                 model: "claude-sonnet-4-20250514"
           monitoring:
             uptimerobot_api_key: ""
-          n8n:
-            base_url: ""
           defaults:
             language: "en"
             timezone: "America/New_York"

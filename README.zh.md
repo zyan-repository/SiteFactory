@@ -191,7 +191,6 @@ SiteFactory/
 │   ├── my-blog/             # Hugo 内容站（type: hugo）
 │   └── my-tool/             # Fork 的工具站（type: static）
 ├── scripts/                 # 自动化脚本（建站、部署、监控）
-├── n8n/                     # n8n 自动化工作流
 ├── dashboard/               # 监控面板
 └── docs/                    # 文档
 ```
@@ -272,19 +271,6 @@ license: MIT
 | `generate-dashboard.sh` | 生成监控面板 |
 | `lighthouse-check.sh <名字\|--all>` | 运行 Lighthouse 性能审计 |
 
-## n8n 自动化工作流
-
-把 `n8n/workflows/` 里的 JSON 文件导入你的 n8n 实例：
-
-| 工作流 | 触发方式 | 功能 |
-|--------|---------|------|
-| `new-site-pipeline` | Webhook | 自动创建并部署新站点 |
-| `content-generation` | 定时（每天） | AI 自动生成 SEO 优化文章 |
-| `monitoring-report` | 定时（每6小时） | 更新监控面板 |
-| `site-health-check` | 定时（每天） | 检查所有站点的 DNS、SSL、可访问性 |
-
-详见 [n8n/README.md](n8n/README.md)。
-
 ## 监控面板
 
 自动生成的单页 HTML 文件，展示所有站点的状态和运行情况。
@@ -306,7 +292,7 @@ open dashboard/index.html
 | [Fork 指南](docs/zh/fork-guide.md) | 怎么找项目、评估、改造 |
 | [内容策略](docs/zh/content-strategy.md) | AdSense 审批技巧和 SEO 策略 |
 | [贡献站点](docs/zh/contributing-sites.md) | 如何向项目提交新的工具站点 |
-| [部署自动化](docs/zh/deployment-automation.md) | 一键部署、GitHub Actions、n8n |
+| [部署自动化](docs/zh/deployment-automation.md) | 一键部署、GitHub Actions |
 | [主域名管理](docs/zh/root-domain.md) | AdSense 验证、主域名切换 |
 | [站点清单](SITES.zh.md) | 所有已集成站点的来源和用途 |
 
@@ -318,8 +304,8 @@ open dashboard/index.html
 | 工具站 | 纯 HTML/CSS/JS | 零构建，直接从 GitHub 抄 |
 | 托管 | Vercel 免费版 | 免费、100GB 流量、自动 SSL |
 | 域名 | NameSilo | ~$9/年，有 REST API 管理 DNS |
-| 自动化 | n8n（自托管） | 可视化工作流，400+ 集成 |
-| AI 内容 | Claude API（通过 n8n） | SEO 优化的文章自动生成 |
+| 自动化 | GitHub Actions | 自动部署、健康检查、内容生成 |
+| AI 内容 | Claude / OpenAI / Gemini / DeepSeek | SEO 优化的文章自动生成 |
 | 监控 | UptimeRobot | 免费 50 个监控点 |
 | 广告 | Google AdSense | 一个标签自动放置广告 |
 

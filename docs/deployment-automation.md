@@ -2,13 +2,12 @@
 
 # Deployment Automation
 
-SiteFactory offers three levels of deployment automation. Choose based on your needs:
+SiteFactory offers two levels of deployment automation. Choose based on your needs:
 
 | Method | Best For | Setup | Infrastructure |
 |--------|----------|-------|----------------|
 | **One-Click Script** | Quick local deploys | None | Local machine |
 | **GitHub Actions** | Auto-deploy on push, scheduled tasks | GitHub Secrets | Free (GitHub) |
-| **n8n Workflows** | Visual automation, complex pipelines | Docker | Self-hosted |
 
 ## Method 1: One-Click Script (Recommended)
 
@@ -170,36 +169,6 @@ Go to Actions → "Generate Content" → "Run workflow" and fill in:
 
 The workflow generates the article, commits it, and pushes — which triggers the deploy workflow automatically.
 
-## Method 3: n8n Workflows (Optional)
-
-For visual workflow automation. Requires a running n8n instance.
-
-### Quick Setup
-
-```bash
-# Start n8n with Docker
-docker run -d --name n8n \
-  -p 5678:5678 \
-  -v ~/.n8n:/home/node/.n8n \
-  -v /path/to/SiteFactory:/data/SiteFactory \
-  -e SF_PROJECT_ROOT=/data/SiteFactory \
-  -e SF_DOMAIN=search123.top \
-  n8nio/n8n
-```
-
-### Import Workflows
-
-1. Open http://localhost:5678
-2. Go to Workflows → Import from file
-3. Import each JSON from `n8n/workflows/`:
-   - `new-site-pipeline.json` — Webhook: create + deploy sites
-   - `content-generation.json` — Webhook: AI content generation
-   - `monitoring-report.json` — Cron: daily monitoring dashboard
-   - `site-health-check.json` — Cron: health checks every 6h
-4. Activate each workflow
-
-See [n8n/README.md](../n8n/README.md) for detailed setup instructions.
-
 ## Choosing the Right Method
 
 | Scenario | Recommended |
@@ -208,5 +177,3 @@ See [n8n/README.md](../n8n/README.md) for detailed setup instructions.
 | Regular content updates via git | GitHub Actions (auto-deploy) |
 | Daily AI content generation | GitHub Actions (content workflow) |
 | 10+ sites, need monitoring | GitHub Actions (health check) |
-| Complex multi-step automation | n8n |
-| Visual workflow editing | n8n |
