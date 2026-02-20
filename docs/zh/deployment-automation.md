@@ -132,7 +132,9 @@ SiteFactory 提供三种部署自动化方式，根据需求选择：
 | `SF_NAMESILO_API_KEY` | NameSilo API 密钥 | `config.yaml` → `domain.namesilo_api_key` |
 | `SF_ADSENSE_PUB_ID` | AdSense 发布者 ID | `config.yaml` → `adsense.publisher_id` |
 | `SF_GA_ID` | Google Analytics ID | `config.yaml` → `analytics.google_analytics_id` |
-| `SF_AI_API_KEY` | Claude/OpenAI API 密钥 | `config.yaml` → `ai.providers.claude.api_key` |
+| `SF_AI_API_KEY` | 所选 AI 服务的 API 密钥 | `config.yaml` → `ai.providers.<provider>.api_key` |
+
+> **注意：** `SF_AI_API_KEY` 是所有 AI 服务共用的。触发内容生成时可以选择 provider（claude、openai、deepseek、gemini、moonshot、zhipu），密钥需要与所选 provider 匹配。
 
 ### 可用工作流
 
@@ -163,6 +165,8 @@ SiteFactory 提供三种部署自动化方式，根据需求选择：
 - **Topic：** 文章主题
 - **Keywords：** SEO 关键词，逗号分隔（可选）
 - **Word count：** 目标字数（默认 1200）
+- **AI provider：** 选择 claude、openai、deepseek、gemini、moonshot、zhipu（默认 claude）
+- **Model name：** 留空使用 provider 默认模型，或指定模型（如 `deepseek-chat`）
 
 工作流自动生成文章、提交到 git、推送 —— 推送会自动触发部署工作流。
 

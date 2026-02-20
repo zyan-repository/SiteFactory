@@ -132,7 +132,9 @@ Go to your repo's **Settings → Secrets and variables → Actions → New repos
 | `SF_NAMESILO_API_KEY` | NameSilo API key | `config.yaml` → `domain.namesilo_api_key` |
 | `SF_ADSENSE_PUB_ID` | AdSense publisher ID | `config.yaml` → `adsense.publisher_id` |
 | `SF_GA_ID` | Google Analytics ID | `config.yaml` → `analytics.google_analytics_id` |
-| `SF_AI_API_KEY` | Claude/OpenAI API key | `config.yaml` → `ai.providers.claude.api_key` |
+| `SF_AI_API_KEY` | API key for your chosen AI provider | `config.yaml` → `ai.providers.<provider>.api_key` |
+
+> **Note:** `SF_AI_API_KEY` is shared across all providers. When triggering Content Generation, you select the provider (claude, openai, deepseek, gemini, moonshot, zhipu) — the key must match the provider you choose.
 
 ### Available Workflows
 
@@ -163,6 +165,8 @@ Go to Actions → "Generate Content" → "Run workflow" and fill in:
 - **Topic:** article topic
 - **Keywords:** comma-separated SEO keywords (optional)
 - **Word count:** target word count (default 1200)
+- **AI provider:** choose from claude, openai, deepseek, gemini, moonshot, zhipu (default: claude)
+- **Model name:** leave empty for provider default, or specify a model (e.g., `deepseek-chat`)
 
 The workflow generates the article, commits it, and pushes — which triggers the deploy workflow automatically.
 
