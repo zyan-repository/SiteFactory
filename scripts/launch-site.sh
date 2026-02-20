@@ -8,6 +8,7 @@
 #
 # Options:
 #   --skip-verify   Skip DNS and HTTP verification phases
+#   --root          Also bind root/apex domain to this site
 #
 # Environment:
 #   SF_JSON_OUTPUT=true   Output machine-readable JSON summary (for n8n)
@@ -19,10 +20,12 @@ source "$REPO_ROOT/scripts/lib/logging.sh"
 
 # --- Parse arguments (extract flags, then positional args) ---
 SKIP_VERIFY=false
+ROOT_FLAG=""
 POSITIONAL_ARGS=()
 for arg in "$@"; do
   case "$arg" in
     --skip-verify) SKIP_VERIFY=true ;;
+    --root) ROOT_FLAG="--root" ;;
     *) POSITIONAL_ARGS+=("$arg") ;;
   esac
 done
@@ -55,6 +58,13 @@ fi
 source "$REPO_ROOT/scripts/lib/verify.sh"
 
 CUSTOM_DOMAIN="${SITE_NAME}.${SF_DOMAIN:-example.com}"
+ROOT_DOMAIN="${SF_DOMAIN:-example.com}"
+
+# Auto-detect --root from site.yaml if not explicitly passed
+if [[ -z "$ROOT_FLAG" ]] && [[ -f "$REPO_ROOT/sites/$SITE_NAME/site.yaml" ]] && \
+   grep -q "^root_domain: true" "$REPO_ROOT/sites/$SITE_NAME/site.yaml" 2>/dev/null; then
+  ROOT_FLAG="--root"
+fi
 
 log_info "=== SiteFactory Launch: $SITE_NAME ($MODE) ==="
 echo ""
@@ -73,12 +83,12 @@ echo ""
 
 # --- Phase 2: Deploy ---
 log_step "Phase 2/6: Deploying to production..."
-"$REPO_ROOT/scripts/deploy.sh" "$SITE_NAME"
+"$REPO_ROOT/scripts/deploy.sh" "$SITE_NAME" $ROOT_FLAG
 echo ""
 
 # --- Phase 3: DNS ---
 log_step "Phase 3/6: Setting up DNS..."
-"$REPO_ROOT/scripts/dns-setup.sh" "$SITE_NAME"
+"$REPO_ROOT/scripts/dns-setup.sh" "$SITE_NAME" $ROOT_FLAG
 echo ""
 
 # --- Phase 4: Verify DNS ---
@@ -92,6 +102,14 @@ if [[ "$SKIP_VERIFY" == "false" ]]; then
   else
     log_warn "DNS not yet propagated (this is normal, may take up to 48h)"
     log_info "Check manually: dig CNAME $CUSTOM_DOMAIN"
+  fi
+  if [[ -n "$ROOT_FLAG" ]]; then
+    if verify_dns_a_poll "$ROOT_DOMAIN" "76.76.21.21" 12 10; then
+      echo ""
+      log_ok "Root DNS verified: $ROOT_DOMAIN"
+    else
+      log_warn "Root DNS not yet propagated. Check: dig A $ROOT_DOMAIN"
+    fi
   fi
   echo ""
 else
@@ -111,6 +129,15 @@ if [[ "$SKIP_VERIFY" == "false" ]]; then
   else
     log_warn "Site not yet accessible at $SITE_URL"
     log_info "This will resolve once DNS fully propagates"
+  fi
+  if [[ -n "$ROOT_FLAG" ]]; then
+    ROOT_URL="https://$ROOT_DOMAIN"
+    if verify_http_poll "$ROOT_URL" 6 10; then
+      echo ""
+      log_ok "Root domain is live: $ROOT_URL"
+    else
+      log_warn "Root domain not yet accessible at $ROOT_URL"
+    fi
   fi
   echo ""
 else
@@ -140,6 +167,9 @@ echo "  +------------------------------------------+"
 echo "  | Site:    $SITE_NAME"
 echo "  | Type:    $MODE"
 echo "  | URL:     https://$CUSTOM_DOMAIN"
+if [[ -n "$ROOT_FLAG" ]]; then
+echo "  | Root:    https://$ROOT_DOMAIN"
+fi
 echo "  | Dir:     sites/$SITE_NAME"
 echo "  | DNS:     $(if [[ "$DNS_OK" == "true" ]]; then echo "verified"; else echo "pending"; fi)"
 echo "  | HTTP:    $(if [[ "$HTTP_OK" == "true" ]]; then echo "live"; else echo "pending"; fi)"
@@ -153,13 +183,16 @@ echo "    3. Monitor: ./scripts/lighthouse-check.sh $SITE_NAME"
 
 # JSON output for automation (n8n, CI, etc.)
 if [[ "${SF_JSON_OUTPUT:-false}" == "true" ]] && command -v jq &>/dev/null; then
+  ROOT_URL_VAL=""
+  [[ -n "$ROOT_FLAG" ]] && ROOT_URL_VAL="https://$ROOT_DOMAIN"
   jq -n \
     --arg name "$SITE_NAME" \
     --arg type "$MODE" \
     --arg url "https://$CUSTOM_DOMAIN" \
+    --arg root_url "$ROOT_URL_VAL" \
     --arg dir "sites/$SITE_NAME" \
     --argjson elapsed "$ELAPSED" \
     --argjson dns_ok "$DNS_OK" \
     --argjson http_ok "$HTTP_OK" \
-    '{success: true, site_name: $name, site_type: $type, url: $url, directory: $dir, elapsed_seconds: $elapsed, dns_verified: $dns_ok, http_verified: $http_ok}'
+    '{success: true, site_name: $name, site_type: $type, url: $url, root_url: $root_url, directory: $dir, elapsed_seconds: $elapsed, dns_verified: $dns_ok, http_verified: $http_ok}'
 fi

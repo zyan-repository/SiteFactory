@@ -282,6 +282,7 @@ open dashboard/index.html
 | [内容策略](docs/zh/content-strategy.md) | AdSense 审批技巧和 SEO 策略 |
 | [贡献站点](docs/zh/contributing-sites.md) | 如何向项目提交新的工具站点 |
 | [部署自动化](docs/zh/deployment-automation.md) | 一键部署、GitHub Actions、n8n |
+| [主域名管理](docs/zh/root-domain.md) | AdSense 验证、主域名切换 |
 | [站点清单](SITES.zh.md) | 所有已集成站点的来源和用途 |
 
 ## 技术栈

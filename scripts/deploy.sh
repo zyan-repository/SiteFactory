@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # deploy.sh - Deploy a site to Vercel. Auto-detects Hugo vs static type.
-# Usage: ./scripts/deploy.sh <site-name> [--preview] [--verify]
+# Usage: ./scripts/deploy.sh <site-name> [--preview] [--verify] [--root]
 
 set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -12,14 +12,16 @@ source "$REPO_ROOT/scripts/lib/platform.sh"
 SITE_NAME=""
 PREVIEW_FLAG=""
 VERIFY_FLAG=""
+ROOT_FLAG=""
 for arg in "$@"; do
   case "$arg" in
     --preview) PREVIEW_FLAG="--preview" ;;
     --verify) VERIFY_FLAG="--verify" ;;
+    --root) ROOT_FLAG="--root" ;;
     *) [[ -z "$SITE_NAME" ]] && SITE_NAME="$arg" ;;
   esac
 done
-[[ -z "$SITE_NAME" ]] && { echo "Usage: deploy.sh <site-name> [--preview] [--verify]"; exit 1; }
+[[ -z "$SITE_NAME" ]] && { echo "Usage: deploy.sh <site-name> [--preview] [--verify] [--root]"; exit 1; }
 
 SITE_DIR="$REPO_ROOT/sites/$SITE_NAME"
 
@@ -58,6 +60,14 @@ fi
 
 CUSTOM_DOMAIN="${SITE_NAME}.${SF_DOMAIN}"
 
+# Detect root domain from --root flag or site.yaml
+IS_ROOT=false
+if [[ "$ROOT_FLAG" == "--root" ]]; then
+  IS_ROOT=true
+elif [[ -f "$SITE_DIR/site.yaml" ]] && grep -q "^root_domain: true" "$SITE_DIR/site.yaml" 2>/dev/null; then
+  IS_ROOT=true
+fi
+
 log_step "Deploying to Vercel${PROD_FLAG:+ (production)}..."
 log_info "This may take a minute, showing Vercel output below..."
 echo ""
@@ -79,10 +89,19 @@ echo ""
 if [[ -n "$PROD_FLAG" ]]; then
   log_step "Configuring custom domain: $CUSTOM_DOMAIN"
   npx vercel domains add "$CUSTOM_DOMAIN" "$SITE_NAME" --token "$SF_VERCEL_TOKEN" 2>/dev/null || true
+
+  if [[ "$IS_ROOT" == "true" ]]; then
+    log_step "Configuring root domain: $SF_DOMAIN"
+    npx vercel domains add "$SF_DOMAIN" "$SITE_NAME" --token "$SF_VERCEL_TOKEN" 2>/dev/null || true
+    npx vercel domains add "www.${SF_DOMAIN}" "$SITE_NAME" --token "$SF_VERCEL_TOKEN" 2>/dev/null || true
+  fi
 fi
 
 log_ok "Deployed: $DEPLOY_URL"
 log_ok "Custom domain: https://$CUSTOM_DOMAIN"
+if [[ "$IS_ROOT" == "true" ]]; then
+  log_ok "Root domain: https://$SF_DOMAIN"
+fi
 
 # Post-deploy HTTP health check (optional)
 if [[ "$VERIFY_FLAG" == "--verify" ]] && [[ -n "$DEPLOY_URL" ]]; then

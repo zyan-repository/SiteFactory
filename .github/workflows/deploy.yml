@@ -100,8 +100,17 @@ jobs:
               email: ""
           EOF
 
+      - name: Detect root domain flag
+        id: root-check
+        run: |
+          if grep -q "^root_domain: true" "sites/${{ matrix.site }}/site.yaml" 2>/dev/null; then
+            echo "flag=--root" >> "$GITHUB_OUTPUT"
+          else
+            echo "flag=" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Deploy ${{ matrix.site }}
-        run: ./scripts/deploy.sh "${{ matrix.site }}"
+        run: ./scripts/deploy.sh "${{ matrix.site }}" ${{ steps.root-check.outputs.flag }}
 
       - name: Setup DNS
-        run: ./scripts/dns-setup.sh "${{ matrix.site }}" || true
+        run: ./scripts/dns-setup.sh "${{ matrix.site }}" ${{ steps.root-check.outputs.flag }} || true

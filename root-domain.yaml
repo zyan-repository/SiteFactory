@@ -1,0 +1,7 @@
+# Root domain assignment — managed by scripts/swap-root.sh
+# Only ONE site can occupy the root domain at a time.
+# The assigned site is accessible at both:
+#   - https://search123.top (root domain)
+#   - https://{site-name}.search123.top (subdomain, always available)
+current_site: wifi-qr
+assigned_at: "2026-02-19"

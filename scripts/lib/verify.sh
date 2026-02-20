@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # verify.sh - Post-deployment verification helpers (DNS polling, HTTP health check).
+# Supports both CNAME (subdomains) and A record (apex/root domain) verification.
 # Usage: source scripts/lib/verify.sh
 
 # Check if a DNS CNAME record resolves to the expected target.
@@ -30,6 +31,44 @@ verify_dns_poll() {
   local attempt=1
   while [[ $attempt -le $max_attempts ]]; do
     if verify_dns "$hostname" "$expected"; then
+      return 0
+    fi
+    local remaining=$(( (max_attempts - attempt) * interval ))
+    printf "\r  Waiting for DNS propagation... attempt %d/%d (up to %ds remaining)" \
+      "$attempt" "$max_attempts" "$remaining"
+    sleep "$interval"
+    attempt=$((attempt + 1))
+  done
+  echo ""
+  return 1
+}
+
+# Check if a DNS A record resolves to the expected IP.
+# Returns 0 if resolved, 1 if not.
+verify_dns_a() {
+  local hostname="$1"
+  local expected_ip="$2"
+
+  if command -v dig &>/dev/null; then
+    dig A +short "$hostname" 2>/dev/null | grep -q "$expected_ip"
+  elif command -v nslookup &>/dev/null; then
+    nslookup "$hostname" 2>/dev/null | grep -q "$expected_ip"
+  else
+    return 1
+  fi
+}
+
+# Poll A record DNS until resolved or timeout.
+# Returns 0 if resolved, 1 if timed out.
+verify_dns_a_poll() {
+  local hostname="$1"
+  local expected_ip="${2:-76.76.21.21}"
+  local max_attempts="${3:-12}"
+  local interval="${4:-10}"
+
+  local attempt=1
+  while [[ $attempt -le $max_attempts ]]; do
+    if verify_dns_a "$hostname" "$expected_ip"; then
       return 0
     fi
     local remaining=$(( (max_attempts - attempt) * interval ))

@@ -261,6 +261,7 @@ open dashboard/index.html
 | [Content Strategy](docs/content-strategy.md) | [内容策略](docs/zh/content-strategy.md) |
 | [Contributing Sites](docs/contributing-sites.md) | [贡献站点](docs/zh/contributing-sites.md) |
 | [Deployment Automation](docs/deployment-automation.md) | [部署自动化](docs/zh/deployment-automation.md) |
+| [Root Domain Management](docs/root-domain.md) | [主域名管理](docs/zh/root-domain.md) |
 | [Site Registry](SITES.md) | [站点清单](SITES.zh.md) |
 
 ## Tech Stack

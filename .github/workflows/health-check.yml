@@ -45,6 +45,24 @@ jobs:
           echo "" >> "$GITHUB_STEP_SUMMARY"
           echo "**Total: $((TOTAL - FAILED))/$TOTAL healthy**" >> "$GITHUB_STEP_SUMMARY"
 
+          # Check root domain if root-domain.yaml exists
+          if [ -f "root-domain.yaml" ]; then
+            ROOT_SITE=$(grep "^current_site:" root-domain.yaml | awk '{print $2}')
+            if [ -n "$ROOT_SITE" ]; then
+              TOTAL=$((TOTAL + 1))
+              ROOT_URL="https://${SF_DOMAIN}"
+              HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 15 "$ROOT_URL" 2>/dev/null || echo "000")
+              if [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 400 ]; then
+                echo "OK   ($HTTP_CODE): $ROOT_URL (root -> $ROOT_SITE)"
+                echo "| ${ROOT_SITE} (root) | $ROOT_URL | OK | $HTTP_CODE |" >> "$GITHUB_STEP_SUMMARY"
+              else
+                echo "FAIL ($HTTP_CODE): $ROOT_URL (root -> $ROOT_SITE)"
+                echo "| ${ROOT_SITE} (root) | $ROOT_URL | **FAIL** | $HTTP_CODE |" >> "$GITHUB_STEP_SUMMARY"
+                FAILED=$((FAILED + 1))
+              fi
+            fi
+          fi
+
           echo ""
           echo "Results: $((TOTAL - FAILED))/$TOTAL healthy"
 
