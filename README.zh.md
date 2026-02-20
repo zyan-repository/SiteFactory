@@ -194,11 +194,30 @@ cd SiteFactory
 nano config.yaml           # 填写你的凭证
 ```
 
-### 第四步：创建你的站点
+### 第四步：部署和创建站点
+
+仓库自带示例站点（如 `wifi-qr`），可以直接部署：
 
 ```bash
-# 创建站点并推送 — GitHub Actions 自动部署
+# 直接部署仓库自带的示例站点 — 无需重新创建
+./scripts/deploy.sh wifi-qr
+./scripts/dns-setup.sh wifi-qr
+```
+
+添加自己的新站点：
+
+```bash
+# Fork 新的工具站（使用新名称，不要和 sites/ 下已有的重名）
 ./scripts/launch-site.sh fork https://github.com/user/repo my-tool "我的工具"
+
+# 或创建 Hugo 内容站
+./scripts/launch-site.sh hugo my-blog "我的博客" "分享技术心得"
+```
+
+推送即可触发 GitHub Actions 自动部署：
+
+```bash
+git add sites/
 git push
 ```
 

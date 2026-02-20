@@ -170,11 +170,30 @@ cd SiteFactory
 nano config.yaml           # Fill in your credentials
 ```
 
-### Step 4: Create Your Sites
+### Step 4: Deploy & Create Sites
+
+The repo includes example sites (e.g., `wifi-qr`) ready to deploy immediately:
 
 ```bash
-# Create and push — GitHub Actions auto-deploys
+# Deploy an included example site — no creation needed
+./scripts/deploy.sh wifi-qr
+./scripts/dns-setup.sh wifi-qr
+```
+
+To add your own new sites:
+
+```bash
+# Fork a new tool site (use a unique name, not one that already exists in sites/)
 ./scripts/launch-site.sh fork https://github.com/user/repo my-tool "My Tool"
+
+# Or create a Hugo content site
+./scripts/launch-site.sh hugo my-blog "My Blog" "A blog about things"
+```
+
+Push to trigger GitHub Actions auto-deploy:
+
+```bash
+git add sites/
 git push
 ```
 
