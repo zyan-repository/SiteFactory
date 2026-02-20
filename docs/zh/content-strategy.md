@@ -203,13 +203,12 @@ SiteFactory 使用 **Auto-Ads**（自动广告），Google 会自动在最优位
 
 ## 时间线规划
 
-| 周 | 目标 |
-|----|------|
-| 第 1 周 | 搭建 SiteFactory，创建前 3 个站点 |
-| 第 2 周 | 给站点添加内容（每站 15+ 页） |
-| 第 3 周 | 提交到 Google Search Console，等待收录 |
-| 第 4 周 | 申请 AdSense |
-| 第 5-6 周 | 等 AdSense 审核，继续添加内容 |
-| 第 7 周起 | 扩大规模：更多 Fork、更多内容、优化收入 |
+| 阶段 | 目标 |
+|------|------|
+| 第 1-2 小时 | 搭建 SiteFactory，创建 Hugo 站 + AI 生成内容，部署到主域名，提交 Google Search Console |
+| 当天 | 补充文章到 15 篇以上，申请 AdSense |
+| 第 2-4 周 | 等待 AdSense 审核（通常 2-4 周），期间继续添加站点和内容 |
 
+> **唯一的等待是 AdSense 审核。** 配好 AI API Key 后，从零到提交 AdSense 申请只需 1-2 小时。Hugo 模板自带隐私政策、关于页面、联系页面和服务条款，AdSense 合规要求自动满足。
+>
 > **如果超过 6 周还没通过 AdSense：** 不要急——继续添加内容，确保所有页面都在 Search Console 里被收录了（[Search Console](https://search.google.com/search-console) → 网页 → 看"已编入索引"数量）。修改 Google 指出的问题后重新申请。

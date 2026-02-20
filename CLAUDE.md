@@ -45,13 +45,22 @@ Every site has a `site.yaml` that determines how it's built and deployed:
 # Hugo content site
 type: hugo
 name: tech-blog
+title: "Tech Blog"
+description: "Daily tips for developers"
 source: template
+language: en
+created: "2026-01-15"
+# root_domain: true        # Optional: set to serve on root domain
 
 # Forked tool site
 type: static
 name: bmi-calculator
+title: "BMI Calculator"
+description: "Calculate your Body Mass Index"
 source: https://github.com/user/bmi-calc
 license: MIT
+language: en
+created: "2026-01-15"
 ```
 
 ### GitHub Project Evaluation
@@ -69,7 +78,7 @@ Before forking, run `./scripts/check-repo.sh <url>`. A project MUST pass:
 
 === QUICK EXCLUSION SIGNALS ===
 - server.js / app.py / main.go / docker-compose.yml → has backend
-- express / koa / fastify / next in package.json → server framework
+- express / koa / fastify / next / nuxt / nest / hapi / restify in package.json → server framework
 - requirements.txt / Gemfile / go.mod → non-frontend deps
 - DATABASE_URL / REDIS_URL in .env → database dependency
 - fetch('/api/...') in code → internal API calls
@@ -77,7 +86,7 @@ Before forking, run `./scripts/check-repo.sh <url>`. A project MUST pass:
 
 ### Fork Adaptation Pipeline
 
-`fork-site.sh` executes: clone → strip .git → inject AdSense + GA + SEO → add privacy/about pages → create ads.txt + site.yaml → add attribution.
+`fork-site.sh` executes: compatibility check → clone → strip .git → inject AdSense + GA + SEO → add privacy/about pages → create ads.txt + site.yaml → add attribution.
 
 ### High-Value Fork Targets
 
@@ -116,9 +125,13 @@ SiteFactory/
 │   ├── deploy-all.sh        # Deploy all sites
 │   ├── build-all.sh         # Build all Hugo sites
 │   ├── dns-setup.sh         # NameSilo API CNAME setup (--verify flag)
+│   ├── swap-root.sh         # Swap which site occupies the root domain
 │   ├── generate-content.sh  # AI-generate SEO articles (multi-provider)
+│   ├── generate-content-plan.sh  # AI-generate content plan for a site
+│   ├── generate-seed-content.sh  # AI-generate initial seed articles
 │   ├── generate-dashboard.sh # Monitoring dashboard
 │   ├── lighthouse-check.sh  # Lighthouse audit
+│   ├── pre-commit-hook.sh   # ShellCheck on staged .sh files
 │   └── lib/
 │       ├── config.sh        # Parse config.yaml → env vars
 │       ├── logging.sh       # Colored log helpers
@@ -181,7 +194,7 @@ Sitemap & indexing:
 |------|--------|
 | **No click encouragement** | Never use "click here", "support us", arrows pointing to ads |
 | **No deceptive layout** | Ads must be clearly distinguishable from content |
-| **No ad overload** | Max 3 ad units per page. Content must exceed ad space |
+| **No ad overload** | Content must exceed ad space. With Auto-Ads (default), Google manages placement automatically. If placing ads manually, max 3 units per page |
 | **No thin content** | Every page needs 300+ words of original, useful content |
 | **No auto-refresh** | Pages must NOT auto-reload to inflate impressions |
 | **No pop-up ads** | No interstitials that block content |
@@ -190,7 +203,7 @@ Sitemap & indexing:
 | **Mobile friendly** | Ads must not break mobile layout or overlap content |
 | **Privacy policy** | Every site MUST have a privacy policy page |
 
-Standard ad placement (3 units max):
+Ad placement: SiteFactory uses **Auto-Ads** by default — Google automatically places ads where they perform best. If placing ads manually instead, use max 3 units:
 1. Top of article (below H1, above first paragraph)
 2. Mid-article (after 3rd or 4th paragraph)
 3. End of article (before related posts)
@@ -292,6 +305,7 @@ Automation is handled at two levels:
 | Auto Deploy | `deploy.yml` | Push to `sites/`, manual dispatch | Deploys changed sites to Vercel + DNS |
 | Health Check | `health-check.yml` | Every 6 hours, manual | HTTP check all sites, warn if down |
 | Content Gen | `content-generation.yml` | Manual dispatch | AI article generation → commit → push → auto-deploy |
+| Scheduled Content | `scheduled-content.yml` | Daily 09:00 UTC, manual | Auto-generate content for sites with content plans |
 
 ## Monitoring
 
@@ -410,7 +424,7 @@ Current asset naming convention (Hugo v0.103.0+):
 ### Pre-deploy Check
 
 ```bash
-shellcheck scripts/*.sh scripts/lib/*.sh && hugo --gc --minify && scripts/lighthouse-check.sh
+shellcheck scripts/*.sh scripts/lib/*.sh && scripts/build-all.sh && scripts/lighthouse-check.sh
 ```
 
 ## Git Conventions

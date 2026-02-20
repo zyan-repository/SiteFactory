@@ -242,7 +242,7 @@ node --version  # Should show Node.js version
 ## Step 2: Clone the Repository
 
 ```bash
-git clone https://github.com/yourname/SiteFactory.git
+git clone https://github.com/zyan-repository/SiteFactory.git
 cd SiteFactory
 ```
 
@@ -315,20 +315,7 @@ You should see green checkmarks (✓) for all items. If any show a red cross (�
 
 ## Step 6: Create Your First Site
 
-### Option A: Hugo Content Site
-
-```bash
-./scripts/new-site.sh my-blog "My Tech Blog" "Tips and tutorials for developers"
-```
-
-Preview locally:
-
-```bash
-hugo server -s sites/my-blog
-# Open http://localhost:1313
-```
-
-### Option B: Fork a GitHub Project
+### Option A: Fork a GitHub Project (Fastest)
 
 First, check if the project is compatible:
 
@@ -348,6 +335,19 @@ Preview:
 open sites/wifi-qr/index.html
 ```
 
+### Option B: Hugo Content Site
+
+```bash
+./scripts/new-site.sh my-blog "My Tech Blog" "Tips and tutorials for developers"
+```
+
+Preview locally:
+
+```bash
+hugo server -s sites/my-blog
+# Open http://localhost:1313
+```
+
 ## Step 7: Deploy
 
 ```bash
@@ -363,7 +363,7 @@ The script will:
 2. Deploy to Vercel
 3. Configure your custom subdomain (`my-blog.yourdomain.com`)
 
-## Step 8: Set Up DNS (First Time Only)
+## Step 8: Set Up DNS
 
 For each site, add a DNS record:
 
@@ -380,20 +380,48 @@ DNS changes can take up to 48 hours to propagate. Your site will be live at `htt
 - If results show `cname.vercel-dns.com`, DNS is working
 - If results show nothing or errors, wait a few more hours and check again
 
-## Step 9: Apply for AdSense
+## Step 9: Set Up Root Domain (Required for AdSense)
 
-> AdSense requires your site to have real content and be at least 1-2 weeks old.
+Google AdSense verifies your site by visiting `https://yourdomain.com/`. If all your sites only live on subdomains, AdSense verification will fail.
 
-1. Deploy at least 15 pages of original content
-2. Make sure privacy policy and about pages exist
-3. Wait 1-2 weeks for Google to index your site
-4. Apply at [adsense.google.com](https://adsense.google.com/)
-5. Once approved, update `adsense.publisher_id` in config.yaml and set `enabled: true`
-6. Redeploy your sites — ads will automatically appear
+Assign one site to the root domain:
 
-See [Content Strategy](content-strategy.md) for detailed AdSense approval tips.
+```bash
+# Swap root domain to an existing site
+./scripts/swap-root.sh wifi-qr --verify
+```
 
-## Step 10: Monitor (Optional)
+Or set `root_domain: true` in a site's `site.yaml` and redeploy. See [Root Domain Management](root-domain.md) for details.
+
+## Step 10: Add Content
+
+Empty sites won't pass AdSense review. Add content to each site:
+
+- **Hugo sites:** At least 15 articles, each 300+ words (800+ recommended). Use `./scripts/generate-content.sh <site> <topic>` for AI generation, or write manually.
+- **Fork tool sites:** Add How to Use (300+ words), About This Tool (300+ words), and FAQ (300+ words) pages.
+- Make sure privacy policy and about pages exist (included in templates).
+
+See [Content Strategy](content-strategy.md) for detailed guidelines.
+
+## Step 11: Submit to Google & Apply for AdSense
+
+**Submit to Google Search Console:**
+
+1. Go to [search.google.com/search-console](https://search.google.com/search-console)
+2. Add your domain as a property → verify with HTML tag
+3. Submit your sitemap: left menu → "Sitemaps" → enter `sitemap.xml` → click "Submit"
+4. Wait for indexing (a few days to 2 weeks)
+
+**Apply for AdSense** (after your site has content and is indexed):
+
+1. Go to [adsense.google.com](https://adsense.google.com/) → sign up with your domain
+2. Wait for approval (typically 2-4 weeks)
+3. Once approved, update `adsense.publisher_id` in config.yaml and set `enabled: true`
+4. Redeploy your sites: `./scripts/deploy-all.sh` — ads will automatically appear
+
+See [Content Strategy](content-strategy.md) for AdSense approval tips.
+
+## Step 12: Monitor (Optional)
 
 Generate a monitoring dashboard:
 
@@ -460,8 +488,8 @@ hugo -s sites/my-blog --gc --minify
 You can set up everything else first:
 1. In `config.yaml`, keep `publisher_id` as the placeholder value
 2. Set `adsense.enabled: false`
-3. Deploy your sites, add content, wait 1-2 weeks
-4. Apply for AdSense (see [Content Strategy](content-strategy.md))
+3. Deploy your sites, add content (15+ pages), submit to Google Search Console
+4. Apply for AdSense (see [Content Strategy](content-strategy.md)) — approval typically takes 2-4 weeks
 5. Once approved, update config.yaml with your real publisher ID and set `enabled: true`
 6. Redeploy all sites: `./scripts/deploy-all.sh`
 

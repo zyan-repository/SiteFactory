@@ -181,7 +181,7 @@ SiteFactory uses **Auto-Ads** — Google automatically places ads where they per
 | CTR > 5% | Abnormally high click rate — may indicate invalid clicks (bots, click farms, or someone repeatedly clicking your ads) | Check Google Analytics for suspicious traffic sources. Do NOT click your own ads. Wait — Google will investigate automatically. |
 | CTR suddenly drops to 0% | Ads stopped showing on your site | Check AdSense dashboard for error messages. Verify your site loads correctly. |
 | Revenue drops > 30% overnight | Possible policy violation or ad serving restriction | Log in to AdSense and check for any policy warnings or "Ad serving limited" banners. |
-| "Limited ad serving" notice | Google detected unusual click patterns or traffic and temporarily restricted ads on your site | **Where you see this:** A yellow or red banner at the top of the AdSense dashboard. **What to do:** (1) Do NOT click your own ads, ever. (2) Check GA for suspicious referrers. (3) Do nothing else — Google automatically reviews and restores ad serving within 30 days if traffic normalizes. (4) Do NOT contact Google support about this; it resolves itself. |
+| "Limited ad serving" notice | Google detected unusual click patterns or traffic and temporarily restricted ads on your site | **Where you see this:** A yellow or red banner at the top of the AdSense dashboard. **What to do:** (1) Do NOT click your own ads, ever. (2) Check GA for suspicious referrers. (3) Do nothing else — Google automatically reviews and restores ad serving within 30 days if traffic normalizes. (4) Do NOT contact Google support about this; it resolves itself. (5) If not restored after 30 days, check all external links pointing to your site and remove suspicious ones. |
 
 ## Monthly Maintenance
 
@@ -196,13 +196,12 @@ SiteFactory uses **Auto-Ads** — Google automatically places ads where they per
 
 ## Timeline
 
-| Week | Goal |
-|------|------|
-| 1 | Set up SiteFactory, create first 3 sites |
-| 2 | Add content to sites (15+ pages each) |
-| 3 | Submit to Google Search Console, start indexing |
-| 4 | Apply for AdSense |
-| 5-6 | Wait for AdSense approval, keep adding content |
-| 7+ | Scale: fork more tools, generate more content |
+| Phase | Goal |
+|-------|------|
+| Hour 1-2 | Set up SiteFactory, create Hugo site with AI content, deploy to root domain, submit to Google Search Console |
+| Same day | Add more articles to reach 15+, apply for AdSense |
+| Week 2-4 | Wait for AdSense approval (typically 2-4 weeks), keep adding sites and content |
 
+> **The only wait is AdSense review.** With AI content generation configured, you can go from zero to AdSense application in 1-2 hours. Hugo templates include privacy policy, about, contact, and terms pages — all AdSense compliance requirements are met automatically.
+>
 > **If AdSense approval takes longer than 6 weeks:** Don't worry — keep adding content and ensure all pages are indexed in Search Console. You can check indexing status at [Search Console](https://search.google.com/search-console) → Pages. Reapply after fixing any issues Google identified.

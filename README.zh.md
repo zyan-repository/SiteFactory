@@ -77,24 +77,24 @@ open config.yaml    # Mac 用默认编辑器打开
 nano config.yaml    # 在终端里编辑（Ctrl+O 保存，Ctrl+X 退出）
 ```
 
-需要填写的内容：
+必须填写的内容：
 
 | 配置项 | 去哪里获取 | 怎么操作 | 值长什么样 |
 |--------|-----------|---------|-----------|
 | `domain.name` | [NameSilo](https://www.namesilo.com/) | 搜索域名 → 加购物车 → 付款（约 $9/年） | `mysite.com`（不带 https://） |
 | `domain.namesilo_api_key` | [API 管理页](https://www.namesilo.com/account/api-manager) | 点击 **"Generate"** → 复制出现的字符串 | 约 20-30 个字母数字，如 `a1b2c3...` |
 | `vercel.token` | [令牌页](https://vercel.com/account/tokens) | 点击 **"Create"** → 范围选 "Full Account" → **立即复制**（只显示一次！） | 约 24+ 个字符，如 `pZGwk...` |
-| `adsense.publisher_id` | [AdSense](https://adsense.google.com/) | 登录后看**地址栏** URL 里的 `pub-数字`，前面加 `ca-`；或者：设置 → 账号信息 | `ca-pub-5531531271065052` |
-| `analytics.google_analytics_id` | [Analytics](https://analytics.google.com/) | **新账号：** 点击"开始衡量" → 创建账号和媒体资源 → 创建数据流 → 获取衡量 ID；**已有账号：** 左下角齿轮 → 数据流 → 右上角**衡量 ID** | `G-A1B2C3D4E5` |
 
 > 每一步的详细图文教程见 [配置指南](docs/zh/setup-guide.md)，保证不用查任何资料就能跟着做。
 
-可选配置（不填也能用）：
+可选配置（不填也能用，以后再补）：
 
-| 配置项 | 用途 |
-|--------|------|
-| `claude.api_key` | AI 自动生成文章（需要 Claude API） |
-| `monitoring.uptimerobot_api_key` | 监控站点是否在线 |
+| 配置项 | 用途 | 什么时候需要 |
+|--------|------|-------------|
+| `adsense.publisher_id` | AdSense 广告收入 | 等站点有内容后申请 AdSense，审核通过后再填（详见第十步） |
+| `analytics.google_analytics_id` | 流量统计 | 推荐尽早配置，但不影响部署 |
+| `ai.api_key` | AI 自动生成文章 | 想用 AI 写文章时再配 |
+| `monitoring.uptimerobot_api_key` | 监控站点是否在线 | 站点多了以后再配 |
 
 > **中国大陆用户注意**：Google 系列服务（AdSense、Analytics、Search Console）可能需要特殊网络环境才能访问。
 
@@ -110,63 +110,113 @@ nano config.yaml    # 在终端里编辑（Ctrl+O 保存，Ctrl+X 退出）
 
 ### 第七步：创建你的第一个站点
 
-**最快方式：一键启动（推荐）**
+**推荐：用 Hugo 创建内容站 + AI 自动生成内容（最快满足 AdSense 要求）**
+
+如果你在第五步配置了 AI API Key，Hugo 建站时会**自动生成种子文章、首页内容和关于页面**，加上模板自带的隐私政策、联系页和服务条款，**一条命令就满足 AdSense 对内容和合规页面的要求**：
 
 ```bash
-# 一条命令搞定：创建 + 部署 + DNS + 验证
+# 推荐：创建 Hugo 站 + 部署 + DNS + 绑定主域名，一步到位
+./scripts/launch-site.sh hugo adsense-home "我的首页" "搜索工具和实用资讯" --root
+```
+
+> 加了 `--root` 参数，这个站会同时部署到 `https://你的域名.com` 和 `https://adsense-home.你的域名.com`。AdSense 验证需要主域名有内容，所以第一个站建议就绑到主域名。
+
+**也可以 Fork 工具站：**
+
+```bash
+# Fork 一个 GitHub 上现成的小工具
 ./scripts/launch-site.sh fork https://github.com/evgeni/qifi wifi-qr "WiFi 二维码生成器"
-
-# 或者创建 Hugo 内容站
-./scripts/launch-site.sh hugo my-blog "我的博客" "分享技术心得"
 ```
 
-或者分步操作：
+或者分步操作（手动控制每个环节）：
 
 ```bash
-./scripts/fork-site.sh https://github.com/evgeni/qifi wifi-qr "WiFi 二维码生成器"
-./scripts/deploy.sh wifi-qr
-./scripts/dns-setup.sh wifi-qr
+# 1. 创建站点
+./scripts/new-site.sh adsense-home "我的首页" "搜索工具和实用资讯"
+
+# 2. 部署到 Vercel + 绑定主域名
+./scripts/deploy.sh adsense-home --root
+
+# 3. 设置 DNS
+./scripts/dns-setup.sh adsense-home --root
 ```
 
-### 第八步：设置域名
+> DNS 生效需要最多 48 小时，耐心等待。生效后访问 `https://你的域名.com` 就能看到你的站点了。
+>
+> 怎么查 DNS 有没有生效？打开 [dnschecker.org](https://dnschecker.org/)，输入你的域名，记录类型选 A，如果结果显示 `76.76.21.21` 就说明生效了。
 
-> 如果使用了 `launch-site.sh`，DNS 已自动配置，可跳过此步。
+### 第八步：补充内容到 15 篇以上
+
+如果第五步配置了 AI API Key，建站时已经自动生成了种子文章（默认 5 篇）。你只需要**继续补充到 15 篇以上**：
 
 ```bash
-./scripts/dns-setup.sh my-tool
+# 用 AI 继续生成文章
+./scripts/generate-content.sh adsense-home "实用搜索技巧"
+./scripts/generate-content.sh adsense-home "在线工具推荐"
+
+# 或者手动创建文章
+nano sites/adsense-home/content/posts/my-article.md
 ```
 
-这会自动添加 DNS 记录：`my-tool.你的域名.com` → Vercel 服务器。
+**Hugo 模板已自动包含以下 AdSense 必需页面**（无需手动创建）：
+- 隐私政策（privacy-policy.md）
+- 关于页面（about.md）
+- 联系页面（contact.md）
+- 服务条款（terms.md）
 
-> DNS 生效需要最多 48 小时，耐心等待。生效后访问 `https://my-tool.你的域名.com` 就能看到你的站点了。
-
-### 第九步：绑定主域名（AdSense 必需）
-
-Google AdSense 会访问 `https://你的域名.com/` 来验证站点。如果所有站点都只在子域名（如 `wifi-qr.你的域名.com`），主域名没有内容，**AdSense 验证会失败**。
-
-**解决方案：** 把其中一个站点分配到主域名，让它同时在 `https://你的域名.com` 和 `https://站点名.你的域名.com` 提供服务：
+每篇文章建议 **300+ 字**（800+ 字效果更好）。补完文章后重新部署：
 
 ```bash
-# 方法 1：部署时加 --root 参数
-./scripts/launch-site.sh fork https://github.com/evgeni/qifi wifi-qr "WiFi 二维码生成器" --root
-
-# 方法 2：把主域名切换到已部署的站点
-./scripts/swap-root.sh wifi-qr --verify
+./scripts/deploy.sh adsense-home --root
 ```
 
-也可以在站点的 `site.yaml` 中设置 `root_domain: true`，部署脚本会自动检测。
+> 没配 AI？也没关系，手动写或用任何 AI 工具生成文章，放到 `sites/站点名/content/posts/` 目录即可。详细的内容策略见 [内容策略](docs/zh/content-strategy.md)。
 
-**注意事项：**
-- 同一时间只有**一个站点**可以占据主域名
-- 所有部署**默认只部署到子域名** —— 主域名需要手动启用
-- `swap-root.sh` 自动处理所有操作：Vercel 绑定、DNS A 记录、www 重定向
-- 切换时旧站点保留其子域名，不受影响
+### 第九步：提交到 Google
 
-详细说明见 [主域名管理](docs/zh/root-domain.md)。
+让 Google 知道你的站点存在，加快收录速度：
 
-## Fork 部署（其他用户使用）
+1. 打开 [Google Search Console](https://search.google.com/search-console)
+2. 点击左上角下拉菜单 → **"添加资源"**
+3. 选择 **"网址前缀"** → 输入 `https://你的域名.com` → 点击 **"继续"**
+4. 选择 **HTML 标记** 验证方式，把验证码填入 `config.yaml` 的 `google_search_console_verification` 字段
+5. 重新部署站点：`./scripts/deploy-all.sh`
+6. 回到 Search Console 点击 **"验证"**
+7. 验证成功后，在左侧菜单点击 **"站点地图"** → 输入 `sitemap.xml` → 点击 **"提交"**
 
-想用 SiteFactory 搭建自己的站群？Fork 本项目即可 —— 完整的自动化流水线开箱即用，还能随时同步上游的脚本和模板更新。
+> Google 收录通常需要几天到 2 周。可以在 Search Console 的「网页」页面查看收录进度。
+
+### 第十步：申请 AdSense
+
+> 确保站点已有足够内容（每站 15+ 页）、已绑定主域名（第七步）、已提交 Google 收录（第九步）。
+
+1. 打开 [adsense.google.com](https://adsense.google.com/)
+2. 点击 **"开始使用"**，用 Google 账号登录
+3. 填写你的网站地址（`https://你的域名.com`）和国家
+4. 按 Google 的提示完成注册
+5. 等待审核（通常 **2-4 周**）
+6. 审核通过后，获取发布者 ID（地址栏里的 `pub-数字`，前面加 `ca-`）
+7. 填入 `config.yaml` 的 `adsense.publisher_id`，把 `enabled` 改成 `true`
+8. 重新部署：`./scripts/deploy-all.sh` —— 广告自动出现！
+
+> 如果被拒绝了也不要慌，常见原因和解决方法见 [内容策略](docs/zh/content-strategy.md)。
+
+### 完成！
+
+恭喜，你已经完成了从零到赚钱的全部流程。接下来可以：
+
+- **扩大规模** —— 创建更多站点，详见 [添加新站点](docs/zh/adding-new-site.md)
+- **找更多项目来 Fork** —— 详见 [Fork 指南](docs/zh/fork-guide.md)
+- **优化内容和 SEO** —— 详见 [内容策略](docs/zh/content-strategy.md)
+- **设置自动化** —— 详见 [部署自动化](docs/zh/deployment-automation.md)
+
+---
+
+## Fork 部署（进阶 · 适合有 GitHub 经验的用户）
+
+> **新手请跳过这一节。** 以上 10 步教程已经是完整流程。下面是给想 Fork 本项目到自己 GitHub 账号的用户看的，适合有 Git/GitHub 使用经验的人。
+
+想把 SiteFactory 复制一份到自己的 GitHub 账号？Fork 本项目即可 —— 完整的自动化流水线开箱即用，还能随时同步上游的脚本和模板更新。
 
 ### 第一步：Fork 仓库
 
@@ -371,6 +421,7 @@ open dashboard/index.html
 | [贡献站点](docs/zh/contributing-sites.md) | 如何向项目提交新的工具站点 |
 | [部署自动化](docs/zh/deployment-automation.md) | 一键部署、GitHub Actions |
 | [主域名管理](docs/zh/root-domain.md) | AdSense 验证、主域名切换 |
+| [自动内容生成](docs/zh/automated-content.md) | AI 内容生成流水线、定时任务 |
 | [站点清单](SITES.zh.md) | 所有已集成站点的来源和用途 |
 
 ## 技术栈
@@ -401,12 +452,12 @@ open dashboard/index.html
 
 ### 多久能开始赚钱？
 
-1. 第 1 周：搭建环境，创建前 3 个站点
-2. 第 2 周：添加内容（每站至少 15 页）
-3. 第 3 周：提交 Google 收录
-4. 第 4 周：申请 AdSense
-5. 第 5-6 周：等待 AdSense 审核
-6. 第 7 周起：开始有广告收入，持续添加站点
+1. **第 1-2 小时**：搭建环境 + 创建 Hugo 站点 + AI 生成内容 + 部署上线 + 提交 Google（配了 AI API Key 的话，建站时自动生成种子内容）
+2. **当天或第二天**：补充文章到 15 篇以上，申请 AdSense
+3. **接下来 2-4 周**：等待 AdSense 审核，期间继续添加站点和内容
+4. **审核通过后**：立即开始有广告收入
+
+> **唯一的等待是 AdSense 审核。** 搭建环境到提交 AdSense 申请可以在 1-2 小时内完成。推荐第五步就配好 AI API Key，建站时自动生成内容，省去手动写文章的时间。
 
 ### AdSense 审核通不过怎么办？
 

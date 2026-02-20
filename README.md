@@ -57,12 +57,12 @@ Both paths produce sites that:
 
 **macOS:**
 ```bash
-brew install hugo yq jq node
+brew install hugo yq jq node git
 ```
 
 **Ubuntu/Debian:**
 ```bash
-sudo apt-get install hugo yq jq nodejs
+sudo apt-get install hugo yq jq nodejs git
 ```
 
 **Windows:** Use [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install) with Ubuntu, then follow the Linux instructions above.
@@ -140,9 +140,37 @@ You can also set `root_domain: true` in a site's `site.yaml` — deploy scripts 
 
 For details see [Root Domain Management](docs/root-domain.md).
 
+### Recommended: Hugo + AI for Fastest AdSense Approval
+
+If you configure an AI API key in config.yaml, Hugo sites **auto-generate seed articles, homepage content, and about page** during creation. Combined with the template's built-in privacy policy, contact page, and terms of service, **one command satisfies AdSense content and compliance requirements**:
+
+```bash
+# Create Hugo site + deploy + DNS + bind to root domain — all in one
+./scripts/launch-site.sh hugo adsense-home "My Site" "Search tools and resources" --root
+```
+
+The `--root` flag binds the site to your root domain (`https://yourdomain.com`), which AdSense needs for verification. Then add more articles to reach 15+:
+
+```bash
+./scripts/generate-content.sh adsense-home "useful search tips"
+./scripts/deploy.sh adsense-home --root
+```
+
+### Submit to Google & Apply for AdSense
+
+1. **Submit to Google Search Console:** Go to [Search Console](https://search.google.com/search-console) → Add property → enter your domain → verify via HTML tag → submit `sitemap.xml`
+2. **Apply for AdSense:** Go to [adsense.google.com](https://adsense.google.com/) → sign up with your domain → wait for approval (typically 2-4 weeks)
+3. **Once approved:** Copy your publisher ID, update `adsense.publisher_id` in config.yaml, set `enabled: true`, and redeploy: `./scripts/deploy-all.sh`
+
+> **The only wait is AdSense review.** Setup to AdSense application can be done in 1-2 hours with AI content generation.
+
+---
+
 ## Fork & Deploy (For Other Users)
 
-Want to use SiteFactory with your own domain and sites? Fork it — you get the full automation pipeline, and you can sync upstream improvements at any time.
+> **New to SiteFactory?** The Quick Start section above is the complete guide. This section is for users who want to fork SiteFactory to their own GitHub account — useful if you have GitHub experience and want CI/CD auto-deploy.
+
+Want to copy SiteFactory to your own GitHub account? Fork it — you get the full automation pipeline, and you can sync upstream improvements at any time.
 
 ### Step 1: Fork on GitHub
 
@@ -350,6 +378,7 @@ open dashboard/index.html
 | [Contributing Sites](docs/contributing-sites.md) | [贡献站点](docs/zh/contributing-sites.md) |
 | [Deployment Automation](docs/deployment-automation.md) | [部署自动化](docs/zh/deployment-automation.md) |
 | [Root Domain Management](docs/root-domain.md) | [主域名管理](docs/zh/root-domain.md) |
+| [Automated Content](docs/automated-content.md) | [自动内容生成](docs/zh/automated-content.md) |
 | [Site Registry](SITES.md) | [站点清单](SITES.zh.md) |
 
 ## Tech Stack

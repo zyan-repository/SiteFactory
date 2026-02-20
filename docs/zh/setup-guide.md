@@ -208,11 +208,9 @@ UptimeRobot 用来监控你的网站是不是在线，如果挂了会发邮件�
 
 ## 第一步：安装工具
 
-### Mac 用户
+### macOS
 
 打开终端（按 `Command + 空格`，输入 `Terminal`，回车），然后逐行执行：
-
-### macOS
 
 ```bash
 # 安装 Homebrew（Mac 的软件包管理器）
@@ -249,7 +247,7 @@ git --version   # 应该显示 git version 开头
 
 ```bash
 # 下载项目代码
-git clone https://github.com/yourname/SiteFactory.git
+git clone https://github.com/zyan-repository/SiteFactory.git
 
 # 进入项目目录
 cd SiteFactory
@@ -328,7 +326,7 @@ analytics:
 
 ## 第六步：创建第一个站点
 
-### 方式 A：从 GitHub Fork 一个工具站
+### 方式 A：从 GitHub Fork 一个工具站（最快）
 
 ```bash
 # 先检查项目兼容性
@@ -375,14 +373,43 @@ hugo server -s sites/my-blog
 - 如果结果显示 `cname.vercel-dns.com`，说明 DNS 已生效
 - 如果什么都没有或显示错误，再等几个小时重新检查
 
-## 第八步：申请 AdSense（等站点运行 1-2 周后）
+## 第八步：绑定主域名（AdSense 必需）
 
-1. 先给站点添加足够的内容（至少 15 页，每页 300+ 字）
-2. 确保隐私政策和关于页面存在（模板已自动包含）
-3. 等 Google 收录你的站点（通常 1-2 周）
-4. 去 [adsense.google.com](https://adsense.google.com/) 申请
-5. 审核通过后，把真实的 `publisher_id` 填入 config.yaml，`enabled` 改成 `true`
-6. 重新部署所有站点：`./scripts/deploy-all.sh`——广告会自动出现
+Google AdSense 会访问 `https://你的域名.com/` 来验证站点。如果所有站点都只在子域名上，主域名没有内容，**AdSense 验证会失败**。
+
+把其中一个站点分配到主域名：
+
+```bash
+./scripts/swap-root.sh wifi-qr --verify
+```
+
+或者在站点的 `site.yaml` 中设置 `root_domain: true` 后重新部署。详见 [主域名管理](root-domain.md)。
+
+## 第九步：给站点添加内容
+
+空站点无法通过 AdSense 审核。
+
+- **Hugo 站：** 至少 15 篇文章，每篇 300+ 字（建议 800+）。用 `./scripts/generate-content.sh <站点> <主题>` 可 AI 生成，或手动写。
+- **Fork 工具站：** 添加使用说明（300+ 字）、关于本工具（300+ 字）、FAQ（300+ 字）页面。
+- 确保隐私政策和关于页面存在（模板已自动包含）。
+
+详细内容指南见 [内容策略](content-strategy.md)。
+
+## 第十步：提交到 Google 并申请 AdSense
+
+**提交到 Google Search Console：**
+
+1. 打开 [search.google.com/search-console](https://search.google.com/search-console)
+2. 添加你的域名资源 → 用 HTML 标记验证
+3. 提交 sitemap：左侧菜单 → "站点地图" → 输入 `sitemap.xml` → 点击 "提交"
+4. 等待收录（几天到 2 周）
+
+**申请 AdSense**（站点有内容且被收录后）：
+
+1. 去 [adsense.google.com](https://adsense.google.com/) → 用你的域名注册
+2. 等待审核（通常 2-4 周）
+3. 审核通过后，把真实的 `publisher_id` 填入 config.yaml，`enabled` 改成 `true`
+4. 重新部署所有站点：`./scripts/deploy-all.sh`——广告会自动出现
 
 详细技巧见 [内容策略](content-strategy.md)。
 
