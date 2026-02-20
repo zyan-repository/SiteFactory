@@ -217,6 +217,26 @@ Rules:
 - URL structure: `/{lang}/page/` (language prefix always present)
 - Do NOT mix languages on a single page
 
+### Documentation Bilingual Requirement
+
+**Every project documentation file (`.md`) must have both English and Chinese versions.** This is non-negotiable.
+
+| Location | English | Chinese |
+|----------|---------|---------|
+| Root-level files | `FILE.md` | `FILE.zh.md` |
+| `docs/` directory | `docs/file.md` | `docs/zh/file.md` |
+
+Format rules:
+- English files start with: `**English** \| [中文](path-to-chinese-version)`
+- Chinese files start with: `[English](path-to-english-version) \| **中文**`
+- When creating or modifying any `.md` file, always create/update both language versions
+- README: `README.md` (English) ↔ `README.zh.md` (Chinese)
+
+**Checklist before committing documentation changes:**
+- [ ] Both English and Chinese versions exist
+- [ ] Language toggle links at the top of each file are correct
+- [ ] Both README files' documentation tables include the new entry with links to both versions
+
 ## Deployment
 
 ### Architecture

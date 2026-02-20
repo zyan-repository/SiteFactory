@@ -116,6 +116,7 @@ Full step-by-step with click paths: see [Setup Guide](docs/setup-guide.md).
 ```
 SiteFactory/
 ├── config.yaml              # Your credentials (git-ignored)
+├── SITES.md                 # Registry of all integrated sites
 ├── sites/
 │   ├── _template/           # Hugo site template (SEO-optimized)
 │   ├── _shared/             # Shared pages for fork sites (privacy policy, about)
@@ -249,6 +250,8 @@ open dashboard/index.html
 | [Adding a New Site](docs/adding-new-site.md) | [添加新站点](docs/zh/adding-new-site.md) |
 | [Fork Guide](docs/fork-guide.md) | [Fork 指南](docs/zh/fork-guide.md) |
 | [Content Strategy](docs/content-strategy.md) | [内容策略](docs/zh/content-strategy.md) |
+| [Contributing Sites](docs/contributing-sites.md) | [贡献站点](docs/zh/contributing-sites.md) |
+| [Site Registry](SITES.md) | [站点清单](SITES.zh.md) |
 
 ## Tech Stack
 

@@ -163,6 +163,7 @@ nano config.yaml    # 在终端里编辑（Ctrl+O 保存，Ctrl+X 退出）
 ```
 SiteFactory/
 ├── config.yaml              # 你的凭证配置（不会上传到 git）
+├── SITES.md                 # 所有已集成站点的清单
 ├── sites/
 │   ├── _template/           # Hugo 站点模板
 │   ├── _shared/             # Fork 站共用文件（隐私政策、关于页面）
@@ -280,6 +281,8 @@ open dashboard/index.html
 | [添加新站点](docs/zh/adding-new-site.md) | Hugo 和 Fork 两种建站方式 |
 | [Fork 指南](docs/zh/fork-guide.md) | 怎么找项目、评估、改造 |
 | [内容策略](docs/zh/content-strategy.md) | AdSense 审批技巧和 SEO 策略 |
+| [贡献站点](docs/zh/contributing-sites.md) | 如何向项目提交新的工具站点 |
+| [站点清单](SITES.zh.md) | 所有已集成站点的来源和用途 |
 
 ## 技术栈
 
