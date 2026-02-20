@@ -55,13 +55,13 @@ analytics:
   # NOTE: One GA property covers all subdomains — just fill in once.
   google_analytics_id: "G-XXXXXXXXXX"
 
-  # Google Search Console verification code
-  # WHERE: https://search.google.com/search-console -> Add property
-  #        -> URL prefix -> enter your URL -> choose "HTML tag" method
-  #        -> copy the content="..." value from the meta tag shown
+  # Google Search Console verification code (optional)
+  # Only needed if using the "URL prefix + HTML tag" verification method.
+  # If you verified via "Domain property + DNS TXT record", leave this empty.
+  # WHERE: Search Console -> Add property -> URL prefix -> HTML tag -> copy content="..." value
   # FORMAT: ~43 alphanumeric characters
   # NOTE: Can be added later after site is live and DNS is set up
-  google_search_console_verification: "XXXXXXXXXXXXXX"
+  google_search_console_verification: ""
 
 # --- AI Content Generation (Optional — skip if not using AI content) ---
 # Used by: scripts/generate-content.sh and GitHub Actions content-generation workflow
