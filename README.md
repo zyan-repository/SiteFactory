@@ -71,7 +71,7 @@ sudo apt-get install hugo yq jq nodejs
 
 ```bash
 # 1. Clone the repo
-git clone https://github.com/yourname/SiteFactory.git
+git clone https://github.com/zyan-repository/SiteFactory.git
 cd SiteFactory
 
 # 2. Run setup — creates config.yaml, checks tools, validates credentials
@@ -205,7 +205,7 @@ Add the original repo as `upstream` to pull script improvements, template update
 
 ```bash
 # One-time setup
-git remote add upstream https://github.com/ORIGINAL_OWNER/SiteFactory.git
+git remote add upstream https://github.com/zyan-repository/SiteFactory.git
 
 # Sync whenever you want
 git fetch upstream

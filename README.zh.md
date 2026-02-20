@@ -55,7 +55,7 @@ sudo apt-get install hugo yq jq nodejs git
 ### 第三步：下载项目
 
 ```bash
-git clone https://github.com/yourname/SiteFactory.git
+git clone https://github.com/zyan-repository/SiteFactory.git
 cd SiteFactory
 ```
 
@@ -229,7 +229,7 @@ git push
 
 ```bash
 # 一次性设置
-git remote add upstream https://github.com/原作者/SiteFactory.git
+git remote add upstream https://github.com/zyan-repository/SiteFactory.git
 
 # 需要时同步
 git fetch upstream
