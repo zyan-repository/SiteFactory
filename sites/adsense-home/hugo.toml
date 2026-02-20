@@ -1,0 +1,49 @@
+baseURL = "https://adsense-home.search123.top/"
+languageCode = "zh"
+title = "Search123"
+
+# Performance
+enableEmoji = false
+enableGitInfo = false
+disableHugoGeneratorInject = true
+
+[params]
+  description = "Your go-to search and tools hub"
+  author = "Arron Zhou"
+  # AdSense
+  adsenseEnabled = true
+  adsensePubId = "ca-pub-5531531271065052"
+  # Analytics
+  googleAnalyticsId = "G-5JJ2VHPXNQ"
+  googleSearchConsoleVerification = "XXXXXXXXXXXXXX"
+  # SEO
+  ogImage = "/images/og-default.png"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = false
+  [markup.highlight]
+    noClasses = false
+
+[outputs]
+  home = ["HTML", "RSS"]
+  section = ["HTML", "RSS"]
+
+[sitemap]
+  changefreq = "weekly"
+  priority = 0.5
+  filename = "sitemap.xml"
+
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+
+[permalinks]
+  posts = "/posts/:slug/"
+
+[minify]
+  disableCSS = false
+  disableHTML = false
+  disableJS = false
+  minifyOutput = true

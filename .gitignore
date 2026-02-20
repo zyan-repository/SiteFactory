@@ -54,15 +54,10 @@ dashboard/data/
 # --- Lighthouse reports (generated) ---
 dashboard/data/lighthouse/
 
-# --- Sites (only _template and _shared are tracked) ---
-# Actual deployed sites are created locally via scripts, not stored in repo.
-# Users run fork-site.sh / new-site.sh to create sites on their machine.
-sites/*
-!sites/_template/
-!sites/_shared/
-
-# --- Root domain assignment (personal deployment config) ---
-root-domain.yaml
+# --- Site build artifacts ---
+sites/*/public/
+sites/*/resources/
+sites/*/.hugo_build.lock
 
 # --- Python ---
 __pycache__/

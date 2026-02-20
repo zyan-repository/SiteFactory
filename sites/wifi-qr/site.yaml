@@ -1,0 +1,9 @@
+type: static
+name: wifi-qr
+title: "WiFi QR Code Generator"
+description: "Generate WiFi QR codes in your browser - no server needed"
+source: https://github.com/evgeni/qifi
+license: MIT
+language: en
+created: 2026-02-19
+root_domain: true

@@ -1,0 +1,5 @@
+<li class="post-item">
+  <h2><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
+  <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
+  {{ with .Description }}<p>{{ . }}</p>{{ end }}
+</li>
