@@ -7,6 +7,7 @@ REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 source "$REPO_ROOT/scripts/lib/config.sh"
 source "$REPO_ROOT/scripts/lib/logging.sh"
 source "$REPO_ROOT/scripts/lib/platform.sh"
+source "$REPO_ROOT/scripts/lib/vercel.sh"
 
 # --- Parse arguments (order-independent) ---
 SITE_NAME=""
@@ -47,9 +48,28 @@ if [[ "$SITE_TYPE" == "hugo" ]]; then
     log_error "Hugo not found. Install Hugo and ensure it is in your PATH."
     exit 1
   fi
+
+  # Save .vercel/ before Hugo build (Hugo clears public/ on rebuild)
+  VERCEL_BACKUP=""
+  if [[ -d "$SITE_DIR/public/.vercel" ]]; then
+    VERCEL_BACKUP=$(mktemp -d)
+    cp -r "$SITE_DIR/public/.vercel" "$VERCEL_BACKUP/.vercel"
+  fi
+
   $HUGO_CMD -s "$SITE_DIR" --gc --minify --quiet
   DEPLOY_DIR="$SITE_DIR/public"
   log_ok "Build successful"
+
+  # Restore .vercel/ after build
+  if [[ -n "$VERCEL_BACKUP" ]] && [[ -d "$VERCEL_BACKUP/.vercel" ]]; then
+    cp -r "$VERCEL_BACKUP/.vercel" "$DEPLOY_DIR/.vercel"
+    rm -rf "$VERCEL_BACKUP"
+  fi
+
+  # Link deploy directory to correct Vercel project name.
+  # Without this, Vercel auto-names Hugo projects "public" (from the directory name).
+  log_step "Linking Vercel project '$SITE_NAME'..."
+  vercel_link_project "$DEPLOY_DIR" "$SITE_NAME" "$SF_VERCEL_TOKEN" || true
 fi
 
 # Deploy
@@ -72,8 +92,17 @@ log_step "Deploying to Vercel${PROD_FLAG:+ (production)}..."
 log_info "This may take a minute, showing Vercel output below..."
 echo ""
 
-# Build vercel command (--name is deprecated, Vercel auto-detects from directory)
+# Detect Vercel scope (required for non-interactive token-based deploys)
+VERCEL_SCOPE=""
+if [[ -n "${SF_VERCEL_TEAM_ID:-}" ]]; then
+  VERCEL_SCOPE="$SF_VERCEL_TEAM_ID"
+elif [[ -f "$DEPLOY_DIR/.vercel/project.json" ]] && command -v jq &>/dev/null; then
+  VERCEL_SCOPE=$(jq -r '.orgId // empty' "$DEPLOY_DIR/.vercel/project.json" 2>/dev/null)
+fi
+
+# Build vercel command
 VERCEL_ARGS=("$DEPLOY_DIR" "--token" "$SF_VERCEL_TOKEN" "--yes")
+[[ -n "$VERCEL_SCOPE" ]] && VERCEL_ARGS+=("--scope" "$VERCEL_SCOPE")
 [[ -n "$PROD_FLAG" ]] && VERCEL_ARGS+=("$PROD_FLAG")
 
 # Stream output in real-time while capturing the deploy URL
@@ -85,15 +114,18 @@ rm -f "$VERCEL_OUTPUT_FILE"
 
 echo ""
 
+# Resolve the actual Vercel project name (may differ from site name for legacy deployments)
+VERCEL_PROJECT=$(resolve_vercel_project "$SITE_DIR" "$SITE_TYPE" "$SITE_NAME")
+
 # Add custom domain for production deploys
 if [[ -n "$PROD_FLAG" ]]; then
   log_step "Configuring custom domain: $CUSTOM_DOMAIN"
-  npx vercel domains add "$CUSTOM_DOMAIN" "$SITE_NAME" --token "$SF_VERCEL_TOKEN" 2>/dev/null || true
+  npx vercel domains add "$CUSTOM_DOMAIN" "$VERCEL_PROJECT" --token "$SF_VERCEL_TOKEN" 2>/dev/null || true
 
   if [[ "$IS_ROOT" == "true" ]]; then
     log_step "Configuring root domain: $SF_DOMAIN"
-    npx vercel domains add "$SF_DOMAIN" "$SITE_NAME" --token "$SF_VERCEL_TOKEN" 2>/dev/null || true
-    npx vercel domains add "www.${SF_DOMAIN}" "$SITE_NAME" --token "$SF_VERCEL_TOKEN" 2>/dev/null || true
+    npx vercel domains add "$SF_DOMAIN" "$VERCEL_PROJECT" --token "$SF_VERCEL_TOKEN" 2>/dev/null || true
+    npx vercel domains add "www.${SF_DOMAIN}" "$VERCEL_PROJECT" --token "$SF_VERCEL_TOKEN" 2>/dev/null || true
   fi
 fi
 

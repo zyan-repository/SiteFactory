@@ -177,3 +177,10 @@ The workflow generates the article, commits it, and pushes — which triggers th
 | Regular content updates via git | GitHub Actions (auto-deploy) |
 | Daily AI content generation | GitHub Actions (content workflow) |
 | 10+ sites, need monitoring | GitHub Actions (health check) |
+
+## Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| Hugo site Vercel project named "public" | `deploy.sh` now auto-links Hugo projects to the correct name. For legacy deployments: `npx vercel link --project <site-name> --yes --cwd sites/<name>/public/ --token $TOKEN` then redeploy |
+| Domain assignment fails silently | Check actual project name: `cat sites/<name>/public/.vercel/project.json`. If `projectName` doesn't match, re-link and redeploy |

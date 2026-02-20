@@ -88,7 +88,7 @@ jobs:
             namesilo_api_key: "${{ secrets.SF_NAMESILO_API_KEY }}"
           vercel:
             token: "${{ secrets.SF_VERCEL_TOKEN }}"
-            team_id: ""
+            team_id: "${{ secrets.SF_VERCEL_TEAM_ID }}"
           adsense:
             publisher_id: "${{ secrets.SF_ADSENSE_PUB_ID }}"
             enabled: true

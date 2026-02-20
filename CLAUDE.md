@@ -378,6 +378,7 @@ Automation is handled at two levels:
 | Forking without checking license | Verify open-source license allows commercial use + modification |
 | Using third-party GitHub Actions for tool installation | Prefer direct download scripts — third-party actions go unmaintained and break when upstream changes download URLs (e.g., `peaceiris/actions-hugo` broke when Hugo changed archive naming in v0.103.0+) |
 | Using `hugo-version: 'latest'` in CI | Pin Hugo to a specific version (e.g., `0.156.0`) so builds are reproducible and you control when to upgrade |
+| Hugo site Vercel project named "public" | Hugo deploys from `public/` dir, so Vercel names the project "public". `deploy.sh` auto-links correct name via `vercel_link_project`. For legacy projects, run `vercel link --project <site-name> --cwd sites/<name>/public/` |
 
 ## Code Quality
 

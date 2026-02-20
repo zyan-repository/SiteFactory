@@ -177,3 +177,10 @@ SiteFactory 提供两种部署自动化方式，根据需求选择：
 | 通过 git 推送定期更新内容 | GitHub Actions（自动部署） |
 | 每日 AI 生成内容 | GitHub Actions（内容工作流） |
 | 10+ 站点需要监控 | GitHub Actions（健康检查） |
+
+## 常见问题排查
+
+| 问题 | 解决方案 |
+|------|---------|
+| Hugo 站点 Vercel 项目名为 "public" | `deploy.sh` 现已自动链接正确项目名。历史部署需手动修复：`npx vercel link --project <站点名> --yes --cwd sites/<名称>/public/ --token $TOKEN` 后重新部署 |
+| 域名绑定静默失败 | 检查实际项目名：`cat sites/<名称>/public/.vercel/project.json`。若 `projectName` 不匹配，重新链接并部署 |

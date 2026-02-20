@@ -131,3 +131,4 @@ dig A search123.top
 | www not redirecting | Check CNAME: `dig CNAME www.search123.top` should show `cname.vercel-dns.com` |
 | A record resolves to wrong IP | NameSilo parking records may conflict. `swap-root.sh` auto-removes stale records, but if manual cleanup is needed: NameSilo Dashboard → DNS Manager → delete A records not pointing to `76.76.21.21` |
 | DNS cached after record change | Old records may be cached for up to 1 hour (TTL=3600). Use `dig @8.8.8.8 A search123.top` to check propagation via Google DNS |
+| Root domain swap fails silently (Hugo sites) | Hugo sites' Vercel project may be named "public" instead of the site name. Check: `npx vercel domains inspect search123.top`. Fix: redeploy with updated `deploy.sh`, or manually `npx vercel link --project <site-name> --yes --cwd sites/<name>/public/` |

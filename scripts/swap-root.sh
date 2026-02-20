@@ -13,6 +13,7 @@ set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 source "$REPO_ROOT/scripts/lib/config.sh"
 source "$REPO_ROOT/scripts/lib/logging.sh"
+source "$REPO_ROOT/scripts/lib/vercel.sh"
 
 # --- Parse arguments ---
 SITE_NAME=""
@@ -72,10 +73,13 @@ echo ""
 # --- Phase 2: Remove root domain from old project ---
 if [[ -n "$CURRENT_ROOT" ]]; then
   log_step "Phase 2: Removing root domain from '$CURRENT_ROOT'..."
-  npx vercel domains rm "$SF_DOMAIN" "$CURRENT_ROOT" --yes --token "$SF_VERCEL_TOKEN" 2>/dev/null || \
-    log_warn "Could not remove $SF_DOMAIN from $CURRENT_ROOT (may not be assigned)"
-  npx vercel domains rm "www.${SF_DOMAIN}" "$CURRENT_ROOT" --yes --token "$SF_VERCEL_TOKEN" 2>/dev/null || \
-    log_warn "Could not remove www.$SF_DOMAIN from $CURRENT_ROOT (may not be assigned)"
+
+  # Note: `vercel domains rm` does not accept a project name — it removes from the team.
+  # We re-add to the new project in Phase 3.
+  npx vercel domains rm "$SF_DOMAIN" --yes --token "$SF_VERCEL_TOKEN" 2>/dev/null || \
+    log_warn "Could not remove $SF_DOMAIN (may not be assigned)"
+  npx vercel domains rm "www.${SF_DOMAIN}" --yes --token "$SF_VERCEL_TOKEN" 2>/dev/null || \
+    log_warn "Could not remove www.$SF_DOMAIN (may not be assigned)"
   log_ok "Root domain removed from $CURRENT_ROOT (subdomain still active)"
 else
   log_info "Phase 2: No existing root assignment, skipping removal"
@@ -84,8 +88,16 @@ echo ""
 
 # --- Phase 3: Add root domain to new project ---
 log_step "Phase 3: Assigning root domain to '$SITE_NAME'..."
-npx vercel domains add "$SF_DOMAIN" "$SITE_NAME" --token "$SF_VERCEL_TOKEN" 2>/dev/null || true
-npx vercel domains add "www.${SF_DOMAIN}" "$SITE_NAME" --token "$SF_VERCEL_TOKEN" 2>/dev/null || true
+
+# Resolve actual Vercel project name
+SITE_TYPE="static"
+if [[ -f "$SITE_DIR/site.yaml" ]]; then
+  SITE_TYPE=$(grep "^type:" "$SITE_DIR/site.yaml" | awk '{print $2}' | tr -d '"')
+fi
+VERCEL_PROJECT=$(resolve_vercel_project "$SITE_DIR" "$SITE_TYPE" "$SITE_NAME")
+
+npx vercel domains add "$SF_DOMAIN" "$VERCEL_PROJECT" --token "$SF_VERCEL_TOKEN" 2>/dev/null || true
+npx vercel domains add "www.${SF_DOMAIN}" "$VERCEL_PROJECT" --token "$SF_VERCEL_TOKEN" 2>/dev/null || true
 log_ok "Root domain assigned to $SITE_NAME"
 echo ""
 

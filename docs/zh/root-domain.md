@@ -131,3 +131,4 @@ dig A search123.top
 | www 没有重定向 | 检查 CNAME：`dig CNAME www.search123.top` 应显示 `cname.vercel-dns.com` |
 | A 记录解析到错误 IP | NameSilo 的默认停放记录可能冲突。`swap-root.sh` 会自动清理旧记录，如需手动处理：NameSilo 控制面板 → DNS 管理 → 删除不指向 `76.76.21.21` 的 A 记录 |
 | 修改 DNS 后仍解析到旧 IP | 旧记录可能缓存最多 1 小时（TTL=3600）。用 `dig @8.8.8.8 A search123.top` 通过 Google DNS 检查传播状态 |
+| 根域名切换静默失败（Hugo 站点） | Hugo 站点的 Vercel 项目名可能是 "public" 而非站点名。检查：`npx vercel domains inspect search123.top`。修复：用更新后的 `deploy.sh` 重新部署，或手动 `npx vercel link --project <站点名> --yes --cwd sites/<名称>/public/` |

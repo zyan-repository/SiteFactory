@@ -20,7 +20,7 @@ fi
 echo "Running ShellCheck on staged scripts..."
 FAILED=0
 for f in $STAGED_SH; do
-  if ! shellcheck "$f"; then
+  if ! shellcheck -x "$f"; then
     FAILED=1
   fi
 done
