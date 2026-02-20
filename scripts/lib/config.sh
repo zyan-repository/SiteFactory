@@ -37,9 +37,13 @@ SF_DEFAULT_LANG=$(yq '.defaults.language // "en"' "$CONFIG_FILE")
 SF_TIMEZONE=$(yq '.defaults.timezone // "America/New_York"' "$CONFIG_FILE")
 SF_AUTHOR_NAME=$(yq '.defaults.author.name // "SiteFactory"' "$CONFIG_FILE")
 SF_AUTHOR_EMAIL=$(yq '.defaults.author.email // ""' "$CONFIG_FILE")
+SF_CONTENT_SCHEDULE=$(yq '.content.default_schedule // "weekly"' "$CONFIG_FILE")
+SF_CONTENT_TOPIC_COUNT=$(yq '.content.default_topic_count // "25"' "$CONFIG_FILE")
+SF_CONTENT_SEED_ARTICLES=$(yq '.content.default_seed_articles // "5"' "$CONFIG_FILE")
 
 export SF_DOMAIN SF_NAMESILO_API_KEY SF_VERCEL_TOKEN SF_VERCEL_TEAM_ID
 export SF_ADSENSE_PUB_ID SF_ADSENSE_ENABLED SF_GA_ID SF_GSC_VERIFICATION
 export SF_AI_PROVIDER SF_AI_API_KEY SF_AI_MODEL SF_AI_BASE_URL
 export SF_UPTIMEROBOT_API_KEY SF_N8N_BASE_URL
 export SF_DEFAULT_LANG SF_TIMEZONE SF_AUTHOR_NAME SF_AUTHOR_EMAIL
+export SF_CONTENT_SCHEDULE SF_CONTENT_TOPIC_COUNT SF_CONTENT_SEED_ARTICLES

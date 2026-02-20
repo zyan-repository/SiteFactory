@@ -81,7 +81,8 @@ jobs:
           for script in setup.sh new-site.sh fork-site.sh check-repo.sh \
                         deploy.sh deploy-all.sh build-all.sh dns-setup.sh \
                         generate-dashboard.sh lighthouse-check.sh \
-                        launch-site.sh generate-content.sh; do
+                        launch-site.sh generate-content.sh \
+                        generate-content-plan.sh generate-seed-content.sh; do
             test -f "scripts/$script"
           done
 

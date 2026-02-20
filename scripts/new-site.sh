@@ -99,6 +99,34 @@ language: ${SITE_LANG}
 created: ${DATE}
 EOF
 
+# Step 4: AI content generation (optional, requires AI config)
+# Content plans are stored in content-plans/ (outside sites/)
+if [[ -f "$REPO_ROOT/config.yaml" ]] && command -v yq &>/dev/null; then
+  AI_KEY=$(yq ".ai.providers.$(yq '.ai.provider' "$REPO_ROOT/config.yaml").api_key // \"\"" "$REPO_ROOT/config.yaml" 2>/dev/null || echo "")
+  if [[ -n "$AI_KEY" && "$AI_KEY" != "null" && "$AI_KEY" != *"XXXX"* ]]; then
+    # Use global defaults from config.yaml (content.default_*)
+    TOPIC_COUNT=$(yq '.content.default_topic_count // "25"' "$REPO_ROOT/config.yaml")
+    SEED_COUNT=$(yq '.content.default_seed_articles // "5"' "$REPO_ROOT/config.yaml")
+    SCHEDULE=$(yq '.content.default_schedule // "weekly"' "$REPO_ROOT/config.yaml")
+
+    log_step "Generating content plan via AI..."
+    "$REPO_ROOT/scripts/generate-content-plan.sh" "$SITE_NAME" "$TOPIC_COUNT" "$SCHEDULE" \
+      || log_warn "Content plan generation failed (non-critical)"
+
+    log_step "Generating seed content via AI..."
+    "$REPO_ROOT/scripts/generate-seed-content.sh" "$SITE_NAME" "$SEED_COUNT" \
+      || log_warn "Seed content generation failed (non-critical)"
+  else
+    log_warn "AI not configured. Skipping content generation."
+    log_info "  Run later: ./scripts/generate-content-plan.sh $SITE_NAME"
+    log_info "             ./scripts/generate-seed-content.sh $SITE_NAME"
+  fi
+else
+  log_info "AI content generation skipped (config.yaml or yq not available)"
+  log_info "  Run later: ./scripts/generate-content-plan.sh $SITE_NAME"
+  log_info "             ./scripts/generate-seed-content.sh $SITE_NAME"
+fi
+
 # Verify build
 log_step "Verifying build..."
 HUGO_CMD=$(find_hugo)

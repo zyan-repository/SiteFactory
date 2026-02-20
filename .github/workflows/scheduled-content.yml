@@ -1,0 +1,186 @@
+name: Scheduled Content Generation
+
+on:
+  schedule:
+    # Run daily at 09:00 UTC
+    # Individual site frequency is controlled per-site or via SF_CONTENT_SCHEDULE
+    - cron: '0 9 * * *'
+  workflow_dispatch:
+    inputs:
+      site_name:
+        description: 'Generate for specific site (leave empty for all eligible)'
+        required: false
+        type: string
+      force:
+        description: 'Ignore publishing_schedule and generate now'
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  discover-sites:
+    runs-on: ubuntu-latest
+    outputs:
+      sites: ${{ steps.find.outputs.sites }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install yq
+        run: |
+          sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+          sudo chmod +x /usr/local/bin/yq
+
+      - id: find
+        name: Find eligible Hugo sites
+        env:
+          FORCE: ${{ inputs.force }}
+          TARGET_SITE: ${{ inputs.site_name }}
+          GLOBAL_SCHEDULE: ${{ secrets.SF_CONTENT_SCHEDULE }}
+        run: |
+          SITES="[]"
+          TODAY=$(date +%Y-%m-%d)
+          TODAY_EPOCH=$(date -d "$TODAY" +%s 2>/dev/null || echo "0")
+          DEFAULT_SCHEDULE="${GLOBAL_SCHEDULE:-weekly}"
+
+          # Scan Hugo sites (not content-plans/, since plans are gitignored)
+          for site_dir in sites/*/; do
+            name=$(basename "$site_dir")
+            [[ "$name" == "_template" || "$name" == "_shared" ]] && continue
+            [[ ! -f "$site_dir/site.yaml" ]] && continue
+
+            # Skip if specific site requested and this isn't it
+            if [[ -n "${TARGET_SITE:-}" && "$name" != "$TARGET_SITE" ]]; then
+              continue
+            fi
+
+            site_type=$(yq '.type // ""' "$site_dir/site.yaml")
+            [[ "$site_type" != "hugo" ]] && continue
+
+            # Check schedule: use content plan if exists, else global default
+            plan_file="content-plans/$name.yaml"
+            schedule="$DEFAULT_SCHEDULE"
+            if [[ -f "$plan_file" ]]; then
+              plan_schedule=$(yq '.publishing_schedule // ""' "$plan_file")
+              [[ -n "$plan_schedule" && "$plan_schedule" != "null" ]] && schedule="$plan_schedule"
+
+              # Check last_generated date
+              if [[ "${FORCE:-false}" != "true" ]]; then
+                last=$(yq '.last_generated // ""' "$plan_file")
+                if [[ -n "$last" && "$last" != "null" && "$last" != "" ]]; then
+                  last_epoch=$(date -d "$last" +%s 2>/dev/null || echo "0")
+                  days_since=$(( (TODAY_EPOCH - last_epoch) / 86400 ))
+                  case "$schedule" in
+                    daily)    [[ "$days_since" -lt 1 ]] && continue ;;
+                    2x-week)  [[ "$days_since" -lt 3 ]] && continue ;;
+                    weekly)   [[ "$days_since" -lt 7 ]] && continue ;;
+                    biweekly) [[ "$days_since" -lt 14 ]] && continue ;;
+                  esac
+                fi
+              fi
+            fi
+            # If no plan file exists, site is always eligible (plan will be generated)
+
+            SITES=$(echo "$SITES" | jq --arg n "$name" '. + [$n]')
+            echo "Eligible: $name (schedule: $schedule)"
+          done
+
+          echo "sites=$SITES" >> "$GITHUB_OUTPUT"
+          echo "Found eligible sites: $SITES"
+
+  generate:
+    needs: discover-sites
+    if: needs.discover-sites.outputs.sites != '[]' && needs.discover-sites.outputs.sites != ''
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    strategy:
+      matrix:
+        site: ${{ fromJSON(needs.discover-sites.outputs.sites) }}
+      max-parallel: 1
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install yq
+        run: |
+          sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+          sudo chmod +x /usr/local/bin/yq
+
+      - name: Create config.yaml
+        env:
+          AI_API_KEY: ${{ secrets.SF_AI_API_KEY }}
+          SF_DOMAIN: ${{ secrets.SF_DOMAIN }}
+          ADSENSE_PUB_ID: ${{ secrets.SF_ADSENSE_PUB_ID }}
+          GA_ID: ${{ secrets.SF_GA_ID }}
+          CONTENT_SCHEDULE: ${{ secrets.SF_CONTENT_SCHEDULE }}
+        run: |
+          PROVIDER="${{ secrets.SF_AI_PROVIDER }}"
+          PROVIDER="${PROVIDER:-claude}"
+          SCHEDULE="${CONTENT_SCHEDULE:-weekly}"
+
+          case "$PROVIDER" in
+            claude)   MODEL="claude-sonnet-4-20250514"; BASE_URL="" ;;
+            openai)   MODEL="gpt-4o"; BASE_URL="https://api.openai.com/v1" ;;
+            deepseek) MODEL="deepseek-chat"; BASE_URL="https://api.deepseek.com/v1" ;;
+            gemini)   MODEL="gemini-2.0-flash"; BASE_URL="" ;;
+            moonshot) MODEL="moonshot-v1-8k"; BASE_URL="https://api.moonshot.cn/v1" ;;
+            zhipu)    MODEL="glm-4-flash"; BASE_URL="https://open.bigmodel.cn/api/paas/v4" ;;
+          esac
+
+          cat > config.yaml << EOF
+          domain:
+            name: "${SF_DOMAIN}"
+            namesilo_api_key: ""
+          vercel:
+            token: ""
+            team_id: ""
+          adsense:
+            publisher_id: "${ADSENSE_PUB_ID}"
+            enabled: true
+          analytics:
+            google_analytics_id: "${GA_ID}"
+            google_search_console_verification: ""
+          ai:
+            provider: "${PROVIDER}"
+            providers:
+              ${PROVIDER}:
+                api_key: "${AI_API_KEY}"
+                model: "${MODEL}"
+                base_url: "${BASE_URL}"
+          content:
+            default_schedule: "${SCHEDULE}"
+            default_topic_count: 25
+            default_seed_articles: 5
+          monitoring:
+            uptimerobot_api_key: ""
+          n8n:
+            base_url: ""
+          defaults:
+            language: "en"
+            timezone: "America/New_York"
+            author:
+              name: "SiteFactory"
+              email: ""
+          EOF
+
+      - name: Ensure content plan exists for ${{ matrix.site }}
+        run: |
+          PLAN="content-plans/${{ matrix.site }}.yaml"
+          if [ ! -f "$PLAN" ]; then
+            echo "No content plan found, generating one..."
+            ./scripts/generate-content-plan.sh "${{ matrix.site }}"
+          fi
+
+      - name: Generate article for ${{ matrix.site }}
+        run: |
+          # Plan mode: picks next pending topic, skips articles that already exist
+          ./scripts/generate-content.sh "${{ matrix.site }}"
+
+      - name: Commit and push
+        run: |
+          git config user.name "SiteFactory Bot"
+          git config user.email "bot@sitefactory.dev"
+          # Only commit the article (content-plans/ is gitignored)
+          git add "sites/${{ matrix.site }}/content/" || true
+          git commit -m "content(${{ matrix.site }}): auto-generate scheduled article" || echo "Nothing to commit"
+          git pull --rebase || true
+          git push

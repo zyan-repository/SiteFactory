@@ -1,6 +1,13 @@
 {{ define "main" }}
 <h1>{{ .Site.Title }}</h1>
+
+{{ with .Content }}
+<div class="homepage-intro">
+  {{ . }}
+</div>
+{{ else }}
 <p>{{ .Site.Params.description }}</p>
+{{ end }}
 
 {{ $posts := where .Site.RegularPages "Section" "posts" }}
 {{ if $posts }}

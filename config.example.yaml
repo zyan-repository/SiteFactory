@@ -106,6 +106,22 @@ ai:
       model: "glm-4-flash"
       base_url: "https://open.bigmodel.cn/api/paas/v4"
 
+# --- Automated Content Pipeline (Optional) ---
+# Controls the AI content generation schedule and defaults.
+# Content plans are stored in content-plans/{site-name}.yaml (outside sites/).
+content:
+  # Default publishing schedule for new Hugo sites
+  # Options: daily | 2x-week | weekly | biweekly
+  # Can be overridden per-site in content-plans/{site}.yaml
+  # Can also be overridden via GitHub secret SF_CONTENT_SCHEDULE
+  default_schedule: "weekly"
+
+  # Number of article topics to generate per content plan
+  default_topic_count: 25
+
+  # Number of seed articles when creating a new site
+  default_seed_articles: 5
+
 # --- Monitoring (Optional — skip if not using UptimeRobot) ---
 monitoring:
   # UptimeRobot API key for uptime monitoring

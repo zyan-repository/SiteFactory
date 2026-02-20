@@ -103,6 +103,12 @@ h3 { font-size: 1.15rem; }
   margin-right: 0.3em;
 }
 
+/* Homepage intro */
+.homepage-intro { margin-bottom: 2rem; }
+.homepage-intro h2 { margin-top: 0.5em; }
+.homepage-intro ul { margin: 0.5em 0 1em 1.5em; }
+.homepage-intro p { margin-bottom: 0.8em; }
+
 /* Breadcrumb */
 .breadcrumb { color: var(--muted); font-size: 0.85rem; margin-bottom: 1em; }
 .breadcrumb a { color: var(--muted); }
