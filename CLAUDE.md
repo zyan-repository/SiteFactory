@@ -251,6 +251,17 @@ Format rules:
 - Sites accessible at `{site-name}.sitefactory.dev`
 - DNS: NameSilo nameservers or Vercel DNS for wildcard SSL
 
+### Root Domain Requirement
+
+**The apex/root domain MUST have a site deployed to it.** Google AdSense verifies by visiting `https://yourdomain.com/`. An empty root domain = failed verification = no ad revenue.
+
+- Exactly ONE site occupies the root domain at a time (tracked in `root-domain.yaml`)
+- That site is accessible at both `https://domain.com` and `https://site-name.domain.com`
+- Use `./scripts/swap-root.sh <site-name>` to change which site is on the root domain
+- Set `root_domain: true` in a site's `site.yaml` for auto-detection by deploy scripts
+- Root domain uses DNS A record (`76.76.21.21`), subdomains use CNAME
+- See [Root Domain Management](docs/root-domain.md) for full details
+
 ### Cost Budget
 
 | Resource | Plan | Limit | Cost |

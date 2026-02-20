@@ -36,7 +36,7 @@ jobs:
             SITES=$(git diff --name-only HEAD~1 -- 'sites/' | \
               grep -v '_template\|_shared' | \
               cut -d'/' -f2 | sort -u | \
-              jq -R -s 'split("\n") | map(select(length > 0))')
+              jq -R -c -s 'split("\n") | map(select(length > 0))')
             echo "sites=$SITES" >> "$GITHUB_OUTPUT"
           fi
 
