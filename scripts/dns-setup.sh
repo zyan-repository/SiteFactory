@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # dns-setup.sh - Add CNAME record for a subdomain via NameSilo API.
-# Usage: ./scripts/dns-setup.sh <site-name>
+# Usage: ./scripts/dns-setup.sh <site-name> [--verify]
 # Creates: <site-name>.example.com -> cname.vercel-dns.com
 
 set -euo pipefail
@@ -8,7 +8,17 @@ REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 source "$REPO_ROOT/scripts/lib/config.sh"
 source "$REPO_ROOT/scripts/lib/logging.sh"
 
-SITE_NAME="${1:?Usage: dns-setup.sh <site-name>}"
+# --- Parse arguments ---
+SITE_NAME=""
+VERIFY_FLAG=""
+for arg in "$@"; do
+  case "$arg" in
+    --verify) VERIFY_FLAG="--verify" ;;
+    *) [[ -z "$SITE_NAME" ]] && SITE_NAME="$arg" ;;
+  esac
+done
+[[ -z "$SITE_NAME" ]] && { echo "Usage: dns-setup.sh <site-name> [--verify]"; exit 1; }
+
 CNAME_TARGET="cname.vercel-dns.com"
 
 log_info "Adding CNAME: ${SITE_NAME}.${SF_DOMAIN} -> ${CNAME_TARGET}"
@@ -28,4 +38,16 @@ else
   echo "  Type:  CNAME"
   echo "  Value: $CNAME_TARGET"
   echo "  TTL:   3600"
+fi
+
+# Optional DNS propagation verification
+if [[ "$VERIFY_FLAG" == "--verify" ]]; then
+  source "$REPO_ROOT/scripts/lib/verify.sh"
+  log_step "Verifying DNS propagation (polling up to 2 minutes)..."
+  if verify_dns_poll "${SITE_NAME}.${SF_DOMAIN}" "$CNAME_TARGET" 12 10; then
+    echo ""
+    log_ok "DNS verified: ${SITE_NAME}.${SF_DOMAIN}"
+  else
+    log_warn "DNS not yet propagated. Check: dig CNAME ${SITE_NAME}.${SF_DOMAIN}"
+  fi
 fi

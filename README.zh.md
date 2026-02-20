@@ -110,30 +110,27 @@ nano config.yaml    # 在终端里编辑（Ctrl+O 保存，Ctrl+X 退出）
 
 ### 第七步：创建你的第一个站点
 
-**方法 A：从 GitHub 抄一个工具站**
+**最快方式：一键启动（推荐）**
 
 ```bash
-# 先检查这个项目能不能用
-./scripts/check-repo.sh https://github.com/evgeni/qifi
+# 一条命令搞定：创建 + 部署 + DNS + 验证
+./scripts/launch-site.sh fork https://github.com/evgeni/qifi wifi-qr "WiFi 二维码生成器"
 
-# 通过检查后，一键 fork 改造
-./scripts/fork-site.sh https://github.com/evgeni/qifi wifi-qr "WiFi 二维码生成器"
-
-# 部署上线
-./scripts/deploy.sh wifi-qr
+# 或者创建 Hugo 内容站
+./scripts/launch-site.sh hugo my-blog "我的博客" "分享技术心得"
 ```
 
-**方法 B：创建一个 Hugo 内容站（博客）**
+或者分步操作：
 
 ```bash
-# 从模板创建
-./scripts/new-site.sh my-blog "我的博客" "分享技术心得"
-
-# 部署上线
-./scripts/deploy.sh my-blog
+./scripts/fork-site.sh https://github.com/evgeni/qifi wifi-qr "WiFi 二维码生成器"
+./scripts/deploy.sh wifi-qr
+./scripts/dns-setup.sh wifi-qr
 ```
 
 ### 第八步：设置域名
+
+> 如果使用了 `launch-site.sh`，DNS 已自动配置，可跳过此步。
 
 ```bash
 ./scripts/dns-setup.sh my-tool
@@ -237,14 +234,16 @@ license: MIT
 
 | 脚本 | 用途 |
 |------|------|
+| `launch-site.sh <fork\|hugo> ...` | **一键启动：创建 + 部署 + DNS + 验证** |
 | `setup.sh` | 首次配置，验证所有凭证 |
 | `new-site.sh <名字> <标题> <描述>` | 创建 Hugo 内容站 |
 | `fork-site.sh <链接> <名字> [标题]` | Fork 改造 GitHub 项目 |
 | `check-repo.sh <链接>` | 检查 GitHub 项目兼容性 |
-| `deploy.sh <名字>` | 部署单个站点到 Vercel |
+| `deploy.sh <名字> [--preview] [--verify]` | 部署单个站点到 Vercel |
 | `deploy-all.sh` | 部署所有站点 |
 | `build-all.sh` | 构建所有 Hugo 站点 |
-| `dns-setup.sh <名字>` | 通过 NameSilo API 添加 DNS 记录 |
+| `dns-setup.sh <名字> [--verify]` | 通过 NameSilo API 添加 DNS 记录 |
+| `generate-content.sh <名字> <主题>` | AI 生成 SEO 文章 |
 | `generate-dashboard.sh` | 生成监控面板 |
 | `lighthouse-check.sh <名字\|--all>` | 运行 Lighthouse 性能审计 |
 
@@ -282,6 +281,7 @@ open dashboard/index.html
 | [Fork 指南](docs/zh/fork-guide.md) | 怎么找项目、评估、改造 |
 | [内容策略](docs/zh/content-strategy.md) | AdSense 审批技巧和 SEO 策略 |
 | [贡献站点](docs/zh/contributing-sites.md) | 如何向项目提交新的工具站点 |
+| [部署自动化](docs/zh/deployment-automation.md) | 一键部署、GitHub Actions、n8n |
 | [站点清单](SITES.zh.md) | 所有已集成站点的来源和用途 |
 
 ## 技术栈

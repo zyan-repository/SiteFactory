@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # deploy.sh - Deploy a site to Vercel. Auto-detects Hugo vs static type.
-# Usage: ./scripts/deploy.sh <site-name> [--preview]
+# Usage: ./scripts/deploy.sh <site-name> [--preview] [--verify]
 
 set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -8,8 +8,19 @@ source "$REPO_ROOT/scripts/lib/config.sh"
 source "$REPO_ROOT/scripts/lib/logging.sh"
 source "$REPO_ROOT/scripts/lib/platform.sh"
 
-SITE_NAME="${1:?Usage: deploy.sh <site-name> [--preview]}"
-PREVIEW_FLAG="${2:-}"
+# --- Parse arguments (order-independent) ---
+SITE_NAME=""
+PREVIEW_FLAG=""
+VERIFY_FLAG=""
+for arg in "$@"; do
+  case "$arg" in
+    --preview) PREVIEW_FLAG="--preview" ;;
+    --verify) VERIFY_FLAG="--verify" ;;
+    *) [[ -z "$SITE_NAME" ]] && SITE_NAME="$arg" ;;
+  esac
+done
+[[ -z "$SITE_NAME" ]] && { echo "Usage: deploy.sh <site-name> [--preview] [--verify]"; exit 1; }
+
 SITE_DIR="$REPO_ROOT/sites/$SITE_NAME"
 
 if [[ ! -d "$SITE_DIR" ]]; then
@@ -51,14 +62,15 @@ log_step "Deploying to Vercel${PROD_FLAG:+ (production)}..."
 log_info "This may take a minute, showing Vercel output below..."
 echo ""
 
-# Build vercel command
-VERCEL_ARGS=("$DEPLOY_DIR" "--token" "$SF_VERCEL_TOKEN" "--yes" "--name" "$SITE_NAME")
+# Build vercel command (--name is deprecated, Vercel auto-detects from directory)
+VERCEL_ARGS=("$DEPLOY_DIR" "--token" "$SF_VERCEL_TOKEN" "--yes")
 [[ -n "$PROD_FLAG" ]] && VERCEL_ARGS+=("$PROD_FLAG")
 
-# Stream output in real-time while capturing the deploy URL (last line)
+# Stream output in real-time while capturing the deploy URL
 VERCEL_OUTPUT_FILE=$(mktemp)
 npx vercel "${VERCEL_ARGS[@]}" 2>&1 | tee "$VERCEL_OUTPUT_FILE"
-DEPLOY_URL=$(tail -1 "$VERCEL_OUTPUT_FILE")
+# Extract the last https:// URL from output (the production/preview URL)
+DEPLOY_URL=$(grep -oE 'https://[^ ]+' "$VERCEL_OUTPUT_FILE" | tail -1)
 rm -f "$VERCEL_OUTPUT_FILE"
 
 echo ""
@@ -66,10 +78,23 @@ echo ""
 # Add custom domain for production deploys
 if [[ -n "$PROD_FLAG" ]]; then
   log_step "Configuring custom domain: $CUSTOM_DOMAIN"
-  npx vercel domains add "$CUSTOM_DOMAIN" --token "$SF_VERCEL_TOKEN" --yes 2>/dev/null || true
+  npx vercel domains add "$CUSTOM_DOMAIN" "$SITE_NAME" --token "$SF_VERCEL_TOKEN" 2>/dev/null || true
 fi
 
 log_ok "Deployed: $DEPLOY_URL"
 log_ok "Custom domain: https://$CUSTOM_DOMAIN"
+
+# Post-deploy HTTP health check (optional)
+if [[ "$VERIFY_FLAG" == "--verify" ]] && [[ -n "$DEPLOY_URL" ]]; then
+  source "$REPO_ROOT/scripts/lib/verify.sh"
+  log_step "Verifying deployment..."
+  if verify_http_poll "$DEPLOY_URL" 4 5; then
+    echo ""
+    log_ok "Verified: $DEPLOY_URL responds OK"
+  else
+    log_warn "Site not yet responding at $DEPLOY_URL (may need a few more seconds)"
+  fi
+fi
+
 echo ""
 echo "  Check status: npx vercel ls --token \$SF_VERCEL_TOKEN"

@@ -101,14 +101,19 @@ Full step-by-step with click paths: see [Setup Guide](docs/setup-guide.md).
 ### Create Your First Site
 
 ```bash
-# Option A: Fork a GitHub project
+# One-click: fork, deploy, DNS, and verify — all in one command
+./scripts/launch-site.sh fork https://github.com/evgeni/qifi wifi-qr "WiFi QR Generator"
+
+# Or for a Hugo content site
+./scripts/launch-site.sh hugo my-blog "My Blog" "A blog about things"
+```
+
+Or step by step:
+
+```bash
 ./scripts/fork-site.sh https://github.com/evgeni/qifi wifi-qr "WiFi QR Generator"
-
-# Option B: Hugo content site
-./scripts/new-site.sh my-blog "My Blog" "A blog about things"
-
-# Deploy
-./scripts/deploy.sh my-site
+./scripts/deploy.sh wifi-qr
+./scripts/dns-setup.sh wifi-qr
 ```
 
 ## Architecture
@@ -132,8 +137,10 @@ SiteFactory/
 │   ├── build-all.sh         # Build all Hugo sites
 │   ├── dns-setup.sh         # Add DNS record via NameSilo API
 │   ├── generate-dashboard.sh # Generate monitoring dashboard
+│   ├── launch-site.sh       # One-click: create + deploy + DNS + verify
+│   ├── generate-content.sh  # AI-generate SEO articles
 │   ├── lighthouse-check.sh  # Run Lighthouse audit
-│   └── lib/                 # Shared functions (config, logging, injection)
+│   └── lib/                 # Shared functions (config, logging, injection, verify)
 ├── n8n/                     # Automation workflows (import into n8n)
 ├── dashboard/               # Monitoring dashboard (auto-generated HTML)
 └── docs/                    # Documentation
@@ -206,14 +213,16 @@ Revenue potential: Even modest AdSense earnings of $0.50/day across all sites = 
 
 | Script | Purpose |
 |--------|---------|
+| `launch-site.sh <fork\|hugo> ...` | **One-click: create + deploy + DNS + verify** |
 | `setup.sh` | One-time setup, validates all credentials |
 | `new-site.sh <name> <title> <desc>` | Create Hugo content site |
 | `fork-site.sh <url> <name> [title]` | Fork & adapt GitHub project |
 | `check-repo.sh <url>` | Evaluate GitHub project compatibility |
-| `deploy.sh <name>` | Deploy single site to Vercel |
+| `deploy.sh <name> [--preview] [--verify]` | Deploy single site to Vercel |
 | `deploy-all.sh` | Deploy all sites |
 | `build-all.sh` | Build all Hugo sites |
-| `dns-setup.sh <name>` | Add CNAME via NameSilo API |
+| `dns-setup.sh <name> [--verify]` | Add CNAME via NameSilo API |
+| `generate-content.sh <name> <topic>` | AI-generate SEO articles |
 | `generate-dashboard.sh` | Generate monitoring dashboard |
 | `lighthouse-check.sh <name\|--all>` | Run Lighthouse audit |
 
@@ -251,6 +260,7 @@ open dashboard/index.html
 | [Fork Guide](docs/fork-guide.md) | [Fork 指南](docs/zh/fork-guide.md) |
 | [Content Strategy](docs/content-strategy.md) | [内容策略](docs/zh/content-strategy.md) |
 | [Contributing Sites](docs/contributing-sites.md) | [贡献站点](docs/zh/contributing-sites.md) |
+| [Deployment Automation](docs/deployment-automation.md) | [部署自动化](docs/zh/deployment-automation.md) |
 | [Site Registry](SITES.md) | [站点清单](SITES.zh.md) |
 
 ## Tech Stack

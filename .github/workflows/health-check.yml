@@ -1,0 +1,54 @@
+name: Site Health Check
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check all sites
+        env:
+          SF_DOMAIN: ${{ secrets.SF_DOMAIN }}
+        run: |
+          FAILED=0
+          TOTAL=0
+
+          echo "## Site Health Report" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Site | URL | Status | Code |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|------|-----|--------|------|" >> "$GITHUB_STEP_SUMMARY"
+
+          for site_dir in sites/*/; do
+            name=$(basename "$site_dir")
+            [[ "$name" == "_template" ]] && continue
+            [[ "$name" == "_shared" ]] && continue
+            [[ ! -f "$site_dir/site.yaml" ]] && continue
+
+            TOTAL=$((TOTAL + 1))
+            URL="https://${name}.${SF_DOMAIN}"
+            HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 15 "$URL" 2>/dev/null || echo "000")
+
+            if [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 400 ]; then
+              echo "OK   ($HTTP_CODE): $URL"
+              echo "| $name | $URL | OK | $HTTP_CODE |" >> "$GITHUB_STEP_SUMMARY"
+            else
+              echo "FAIL ($HTTP_CODE): $URL"
+              echo "| $name | $URL | **FAIL** | $HTTP_CODE |" >> "$GITHUB_STEP_SUMMARY"
+              FAILED=$((FAILED + 1))
+            fi
+          done
+
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "**Total: $((TOTAL - FAILED))/$TOTAL healthy**" >> "$GITHUB_STEP_SUMMARY"
+
+          echo ""
+          echo "Results: $((TOTAL - FAILED))/$TOTAL healthy"
+
+          if [ "$FAILED" -gt 0 ]; then
+            echo "::warning::$FAILED site(s) are unhealthy"
+            exit 1
+          fi

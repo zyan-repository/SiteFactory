@@ -2,6 +2,24 @@
 
 # 添加新站点
 
+## 一键启动（推荐）
+
+从想法到上线最快的方式，一条命令全搞定：
+
+```bash
+# Fork 一个工具站（一条命令完成所有步骤）
+./scripts/launch-site.sh fork https://github.com/user/repo my-tool "我的工具"
+
+# 创建 Hugo 内容站（一条命令完成所有步骤）
+./scripts/launch-site.sh hugo my-blog "我的博客" "分享技术心得"
+```
+
+这一条命令会自动完成：创建站点 → 部署到 Vercel → 配置 DNS → 验证 DNS 传播 → 检查站点存活 → 运行 Lighthouse 审计。详见 [部署自动化](deployment-automation.md)。
+
+如果你想分步操作，请继续往下看。
+
+---
+
 SiteFactory 支持两种站点，根据你的目标选择：
 
 | 目标 | 类型 | 命令 | 需要构建？ |

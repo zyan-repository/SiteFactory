@@ -77,11 +77,17 @@ jobs:
           test -d sites/_template/content
           test -f sites/_template/static/ads.txt
 
-          # Verify scripts exist and are executable
+          # Verify scripts exist
           for script in setup.sh new-site.sh fork-site.sh check-repo.sh \
                         deploy.sh deploy-all.sh build-all.sh dns-setup.sh \
-                        generate-dashboard.sh lighthouse-check.sh; do
+                        generate-dashboard.sh lighthouse-check.sh \
+                        launch-site.sh generate-content.sh; do
             test -f "scripts/$script"
+          done
+
+          # Verify lib scripts exist
+          for lib in config.sh logging.sh inject.sh platform.sh llm.sh verify.sh; do
+            test -f "scripts/lib/$lib"
           done
 
           # Verify dashboard template

@@ -107,19 +107,24 @@ SiteFactory/
 │       └── ...
 ├── scripts/
 │   ├── setup.sh             # One-time setup
+│   ├── launch-site.sh       # One-click: create + deploy + DNS + verify
 │   ├── new-site.sh          # Create Hugo site from template
 │   ├── fork-site.sh         # Fork & adapt GitHub project
 │   ├── check-repo.sh        # Evaluate GitHub project compatibility
-│   ├── deploy.sh            # Deploy (auto-detects hugo/static)
+│   ├── deploy.sh            # Deploy (auto-detects hugo/static, --verify flag)
 │   ├── deploy-all.sh        # Deploy all sites
 │   ├── build-all.sh         # Build all Hugo sites
-│   ├── dns-setup.sh         # NameSilo API CNAME setup
+│   ├── dns-setup.sh         # NameSilo API CNAME setup (--verify flag)
+│   ├── generate-content.sh  # AI-generate SEO articles (multi-provider)
 │   ├── generate-dashboard.sh # Monitoring dashboard
 │   ├── lighthouse-check.sh  # Lighthouse audit
 │   └── lib/
 │       ├── config.sh        # Parse config.yaml → env vars
 │       ├── logging.sh       # Colored log helpers
-│       └── inject.sh        # HTML injection (AdSense/GA/SEO)
+│       ├── inject.sh        # HTML injection (AdSense/GA/SEO)
+│       ├── llm.sh           # Unified LLM API wrapper (6+ providers)
+│       ├── platform.sh      # Cross-platform utilities
+│       └── verify.sh        # DNS polling + HTTP health check
 ├── n8n/workflows/           # n8n workflow exports (JSON)
 ├── dashboard/               # Monitoring dashboard
 │   ├── template.html        # Dashboard template
@@ -263,7 +268,24 @@ When approaching bandwidth limit: optimize images (WebP, lazy loading), minimize
 
 ## n8n Workflow Integration
 
-All repeatable operations must be n8n workflows, exported as JSON in `n8n/`.
+Automation is handled at three levels:
+
+1. **Bash scripts** — Core execution layer (`launch-site.sh`, `deploy.sh`, etc.)
+2. **GitHub Actions** — Auto-deploy on push, scheduled health checks, AI content generation
+3. **n8n** (optional) — Visual workflow automation, webhook-triggered pipelines
+
+### GitHub Actions Workflows
+
+| Workflow | File | Trigger | What it does |
+|----------|------|---------|-------------|
+| Build Check | `build-check.yml` | Push/PR to main | ShellCheck + Hugo build + file verification |
+| Auto Deploy | `deploy.yml` | Push to `sites/`, manual dispatch | Deploys changed sites to Vercel + DNS |
+| Health Check | `health-check.yml` | Every 6 hours, manual | HTTP check all sites, warn if down |
+| Content Gen | `content-generation.yml` | Manual dispatch | AI article generation → commit → push → auto-deploy |
+
+### n8n Workflows (Optional)
+
+All repeatable operations can also be n8n workflows, exported as JSON in `n8n/`.
 
 ### Core Workflows
 
@@ -301,28 +323,37 @@ All repeatable operations must be n8n workflows, exported as JSON in `n8n/`.
 
 ## Adding a New Site
 
-### Hugo Content Site
+### One-Click (Recommended)
 
 ```bash
-./scripts/new-site.sh <name> "<title>" "<description>" [language]
-./scripts/deploy.sh <name>
+# Fork tool site — one command does everything (create + deploy + DNS + verify)
+./scripts/launch-site.sh fork <github-url> <name> "<title>"
+
+# Hugo content site — same one-click flow
+./scripts/launch-site.sh hugo <name> "<title>" "<description>" [language]
 ```
 
-### Fork Tool Site
+### Step by Step (Manual Control)
 
 ```bash
-./scripts/check-repo.sh <github-url>              # Evaluate first
-./scripts/fork-site.sh <github-url> <name> "<title>"  # Fork & adapt
-./scripts/deploy.sh <name>                          # Deploy
+# Hugo site
+./scripts/new-site.sh <name> "<title>" "<description>" [language]
+./scripts/deploy.sh <name>
+./scripts/dns-setup.sh <name>
+
+# Fork site
+./scripts/check-repo.sh <github-url>
+./scripts/fork-site.sh <github-url> <name> "<title>"
+./scripts/deploy.sh <name>
+./scripts/dns-setup.sh <name>
 ```
 
 ### Post-Deploy
 
-1. Set up DNS: `./scripts/dns-setup.sh <name>`
-2. Submit to Google Search Console
-3. Apply for AdSense after 1-2 weeks of indexed content
+1. Submit to Google Search Console
+2. Apply for AdSense after 1-2 weeks of indexed content
 
-**Target: < 2 minutes from idea to live site.**
+**Target: < 2 minutes from idea to live, verified site.**
 
 ## Common Pitfalls
 

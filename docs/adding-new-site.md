@@ -2,6 +2,24 @@
 
 # Adding a New Site
 
+## One-Click Launch (Recommended)
+
+For the fastest path from idea to live site, use `launch-site.sh`:
+
+```bash
+# Fork a tool site (one command does everything)
+./scripts/launch-site.sh fork https://github.com/user/repo my-tool "My Tool"
+
+# Create a Hugo content site (one command does everything)
+./scripts/launch-site.sh hugo my-blog "My Blog" "A blog about things"
+```
+
+This single command: creates the site → deploys to Vercel → sets up DNS → verifies DNS propagation → checks site is live → runs Lighthouse audit. See [Deployment Automation](deployment-automation.md) for details.
+
+If you prefer step-by-step control, continue reading below.
+
+---
+
 SiteFactory supports two types of sites. Choose based on your goal:
 
 | Goal | Type | Command | Build? |

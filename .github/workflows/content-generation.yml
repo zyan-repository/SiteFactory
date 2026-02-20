@@ -1,0 +1,120 @@
+name: Generate Content
+
+on:
+  workflow_dispatch:
+    inputs:
+      site_name:
+        description: 'Target Hugo site name'
+        required: true
+        type: string
+      topic:
+        description: 'Article topic'
+        required: true
+        type: string
+      keywords:
+        description: 'SEO keywords (comma-separated)'
+        required: false
+        type: string
+        default: ''
+      word_count:
+        description: 'Target word count'
+        required: false
+        default: '1200'
+        type: string
+      ai_provider:
+        description: 'AI provider'
+        required: false
+        type: choice
+        default: 'claude'
+        options:
+          - claude
+          - openai
+          - deepseek
+          - gemini
+          - moonshot
+          - zhipu
+      ai_model:
+        description: 'Model name (leave empty for default)'
+        required: false
+        type: string
+        default: ''
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+          sudo chmod +x /usr/local/bin/yq
+
+      - name: Create config.yaml
+        env:
+          PROVIDER: ${{ inputs.ai_provider }}
+          AI_API_KEY: ${{ secrets.SF_AI_API_KEY }}
+          SF_DOMAIN: ${{ secrets.SF_DOMAIN }}
+          ADSENSE_PUB_ID: ${{ secrets.SF_ADSENSE_PUB_ID }}
+          GA_ID: ${{ secrets.SF_GA_ID }}
+        run: |
+          # Determine model: use input if provided, otherwise provider default
+          INPUT_MODEL="${{ inputs.ai_model }}"
+          case "$PROVIDER" in
+            claude)   MODEL="${INPUT_MODEL:-claude-sonnet-4-20250514}"; BASE_URL="" ;;
+            openai)   MODEL="${INPUT_MODEL:-gpt-4o}"; BASE_URL="https://api.openai.com/v1" ;;
+            deepseek) MODEL="${INPUT_MODEL:-deepseek-chat}"; BASE_URL="https://api.deepseek.com/v1" ;;
+            gemini)   MODEL="${INPUT_MODEL:-gemini-2.0-flash}"; BASE_URL="" ;;
+            moonshot) MODEL="${INPUT_MODEL:-moonshot-v1-8k}"; BASE_URL="https://api.moonshot.cn/v1" ;;
+            zhipu)    MODEL="${INPUT_MODEL:-glm-4-flash}"; BASE_URL="https://open.bigmodel.cn/api/paas/v4" ;;
+          esac
+
+          cat > config.yaml << EOF
+          domain:
+            name: "${SF_DOMAIN}"
+            namesilo_api_key: ""
+          vercel:
+            token: ""
+            team_id: ""
+          adsense:
+            publisher_id: "${ADSENSE_PUB_ID}"
+            enabled: true
+          analytics:
+            google_analytics_id: "${GA_ID}"
+            google_search_console_verification: ""
+          ai:
+            provider: "${PROVIDER}"
+            providers:
+              ${PROVIDER}:
+                api_key: "${AI_API_KEY}"
+                model: "${MODEL}"
+                base_url: "${BASE_URL}"
+          monitoring:
+            uptimerobot_api_key: ""
+          n8n:
+            base_url: ""
+          defaults:
+            language: "en"
+            timezone: "America/New_York"
+            author:
+              name: "SiteFactory"
+              email: ""
+          EOF
+
+      - name: Generate article
+        run: |
+          ./scripts/generate-content.sh \
+            "${{ inputs.site_name }}" \
+            "${{ inputs.topic }}" \
+            "${{ inputs.keywords }}" \
+            "${{ inputs.word_count }}"
+
+      - name: Commit and push
+        run: |
+          git config user.name "SiteFactory Bot"
+          git config user.email "bot@sitefactory.dev"
+          git add "sites/${{ inputs.site_name }}/content/" || true
+          git commit -m "content(${{ inputs.site_name }}): add AI-generated article on '${{ inputs.topic }}'" || echo "Nothing to commit"
+          git push
