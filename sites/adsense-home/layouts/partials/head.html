@@ -4,6 +4,10 @@
 
 <!-- SEO Meta -->
 <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+<!-- Prevent indexing of taxonomy/term list pages (no original content) -->
+{{ if in (slice "taxonomy" "term") .Kind }}
+<meta name="robots" content="noindex, follow">
+{{ end }}
 <meta name="author" content="{{ .Site.Params.author }}">
 <link rel="canonical" href="{{ .Permalink }}">
 

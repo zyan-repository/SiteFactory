@@ -1,4 +1,15 @@
-{{ if and .Site.Params.adsenseEnabled .Site.Params.adsensePubId }}
+{{/* Only load AdSense on pages with substantial publisher content.
+     Allowlist: homepage (.IsHome) and regular content pages (.IsPage).
+     Excluded automatically: 404, taxonomy, term, section pages.
+     Per-page opt-out: set noAds: true in frontmatter. */}}
+{{ $showAds := false }}
+{{ if .IsHome }}
+  {{ $showAds = true }}
+{{ end }}
+{{ if and .IsPage (not .Params.noAds) }}
+  {{ $showAds = true }}
+{{ end }}
+{{ if and $showAds .Site.Params.adsenseEnabled .Site.Params.adsensePubId }}
 <script async
   src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ .Site.Params.adsensePubId }}"
   crossorigin="anonymous">

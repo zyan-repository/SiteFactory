@@ -15,7 +15,7 @@ disableHugoGeneratorInject = true
   adsensePubId = "ca-pub-5531531271065052"
   # Analytics
   googleAnalyticsId = "G-5JJ2VHPXNQ"
-  googleSearchConsoleVerification = "XXXXXXXXXXXXXX"
+  googleSearchConsoleVerification = ""
   # SEO
   ogImage = "/images/og-default.png"
 
