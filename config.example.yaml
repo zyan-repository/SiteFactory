@@ -63,6 +63,18 @@ analytics:
   # NOTE: Can be added later after site is live and DNS is set up
   google_search_console_verification: ""
 
+  # Google Search Console Service Account key file (optional)
+  # Enables automatic sitemap submission on deploy.
+  # HOW TO SET UP:
+  #   1. Go to https://console.cloud.google.com/ -> create project -> enable "Search Console API"
+  #   2. Go to IAM & Admin -> Service Accounts -> create account -> generate JSON key -> download
+  #   3. In GSC (https://search.google.com/search-console/) -> Settings -> Users and permissions
+  #      -> add the service account email as Owner
+  #   4. Set the path to the downloaded JSON key file below
+  # FORMAT: absolute or relative path to the JSON key file
+  # NOTE: NEVER commit the key file to git (add it to .gitignore)
+  google_search_console_key_file: ""
+
 # --- AI Content Generation (Optional — skip if not using AI content) ---
 # Used by: scripts/generate-content.sh and GitHub Actions content-generation workflow
 # PURPOSE: Auto-generate SEO blog articles in Markdown with Hugo frontmatter

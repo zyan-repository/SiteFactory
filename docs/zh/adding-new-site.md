@@ -205,6 +205,8 @@ grep "adsbygoogle" sites/wifi-qr/index.html
 
 ### 提交到 Google Search Console
 
+> **支持自动提交：** 如果你已配置 Service Account（`config.yaml` 中的 `google_search_console_key_file`），每次部署会自动提交 sitemap，可以跳过下面的第 7-9 步。Service Account 配置方法见[配置教程](../zh/setup-guide.md)。
+
 1. 打开 [Google Search Console](https://search.google.com/search-console)
 2. 点击左上角下拉菜单 → **"添加资源"**
 3. 选择右边的 **"网址前缀"**

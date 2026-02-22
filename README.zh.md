@@ -81,7 +81,7 @@ nano config.yaml    # 在终端里编辑（Ctrl+O 保存，Ctrl+X 退出）
 
 | 配置项 | 去哪里获取 | 怎么操作 | 值长什么样 |
 |--------|-----------|---------|-----------|
-| `domain.name` | [NameSilo](https://www.namesilo.com/) | 搜索域名 → 加购物车 → 付款（约 $9/年） | `mysite.com`（不带 https://） |
+| `domain.name` | [NameSilo](https://www.namesilo.com/) | 搜索域名 → 加购物车 → 付款（任何后缀均可：.com/.net/.top 等） | `mysite.com`（不带 https://） |
 | `domain.namesilo_api_key` | [API 管理页](https://www.namesilo.com/account/api-manager) | 点击 **"Generate"** → 复制出现的字符串 | 约 20-30 个字母数字，如 `a1b2c3...` |
 | `vercel.token` | [令牌页](https://vercel.com/account/tokens) | 点击 **"Create"** → 范围选 "Full Account" → **立即复制**（只显示一次！） | 约 24+ 个字符，如 `pZGwk...` |
 
@@ -183,6 +183,8 @@ nano sites/adsense-home/content/posts/my-article.md
 5. 重新部署站点：`./scripts/deploy-all.sh`
 6. 回到 Search Console 点击 **"验证"**
 7. 验证成功后，在左侧菜单点击 **"站点地图"** → 输入 `sitemap.xml` → 点击 **"提交"**
+
+> **自动提交：** 如果在 `config.yaml` 中配置了 Service Account 密钥，每次部署会自动提交 sitemap，无需手动操作。详见[配置教程](docs/zh/setup-guide.md)。
 
 > Google 收录通常需要几天到 2 周。可以在 Search Console 的「网页」页面查看收录进度。
 

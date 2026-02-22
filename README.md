@@ -90,7 +90,7 @@ nano config.yaml
 
 | Credential | Where to get it | Format |
 |------------|----------------|--------|
-| Domain | [NameSilo](https://www.namesilo.com/) → buy a `.com` domain | `mysite.com` (no https://) |
+| Domain | [NameSilo](https://www.namesilo.com/) → buy a domain (any TLD: .com, .net, .top, etc.) | `mysite.com` (no https://) |
 | NameSilo API Key | [API Manager](https://www.namesilo.com/account/api-manager) → click "Generate" | ~20-30 alphanumeric chars |
 | Vercel Token | [Tokens page](https://vercel.com/account/tokens) → click "Create", scope "Full Account" | ~24+ chars (shown once!) |
 | AdSense Publisher ID | [AdSense](https://adsense.google.com/) → look at URL bar for `pub-XXXXX` → prepend `ca-` | `ca-pub-` + 16 digits |
@@ -159,6 +159,7 @@ The `--root` flag binds the site to your root domain (`https://yourdomain.com`),
 ### Submit to Google & Apply for AdSense
 
 1. **Submit to Google Search Console:** Go to [Search Console](https://search.google.com/search-console) → Add property → enter your domain → verify via HTML tag → submit `sitemap.xml`
+   - **Auto-submit available:** If you configure a Service Account key in `config.yaml`, sitemaps are submitted automatically on every deploy. See [setup guide](docs/setup-guide.md) for details.
 2. **Apply for AdSense:** Go to [adsense.google.com](https://adsense.google.com/) → sign up with your domain → wait for approval (typically 2-4 weeks)
 3. **Once approved:** Copy your publisher ID, update `adsense.publisher_id` in config.yaml, set `enabled: true`, and redeploy: `./scripts/deploy-all.sh`
 

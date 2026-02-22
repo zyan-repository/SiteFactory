@@ -37,11 +37,11 @@
 1. 打开 [https://www.namesilo.com/domain/search-domains](https://www.namesilo.com/domain/search-domains)
 2. 在搜索框里输入你想要的域名（比如 `techtools`）
 3. 点击 **"Search"** 搜索
-4. 在结果里找一个显示 "Available"（可用）的 `.com` 域名
+4. 在结果里选一个显示 "Available"（可用）的域名（任何后缀都行：`.com`、`.net`、`.top`、`.xyz` 等）
 5. 点击旁边的 **"Add"** 加入购物车
 6. 点击右上角 **购物车图标** → **"Checkout"** 去结账
 7. 注册 NameSilo 账号（或登录已有账号）
-8. 付款（支持 PayPal 或信用卡，`.com` 大约 $8.99/年 ≈ ¥65/年）
+8. 付款（支持 PayPal 或信用卡——价格取决于后缀，`.com` 大约 $8.99/年 ≈ ¥65/年，有些后缀更便宜）
 9. 买完后，你的域名会出现在 [域名管理页](https://www.namesilo.com/account/domain-manager)
 
 **填到 config.yaml 里的格式：** 只写域名本身，不要加 `https://` 或 `www.`
@@ -51,7 +51,7 @@
 | `mysite.com` | `https://mysite.com` |
 | `techtools.net` | `www.techtools.net` |
 
-> **建议：** 选 `.com` 后缀（SEO 效果最好）。域名里不要用连字符（-）。越短越好记越好。
+> **建议：** 任何后缀都可以——`.com`、`.net`、`.top`、`.xyz` 等均支持。域名里不要用连字符（-）。越短越好记越好。
 
 ### 2. NameSilo API Key
 
@@ -168,7 +168,7 @@ Google Search Console 让你提交网站地图，让 Google 更快收录你的�
 1. 打开 [https://search.google.com/search-console](https://search.google.com/search-console)
 2. 点击左上角下拉菜单 → **"添加资源"**
 3. 选择左边的 **"网域"**
-4. 输入你的域名：`你的域名.com`（不带 `https://`）
+4. 输入你的域名，如 `你的域名.com`（不带 `https://`，只填裸域名）
 5. 点击 **"继续"**
 6. Google 会显示一条 TXT 记录值，类似：`google-site-verification=AbCdEf123456789...`
 7. 把这条 TXT 记录添加到你的 DNS。可以通过 NameSilo API 操作：
@@ -205,6 +205,81 @@ Google Search Console 让你提交网站地图，让 Google 更快收录你的�
 **长什么样：** 大约 43 个字母数字混合的字符串
 
 > **注意：** 验证需要你的站点已经上线且 DNS 已生效。如果现在验证不了，等站点部署好了再回来做这一步。
+
+#### 方式 C：通过 Service Account 自动提交 sitemap（推荐，适合批量建站）
+
+如果你打算运营多个站点，配置一次 Service Account 之后，`deploy.sh` 每次部署都会自动向 GSC 提交 sitemap——完全不需要手动操作。
+
+**第 1 步：创建 Google Cloud 项目**
+
+1. 打开 [https://console.cloud.google.com/](https://console.cloud.google.com/)
+2. 如果还没有账号，用你注册 Search Console 时的 Google 账号登录
+3. 页面顶部，点击 "Google Cloud" 旁边的项目下拉菜单
+4. 在弹出窗口中点击 **"新建项目"**
+5. 输入项目名称，比如 `sitefactory-gsc`
+6. 点击 **"创建"**，等几秒钟即可
+
+**第 2 步：启用 Search Console API**
+
+1. 确保顶部下拉菜单选中了你刚创建的项目
+2. 打开 [https://console.cloud.google.com/apis/library](https://console.cloud.google.com/apis/library)
+3. 在搜索框输入 `Google Search Console API`
+4. 点击搜索结果中的 **"Google Search Console API"**
+5. 点击蓝色的 **"启用"** 按钮
+6. 等页面显示 "API 已启用" 并出现绿色对勾
+
+**第 3 步：创建 Service Account（服务账号）**
+
+1. 在左侧菜单中，点击 **"IAM 和管理"** → **"服务账号"**
+   - 或者直接打开 [https://console.cloud.google.com/iam-admin/serviceaccounts](https://console.cloud.google.com/iam-admin/serviceaccounts)
+2. 点击顶部的 **"+ 创建服务账号"**
+3. 填写：
+   - **服务账号名称：** `sitefactory-gsc`（随便取一个好记的名字）
+   - **服务账号 ID：** 自动填充（不用改）
+   - **说明：** `自动提交 sitemap 到 Google Search Console`
+4. 点击 **"创建并继续"**
+5. "授予此服务账号对项目的访问权限" 页面——**跳过**（直接点 "继续"）
+6. "授予用户访问权限" 页面——**跳过**（直接点 "完成"）
+
+**第 4 步：生成 JSON 密钥**
+
+1. 在服务账号列表中，找到你刚创建的那个
+2. 点击右边的 **三个点菜单**（⋮）→ **"管理密钥"**
+3. 点击 **"添加密钥"** → **"创建新密钥"**
+4. 选择 **"JSON"**，然后点 **"创建"**
+5. 浏览器会自动下载一个 `.json` 文件——把它存到安全的地方（比如 `~/.config/sitefactory/gsc-key.json`）
+6. **这个文件绝对不能提交到 git**
+
+**第 5 步：在 Google Search Console 中添加 Service Account**
+
+1. 打开 [https://search.google.com/search-console](https://search.google.com/search-console)
+2. 选择你已验证的域名资源（比如 `sc-domain:你的域名.com`）
+3. 点击左侧菜单的 **"设置"**
+4. 点击 **"用户和权限"**
+5. 点击 **三个点菜单**（⋮）→ **"添加用户"**
+6. 在邮箱栏粘贴 **Service Account 的邮箱地址**——打开下载的 JSON 文件，找到 `"client_email"` 字段，类似：`sitefactory-gsc@your-project.iam.gserviceaccount.com`
+7. 权限设置为 **"拥有者"**
+8. 点击 **"添加"**
+
+**第 6 步：配置 SiteFactory**
+
+本地使用：
+```yaml
+# 在 config.yaml 中
+analytics:
+  google_search_console_key_file: "/path/to/gsc-key.json"
+```
+
+GitHub Actions 使用：
+1. 用文本编辑器打开下载的 JSON 密钥文件
+2. **复制全部内容**
+3. 打开 GitHub 仓库 → **Settings** → **Secrets and variables** → **Actions**
+4. 点击 **"New repository secret"**
+5. Name 填：`SF_GSC_KEY_JSON`
+6. Value：粘贴刚才复制的整个 JSON 内容
+7. 点击 **"Add secret"**
+
+**验证是否生效：** 部署任意一个站点，查看输出中是否有 `[OK] Sitemap submitted`。或者去 GSC → Sitemaps 页面查看——应该能看到刚提交的 sitemap。
 
 ### 7. UptimeRobot API Key（可选）
 

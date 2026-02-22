@@ -110,6 +110,7 @@ jobs:
           analytics:
             google_analytics_id: "${{ secrets.SF_GA_ID }}"
             google_search_console_verification: ""
+            google_search_console_key_file: "/tmp/gsc-key.json"
           ai:
             provider: "claude"
             providers:
@@ -125,6 +126,14 @@ jobs:
               name: "SiteFactory"
               email: ""
           EOF
+
+      - name: Write GSC key file
+        env:
+          GSC_KEY_JSON: ${{ secrets.SF_GSC_KEY_JSON }}
+        run: |
+          if [ -n "$GSC_KEY_JSON" ]; then
+            echo "$GSC_KEY_JSON" > /tmp/gsc-key.json
+          fi
 
       - name: Detect root domain flag
         id: root-check

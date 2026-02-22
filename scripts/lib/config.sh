@@ -27,6 +27,7 @@ SF_ADSENSE_PUB_ID=$(yq '.adsense.publisher_id' "$CONFIG_FILE")
 SF_ADSENSE_ENABLED=$(yq '.adsense.enabled' "$CONFIG_FILE")
 SF_GA_ID=$(yq '.analytics.google_analytics_id' "$CONFIG_FILE")
 SF_GSC_VERIFICATION=$(yq '.analytics.google_search_console_verification // ""' "$CONFIG_FILE")
+SF_GSC_KEY_FILE=$(yq '.analytics.google_search_console_key_file // ""' "$CONFIG_FILE")
 SF_AI_PROVIDER=$(yq '.ai.provider // "claude"' "$CONFIG_FILE")
 SF_AI_API_KEY=$(yq ".ai.providers.${SF_AI_PROVIDER}.api_key // \"\"" "$CONFIG_FILE")
 SF_AI_MODEL=$(yq ".ai.providers.${SF_AI_PROVIDER}.model // \"\"" "$CONFIG_FILE")
@@ -50,7 +51,7 @@ for _var in SF_DOMAIN SF_VERCEL_TOKEN; do
 done
 
 export SF_DOMAIN SF_NAMESILO_API_KEY SF_VERCEL_TOKEN SF_VERCEL_TEAM_ID
-export SF_ADSENSE_PUB_ID SF_ADSENSE_ENABLED SF_GA_ID SF_GSC_VERIFICATION
+export SF_ADSENSE_PUB_ID SF_ADSENSE_ENABLED SF_GA_ID SF_GSC_VERIFICATION SF_GSC_KEY_FILE
 export SF_AI_PROVIDER SF_AI_API_KEY SF_AI_MODEL SF_AI_BASE_URL
 export SF_UPTIMEROBOT_API_KEY
 export SF_DEFAULT_LANG SF_TIMEZONE SF_AUTHOR_NAME SF_AUTHOR_EMAIL

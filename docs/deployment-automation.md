@@ -84,6 +84,7 @@ The fastest way to go from idea to live site. One command handles everything:
 
   Next steps:
     1. Submit sitemap to Google Search Console
+       (auto-submitted if google_search_console_key_file is configured)
     2. Wait 1-2 weeks, then apply for AdSense
     3. Monitor: ./scripts/lighthouse-check.sh wifi-qr
 ```

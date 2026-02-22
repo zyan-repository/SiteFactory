@@ -189,9 +189,15 @@ echo "  | Time:    ${ELAPSED}s"
 echo "  +------------------------------------------+"
 echo ""
 echo "  Next steps:"
-echo "    1. Submit sitemap to Google Search Console"
-echo "    2. Wait 1-2 weeks, then apply for AdSense"
-echo "    3. Monitor: ./scripts/lighthouse-check.sh $SITE_NAME"
+NEXT_STEP=1
+if [[ -z "${SF_GSC_KEY_FILE:-}" || ! -f "${SF_GSC_KEY_FILE:-}" ]]; then
+  echo "    $NEXT_STEP. Submit sitemap to Google Search Console"
+  echo "       (or configure google_search_console_key_file in config.yaml for auto-submission)"
+  NEXT_STEP=$((NEXT_STEP + 1))
+fi
+echo "    $NEXT_STEP. Wait 1-2 weeks, then apply for AdSense"
+NEXT_STEP=$((NEXT_STEP + 1))
+echo "    $NEXT_STEP. Monitor: ./scripts/lighthouse-check.sh $SITE_NAME"
 
 # JSON output for automation (CI, etc.)
 if [[ "${SF_JSON_OUTPUT:-false}" == "true" ]] && command -v jq &>/dev/null; then

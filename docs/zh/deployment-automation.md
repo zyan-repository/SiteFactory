@@ -84,6 +84,7 @@ SiteFactory 提供两种部署自动化方式，根据需求选择：
 
   Next steps:
     1. Submit sitemap to Google Search Console
+       (如已配置 google_search_console_key_file 则自动提交)
     2. Wait 1-2 weeks, then apply for AdSense
     3. Monitor: ./scripts/lighthouse-check.sh wifi-qr
 ```

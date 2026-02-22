@@ -167,6 +167,7 @@ SiteFactory/
 │       ├── llm.sh           # Unified LLM API wrapper (6+ providers)
 │       ├── og-image.sh      # OG image generation (ImageMagick)
 │       ├── platform.sh      # Cross-platform utilities
+│       ├── gsc.sh           # Google Search Console API (sitemap auto-submit)
 │       ├── verify.sh        # DNS polling + HTTP health check
 │       └── vercel.sh        # Vercel project linking helpers
 ├── dashboard/               # Monitoring dashboard
@@ -450,6 +451,19 @@ Automation is handled at two levels:
 - **Lighthouse**: performance score trend
 - **Uptime**: HTTP status check (UptimeRobot free tier)
 
+### GSC Auto-Submit
+
+| Concept | Mechanism |
+|---------|-----------|
+| **When** | `deploy.sh` post-deploy, after HTTP health check passes |
+| **How** | `lib/gsc.sh`: Service Account JWT → OAuth2 token → GSC API `PUT` |
+| **Config (local)** | `config.yaml` → `analytics.google_search_console_key_file` (path to JSON key) |
+| **Config (CI)** | GitHub secret `SF_GSC_KEY_JSON` (JSON key content) → written to `/tmp/gsc-key.json` |
+| **Scope** | `webmasters` scope; adds site property + submits `sitemap.xml` |
+| **Fallback** | If key not configured, skipped silently; `launch-site.sh` shows manual instructions |
+
+One-time setup: create Google Cloud Service Account → enable Search Console API → add service account email as Owner in GSC. See `docs/setup-guide.md` for step-by-step.
+
 ### Invalid Traffic Prevention
 
 - Monitor AdSense CTR: normal is 1-3%. Above 5% = investigate immediately
@@ -480,7 +494,7 @@ AI-generated content must pass these quality checks:
 | DNS setup | Auto (`launch-site.sh`) | None |
 | OG image generation | Auto (`og-image.sh` on site creation) | None |
 | AdSense application | Manual | Submit once, wait 2-4 weeks |
-| Google Search Console | Manual | Submit sitemap once per site |
+| Google Search Console | Auto (`gsc.sh` on deploy, if key configured) | One-time: create Service Account + add as GSC Owner |
 | Finding fork targets | Manual | Browse GitHub for candidates |
 
 ## Adding a New Site

@@ -33,11 +33,11 @@ A domain name is your website's address (e.g., `mysite.com`). You need to buy on
 1. Go to [https://www.namesilo.com/domain/search-domains](https://www.namesilo.com/domain/search-domains)
 2. Type your desired domain in the search box (e.g., `techtools`)
 3. Click **"Search"**
-4. Browse the results — look for a `.com` domain that shows as "Available"
+4. Browse the results — pick any available domain (any TLD works: `.com`, `.net`, `.top`, `.xyz`, etc.)
 5. Click **"Add"** next to your chosen domain
 6. Click the **shopping cart icon** (top right) → **"Checkout"**
 7. Create a NameSilo account (or log in if you already have one)
-8. Complete the payment (PayPal or credit card, ~$8.99/year for `.com`)
+8. Complete the payment (PayPal or credit card — price varies by TLD, e.g., `.com` ~$8.99/year, some TLDs are cheaper)
 9. After purchase, your domain appears at [https://www.namesilo.com/account/domain-manager](https://www.namesilo.com/account/domain-manager)
 
 **What to put in config.yaml:** Just the domain name, without `https://` or `www.`
@@ -47,7 +47,7 @@ A domain name is your website's address (e.g., `mysite.com`). You need to buy on
 | `mysite.com` | `https://mysite.com` |
 | `techtools.net` | `www.techtools.net` |
 
-> **Tip:** Choose `.com` for best SEO recognition. Avoid hyphens in domain names. Keep it short and memorable.
+> **Tip:** Any TLD works — `.com`, `.net`, `.top`, `.xyz`, etc. are all fine. Avoid hyphens in domain names. Keep it short and memorable.
 
 ### 2. NameSilo API Key
 
@@ -164,7 +164,7 @@ Covers your entire domain and all subdomains at once — no need to verify each 
 1. Go to [https://search.google.com/search-console](https://search.google.com/search-console)
 2. Click **"Add property"** (in the top-left dropdown)
 3. Choose **"Domain"** (the left-hand option)
-4. Enter your domain name: `yourdomain.com` (no `https://`)
+4. Enter your domain name, e.g., `yourdomain.com` (no `https://`, just the bare domain)
 5. Click **"Continue"**
 6. Google shows you a TXT record value like: `google-site-verification=AbCdEf123456789...`
 7. Add this TXT record to your DNS. You can do this via NameSilo API:
@@ -201,6 +201,81 @@ Verifies a single URL prefix (e.g., `https://yourdomain.com`). You'll need to ve
 **What it looks like:** A string of ~43 alphanumeric characters
 
 > **Note:** You won't be able to fully verify until your site is live and DNS is set up. You can come back to this step later.
+
+#### Option C: Automated sitemap submission via Service Account (Recommended for scale)
+
+If you plan to run many sites, setting up a Service Account lets `deploy.sh` automatically submit sitemaps to GSC after every deployment — no manual steps needed.
+
+**Step 1: Create a Google Cloud project**
+
+1. Go to [https://console.cloud.google.com/](https://console.cloud.google.com/)
+2. If you don't have an account, sign in with the same Google account you use for Search Console
+3. At the top of the page, click the project dropdown (next to "Google Cloud")
+4. Click **"New Project"** in the popup
+5. Enter a project name, e.g., `sitefactory-gsc`
+6. Click **"Create"** and wait a few seconds
+
+**Step 2: Enable the Search Console API**
+
+1. Make sure your new project is selected in the top dropdown
+2. Go to [https://console.cloud.google.com/apis/library](https://console.cloud.google.com/apis/library)
+3. In the search box, type `Google Search Console API`
+4. Click on **"Google Search Console API"** in the results
+5. Click the blue **"Enable"** button
+6. Wait for the page to show "API enabled" with a green checkmark
+
+**Step 3: Create a Service Account**
+
+1. In the left sidebar, click **"IAM & Admin"** → **"Service Accounts"**
+   - Or go directly to [https://console.cloud.google.com/iam-admin/serviceaccounts](https://console.cloud.google.com/iam-admin/serviceaccounts)
+2. Click **"+ Create Service Account"** at the top
+3. Fill in:
+   - **Service account name:** `sitefactory-gsc` (anything descriptive)
+   - **Service account ID:** auto-filled (don't change)
+   - **Description:** `Auto-submit sitemaps to Google Search Console`
+4. Click **"Create and Continue"**
+5. On the "Grant this service account access" page — **skip it** (click "Continue")
+6. On the "Grant users access" page — **skip it** (click "Done")
+
+**Step 4: Generate a JSON key**
+
+1. In the Service Accounts list, find the account you just created
+2. Click the **three dots menu** (⋮) on the right → **"Manage keys"**
+3. Click **"Add Key"** → **"Create new key"**
+4. Select **"JSON"** and click **"Create"**
+5. A `.json` file downloads automatically — save it somewhere safe (e.g., `~/.config/sitefactory/gsc-key.json`)
+6. **Never commit this file to git**
+
+**Step 5: Add the Service Account to Google Search Console**
+
+1. Go to [https://search.google.com/search-console](https://search.google.com/search-console)
+2. Select your verified domain property (e.g., `sc-domain:yourdomain.com`)
+3. Click **"Settings"** in the left sidebar
+4. Click **"Users and permissions"**
+5. Click the **three dots menu** (⋮) → **"Add user"**
+6. In the email field, paste the **service account email** — find it in the downloaded JSON file under `"client_email"`, it looks like: `sitefactory-gsc@your-project.iam.gserviceaccount.com`
+7. Set permission to **"Owner"**
+8. Click **"Add"**
+
+**Step 6: Configure SiteFactory**
+
+For local use:
+```yaml
+# In config.yaml
+analytics:
+  google_search_console_key_file: "/path/to/gsc-key.json"
+```
+
+For GitHub Actions:
+1. Open the downloaded JSON key file in a text editor
+2. Copy the **entire file content**
+3. Go to your GitHub repo → **Settings** → **Secrets and variables** → **Actions**
+4. Click **"New repository secret"**
+5. Name: `SF_GSC_KEY_JSON`
+6. Value: paste the entire JSON content
+7. Click **"Add secret"**
+
+**Verify it works:** deploy any site and check the output for `[OK] Sitemap submitted`. Or check GSC → Sitemaps page — the sitemap should appear.
 
 ### 7. UptimeRobot API Key (optional)
 

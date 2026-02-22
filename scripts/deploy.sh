@@ -153,5 +153,29 @@ if [[ "$VERIFY_FLAG" == "--verify" ]] && [[ -n "$DEPLOY_URL" ]]; then
   fi
 fi
 
+# Post-deploy: submit sitemap to Google Search Console
+if [[ -n "${SF_GSC_KEY_FILE:-}" && -f "${SF_GSC_KEY_FILE:-}" ]]; then
+  source "$REPO_ROOT/scripts/lib/gsc.sh"
+  SITE_URL="https://${CUSTOM_DOMAIN}/"
+  SITEMAP_URL="https://${CUSTOM_DOMAIN}/sitemap.xml"
+
+  log_step "Submitting sitemap to Google Search Console..."
+  if gsc_add_site "$SITE_URL" && gsc_submit_sitemap "$SITE_URL" "$SITEMAP_URL"; then
+    log_ok "Sitemap submitted: $SITEMAP_URL"
+  else
+    log_warn "GSC sitemap submission failed (non-critical)"
+  fi
+
+  if [[ "$IS_ROOT" == "true" ]]; then
+    ROOT_SITE_URL="https://${SF_DOMAIN}/"
+    ROOT_SITEMAP_URL="https://${SF_DOMAIN}/sitemap.xml"
+    if gsc_add_site "$ROOT_SITE_URL" && gsc_submit_sitemap "$ROOT_SITE_URL" "$ROOT_SITEMAP_URL"; then
+      log_ok "Root sitemap submitted: $ROOT_SITEMAP_URL"
+    else
+      log_warn "GSC root sitemap submission failed (non-critical)"
+    fi
+  fi
+fi
+
 echo ""
 echo "  Check status: npx vercel ls --token \$SF_VERCEL_TOKEN"

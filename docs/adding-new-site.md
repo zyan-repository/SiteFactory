@@ -205,6 +205,8 @@ This creates a CNAME record pointing `<site-name>.yourdomain.com` to `cname.verc
 
 ### Submit to Google Search Console
 
+> **Auto-submit available:** If you have a Service Account configured (`google_search_console_key_file` in `config.yaml`), sitemaps are submitted automatically on every deploy — you can skip steps 7-9 below. See [setup guide](setup-guide.md) for Service Account setup.
+
 1. Go to [Google Search Console](https://search.google.com/search-console)
 2. Click **"Add property"** (in the top-left dropdown)
 3. Choose **"URL prefix"** (the right-hand option)
