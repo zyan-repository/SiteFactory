@@ -1,15 +1,66 @@
 # Site registry for cross-linking navigation.
 # Adding a site here automatically shows it in all Hugo sites' footers.
+# Each site should have 'language' and 'titles' for multilingual crosslinks.
 domain: search123.top
 sites:
   - name: adsense-home
     title: "Search123"
     description: "Search smarter, work faster, stay safe online"
+    language: en
+    titles:
+      en: "Search123"
+      zh: "Search123"
+      ja: "Search123"
     type: hugo
     category: content
     root: true
   - name: wifi-qr
     title: "WiFi QR Generator"
     description: "Generate WiFi QR codes instantly in your browser"
+    language: en
+    titles:
+      en: "WiFi QR Generator"
+      zh: "WiFi 二维码生成器"
+      ja: "WiFi QRコード生成"
     type: static
     category: generator
+  - name: legal-tips
+    title: Legal Tips
+    description: Practical legal knowledge for everyday life
+    language: en
+    titles:
+      en: "Legal Tips"
+      zh: "法律小贴士"
+      ja: "法律のヒント"
+    type: hugo
+    category: content
+  - name: finance-hub
+    title: Finance Hub
+    description: Personal finance guides and investment insights
+    language: en
+    titles:
+      en: "Finance Hub"
+      zh: "理财中心"
+      ja: "ファイナンスハブ"
+    type: hugo
+    category: content
+  - name: legal-tips-zh
+    title: 法律小知识
+    description: 实用法律知识分享
+    language: zh
+    titles:
+      en: "Legal Knowledge"
+      zh: "法律小知识"
+      ja: "法律の豆知識"
+    type: hugo
+    category: content
+  - name: finance-hub-zh
+    title: 理财攻略
+    description: 个人理财与投资指南
+    language: zh
+    titles:
+      en: "Finance Guide"
+      zh: "理财攻略"
+      ja: "資産運用ガイド"
+    type: hugo
+    category: content

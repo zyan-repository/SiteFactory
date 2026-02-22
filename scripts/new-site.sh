@@ -118,7 +118,33 @@ fi
 SITES_YAML="$REPO_ROOT/themes/sitefactory/data/sites.yaml"
 if [[ -f "$SITES_YAML" ]] && command -v yq &>/dev/null; then
   if ! yq -e ".sites[] | select(.name == \"$SITE_NAME\")" "$SITES_YAML" &>/dev/null; then
-    yq -i ".sites += [{\"name\": \"$SITE_NAME\", \"title\": \"$SITE_TITLE\", \"description\": \"$SITE_DESC\", \"type\": \"hugo\", \"category\": \"content\"}]" "$SITES_YAML"
+    yq -i ".sites += [{\"name\": \"$SITE_NAME\", \"title\": \"$SITE_TITLE\", \"description\": \"$SITE_DESC\", \"type\": \"hugo\", \"category\": \"content\", \"language\": \"$SITE_LANG\"}]" "$SITES_YAML"
+
+    # Generate multilingual titles via LLM
+    if [[ -f "$REPO_ROOT/config.yaml" ]]; then
+      source "$REPO_ROOT/scripts/lib/config.sh"
+      source "$REPO_ROOT/scripts/lib/llm.sh"
+      if [[ -n "${SF_AI_API_KEY:-}" && "$SF_AI_API_KEY" != *"XXXX"* ]]; then
+        log_info "  Generating multilingual titles via LLM..."
+        LANGS=("en" "zh" "ja")
+        TITLES_JSON=$(llm_generate \
+          "You are a translator. Output ONLY valid JSON with no extra text." \
+          "Translate this site title into 3 languages. Title: \"$SITE_TITLE\" (original language: $SITE_LANG). Return JSON: {\"en\": \"...\", \"zh\": \"...\", \"ja\": \"...\"}" \
+          2>/dev/null || echo "")
+        if [[ -n "$TITLES_JSON" ]] && echo "$TITLES_JSON" | jq -e . &>/dev/null; then
+          for lang in "${LANGS[@]}"; do
+            lang_title=$(echo "$TITLES_JSON" | jq -r ".${lang} // empty")
+            if [[ -n "$lang_title" ]]; then
+              yq -i "(.sites[] | select(.name == \"$SITE_NAME\")).titles.$lang = \"$lang_title\"" "$SITES_YAML"
+            fi
+          done
+          log_ok "  Multilingual titles generated"
+        else
+          log_warn "  LLM title translation failed, using original title only"
+        fi
+      fi
+    fi
+
     log_ok "  Registered in theme data/sites.yaml"
   fi
 fi

@@ -2,17 +2,23 @@
 {{ with .Site.Data.sites }}
 {{ if gt (len .sites) 1 }}
 <div class="crosslinks">
-  <p class="crosslinks-title">More from {{ .domain }}</p>
+  <p class="crosslinks-title">{{ i18n "moreFrom" }} {{ .domain }}</p>
   <nav>
     {{ $currentName := "" }}
     {{ with $.Site.Params.siteName }}{{ $currentName = . }}{{ end }}
+    {{ $currentLang := $.Site.LanguageCode }}
     {{ range .sites }}
     {{ if ne .name $currentName }}
     {{ $url := printf "https://%s.%s/" .name $.Site.Data.sites.domain }}
     {{ if .root }}
     {{ $url = printf "https://%s/" $.Site.Data.sites.domain }}
     {{ end }}
-    <a href="{{ $url }}" title="{{ .description }}">{{ .title }}</a>
+    {{ $title := .title }}
+    {{ with .titles }}
+    {{ $langTitle := index . $currentLang }}
+    {{ with $langTitle }}{{ $title = . }}{{ end }}
+    {{ end }}
+    <a href="{{ $url }}" title="{{ .description }}">{{ $title }}</a>
     {{ end }}
     {{ end }}
   </nav>
