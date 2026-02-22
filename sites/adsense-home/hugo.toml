@@ -9,6 +9,7 @@ disableHugoGeneratorInject = true
 
 [params]
   description = "Practical guides to search smarter, work faster, and stay safe online"
+  homepageTitle = "Search123 - Search Smarter, Work Faster, Stay Safe Online"
   author = "Arron Zhou"
   authorBio = "Arron is a web developer and digital productivity enthusiast who writes about search techniques, online tools, and internet security. He personally tests every tool reviewed and verifies every technique recommended on this site."
   # AdSense

@@ -221,6 +221,17 @@ h3 { font-size: 1.15rem; }
 .breadcrumb a { color: var(--muted); }
 .breadcrumb a:hover { color: var(--accent); }
 
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem 0 1rem;
+  font-size: 0.9rem;
+}
+.pagination .page-number { color: var(--muted); }
+
 /* Article single page */
 article > h1 { margin-top: 0.5em; }
 

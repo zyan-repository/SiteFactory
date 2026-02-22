@@ -2,6 +2,7 @@
 title: "About"
 description: "About Search123 and its author — our mission, values, and commitment to quality"
 hideDate: true
+noAds: true
 ---
 
 ## About Search123

@@ -1,5 +1,6 @@
 ---
 title: "Top 10 Free Online Tools for Productivity in 2026"
+slug: "top-10-free-online-tools-for-productivity-in-2026"
 date: 2026-02-07
 lastmod: 2026-02-20
 description: "Discover the best free online productivity tools for 2026 to streamline your workflow, manage tasks, and boost your efficiency without spending a dime."
