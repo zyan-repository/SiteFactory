@@ -80,7 +80,7 @@ jobs:
             fi
             # If no plan file exists, site is always eligible (plan will be generated)
 
-            SITES=$(echo "$SITES" | jq --arg n "$name" '. + [$n]')
+            SITES=$(echo "$SITES" | jq -c --arg n "$name" '. + [$n]')
             echo "Eligible: $name (schedule: $schedule)"
           done
 
