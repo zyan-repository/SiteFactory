@@ -1,5 +1,5 @@
-<nav class="breadcrumb" aria-label="面包屑导航">
-  <a href="{{ .Site.BaseURL }}">首页</a>
+<nav class="breadcrumb" aria-label="{{ i18n "breadcrumbNav" }}">
+  <a href="{{ .Site.BaseURL }}">{{ i18n "home" }}</a>
   {{ range .Ancestors.Reverse }}
     {{ if ne .Kind "home" }}
     &rsaquo; <a href="{{ .Permalink }}">{{ .Title }}</a>
@@ -16,7 +16,7 @@
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "首页",
+      "name": {{ i18n "home" | jsonify }},
       "item": "{{ .Site.BaseURL }}"
     }
     {{ $pos := 1 }}
@@ -26,7 +26,7 @@
     ,{
       "@type": "ListItem",
       "position": {{ $pos }},
-      "name": "{{ .Title }}",
+      "name": {{ .Title | jsonify }},
       "item": "{{ .Permalink }}"
     }
     {{ end }}
@@ -35,7 +35,8 @@
     ,{
       "@type": "ListItem",
       "position": {{ $pos }},
-      "name": "{{ .Title }}"
+      "name": {{ .Title | jsonify }},
+      "item": "{{ .Permalink }}"
     }
   ]
 }

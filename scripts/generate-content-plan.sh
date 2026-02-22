@@ -133,11 +133,14 @@ publishing_schedule: "${SCHEDULE}"
 last_generated: ""
 EOF
 
-# Append target_keywords via yq
-echo "$TK_YAML" | yq -i '.target_keywords = load("/dev/stdin")' "$PLAN_FILE"
-
-# Append topics via yq
-echo "$TOPICS_YAML" | yq -i '.topics = load("/dev/stdin")' "$PLAN_FILE"
+# Append target_keywords and topics via yq (use temp files for reliable loading)
+TK_TMPFILE=$(mktemp)
+TOPICS_TMPFILE=$(mktemp)
+echo "$TK_YAML" > "$TK_TMPFILE"
+echo "$TOPICS_YAML" > "$TOPICS_TMPFILE"
+yq -i ".target_keywords = load(\"$TK_TMPFILE\")" "$PLAN_FILE"
+yq -i ".topics = load(\"$TOPICS_TMPFILE\")" "$PLAN_FILE"
+rm -f "$TK_TMPFILE" "$TOPICS_TMPFILE"
 
 log_ok "Content plan generated: $ITEM_COUNT topics for '$SITE_NAME'"
 log_info "Schedule: $SCHEDULE"

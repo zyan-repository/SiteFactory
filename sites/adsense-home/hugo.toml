@@ -17,7 +17,7 @@ disableHugoGeneratorInject = true
   googleAnalyticsId = "G-5JJ2VHPXNQ"
   googleSearchConsoleVerification = ""
   # SEO
-  ogImage = "/images/og-default.png"
+  ogImage = ""
 
 [markup]
   [markup.goldmark]

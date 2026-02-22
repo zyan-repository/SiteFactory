@@ -80,6 +80,7 @@ jobs:
           # Verify scripts exist
           for script in setup.sh new-site.sh fork-site.sh check-repo.sh \
                         deploy.sh deploy-all.sh build-all.sh dns-setup.sh \
+                        swap-root.sh pre-commit-hook.sh \
                         generate-dashboard.sh lighthouse-check.sh \
                         launch-site.sh generate-content.sh \
                         generate-content-plan.sh generate-seed-content.sh; do

@@ -85,10 +85,10 @@ done
 # Step 3: Inject AdSense + Analytics into all HTML files
 log_step "Injecting AdSense, Analytics, and SEO meta..."
 INJECT_COUNT=0
-find "$SITE_DIR" -name "*.html" -maxdepth 2 -type f | while read -r html_file; do
+while IFS= read -r html_file; do
   inject_all "$html_file" "$SF_ADSENSE_PUB_ID" "$SF_GA_ID" "$SITE_TITLE" "$SITE_DESC"
   INJECT_COUNT=$((INJECT_COUNT + 1))
-done
+done < <(find "$SITE_DIR" -name "*.html" -maxdepth 2 -type f)
 if [[ "$INJECT_COUNT" -eq 0 ]]; then
   log_warn "No HTML files found in $SITE_DIR (depth <= 2). AdSense/Analytics not injected."
   log_warn "The forked project may require a build step first."
@@ -105,6 +105,7 @@ for page in privacy-policy.html about.html; do
       -e "s|{{SITE_TITLE}}|${SITE_TITLE}|g" \
       -e "s|{{AUTHOR_EMAIL}}|${SF_AUTHOR_EMAIL}|g" \
       -e "s|{{DATE}}|${DATE}|g" \
+      -e "s|{{LANGUAGE}}|en|g" \
       "$SITE_DIR/$page"
     log_ok "  Added $page"
   fi

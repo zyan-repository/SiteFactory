@@ -234,6 +234,9 @@ nano sites/adsense-home/content/posts/my-article.md
 | `SF_ADSENSE_PUB_ID` | AdSense 发布者 ID |
 | `SF_GA_ID` | Google Analytics 衡量 ID |
 | `SF_AI_API_KEY` | AI 服务的 API 密钥（用于内容生成） |
+| `SF_VERCEL_TEAM_ID` | *（可选）* Vercel 团队/组织 ID，用于团队部署 |
+| `SF_AI_PROVIDER` | *（可选）* AI 服务商名称，默认 `claude` |
+| `SF_CONTENT_SCHEDULE` | *（可选）* 内容生成频率：`daily`、`2x-week`、`weekly`（默认）、`biweekly` |
 
 ### 第三步：本地配置
 

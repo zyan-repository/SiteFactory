@@ -21,3 +21,18 @@ other = "Read more"
 
 [postedOn]
 other = "Posted on"
+
+[allRightsReserved]
+other = "All rights reserved."
+
+[breadcrumbNav]
+other = "Breadcrumb Navigation"
+
+[notFound]
+other = "404 - Page Not Found"
+
+[notFoundMessage]
+other = "The page you are looking for does not exist."
+
+[backToHome]
+other = "Back to Home"

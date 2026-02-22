@@ -138,7 +138,8 @@ SiteFactory/
 │       ├── inject.sh        # HTML injection (AdSense/GA/SEO)
 │       ├── llm.sh           # Unified LLM API wrapper (6+ providers)
 │       ├── platform.sh      # Cross-platform utilities
-│       └── verify.sh        # DNS polling + HTTP health check
+│       ├── verify.sh        # DNS polling + HTTP health check
+│       └── vercel.sh        # Vercel project linking helpers
 ├── dashboard/               # Monitoring dashboard
 │   ├── template.html        # Dashboard template
 │   └── data/                # Metrics JSON (git-ignored)
@@ -413,7 +414,7 @@ npx eslint .
 CI installs Hugo via direct download (not third-party actions). When upgrading Hugo:
 
 1. Check the new version's release assets at `https://github.com/gohugoio/hugo/releases`
-2. Update `HUGO_VERSION` in `.github/workflows/build-check.yml`
+2. Update `HUGO_VERSION` in **both** `.github/workflows/build-check.yml` and `.github/workflows/deploy.yml` — they must stay in sync
 3. Verify archive filenames match (Hugo may change naming conventions between major versions)
 
 Current asset naming convention (Hugo v0.103.0+):

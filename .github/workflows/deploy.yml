@@ -124,4 +124,4 @@ jobs:
         run: ./scripts/deploy.sh "${{ matrix.site }}" ${{ steps.root-check.outputs.flag }}
 
       - name: Setup DNS
-        run: ./scripts/dns-setup.sh "${{ matrix.site }}" ${{ steps.root-check.outputs.flag }} || true
+        run: ./scripts/dns-setup.sh "${{ matrix.site }}" ${{ steps.root-check.outputs.flag }} || echo "::warning::DNS setup failed for ${{ matrix.site }} - manual verification required"

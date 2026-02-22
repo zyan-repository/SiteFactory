@@ -66,7 +66,7 @@ if [[ -z "$TOPIC" ]]; then
     if [[ -f "$POST_DIR/${CANDIDATE_SLUG}.md" ]]; then
       log_info "Skipping '$CANDIDATE' (article already exists)"
       # Mark as published since the article exists
-      SKIP_INDEX=$(yq "[.topics | to_entries[] | select(.value.title == \"$CANDIDATE\")][0].key" "$PLAN_FILE")
+      SKIP_INDEX=$(yq ".topics | to_entries[] | select(.value.title == \"$CANDIDATE\") | .key" "$PLAN_FILE")
       if [[ -n "$SKIP_INDEX" && "$SKIP_INDEX" != "null" ]]; then
         yq -i ".topics[$SKIP_INDEX].status = \"published\"" "$PLAN_FILE"
       fi
@@ -75,7 +75,7 @@ if [[ -z "$TOPIC" ]]; then
 
     TOPIC="$CANDIDATE"
     KEYWORDS=$(yq "[.topics[] | select(.status == \"pending\")][$idx].keywords // \"\"" "$PLAN_FILE")
-    PLAN_INDEX=$(yq "[.topics | to_entries[] | select(.value.title == \"$TOPIC\")][0].key" "$PLAN_FILE")
+    PLAN_INDEX=$(yq ".topics | to_entries[] | select(.value.title == \"$TOPIC\") | .key" "$PLAN_FILE")
     FOUND=true
     break
   done

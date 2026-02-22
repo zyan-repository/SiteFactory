@@ -56,6 +56,10 @@ if [[ "$SITE_TYPE" == "hugo" ]]; then
     cp -r "$SITE_DIR/public/.vercel" "$VERCEL_BACKUP/.vercel"
   fi
 
+  # Clean up temp backup on exit (prevents leak if Hugo build fails)
+  cleanup_vercel_backup() { [[ -n "${VERCEL_BACKUP:-}" ]] && rm -rf "$VERCEL_BACKUP"; }
+  trap cleanup_vercel_backup EXIT
+
   $HUGO_CMD -s "$SITE_DIR" --gc --minify --quiet
   DEPLOY_DIR="$SITE_DIR/public"
   log_ok "Build successful"
@@ -64,7 +68,9 @@ if [[ "$SITE_TYPE" == "hugo" ]]; then
   if [[ -n "$VERCEL_BACKUP" ]] && [[ -d "$VERCEL_BACKUP/.vercel" ]]; then
     cp -r "$VERCEL_BACKUP/.vercel" "$DEPLOY_DIR/.vercel"
     rm -rf "$VERCEL_BACKUP"
+    VERCEL_BACKUP=""  # Prevent double-cleanup by trap
   fi
+  trap - EXIT
 
   # Link deploy directory to correct Vercel project name.
   # Without this, Vercel auto-names Hugo projects "public" (from the directory name).
