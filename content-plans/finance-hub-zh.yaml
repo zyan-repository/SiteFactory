@@ -25,19 +25,19 @@ topics:
     status: published
   - title: "建立紧急备用金的详细步骤与金额建议"
     keywords: "紧急备用金, 应急资金储备, 备用金存多少"
-    status: pending
+    status: published
   - title: "新手如何选择第一只基金进行投资"
     keywords: "新手投资基金, 第一只基金选择, 基金入门投资"
     status: published
   - title: "股票投资入门：A股开户与基础操作流程"
     keywords: "A股开户流程, 股票投资入门, 新手炒股步骤"
-    status: pending
+    status: published
   - title: "银行定期存款与国债哪个更安全划算"
     keywords: "定期存款 vs 国债, 低风险理财比较, 保本投资选择"
     status: published
   - title: "详解货币基金：余额宝等产品的收益与风险"
     keywords: "货币基金详解, 余额宝收益风险, 活期理财选择"
-    status: pending
+    status: published
   - title: "如何利用指数基金进行长期定投"
     keywords: "指数基金定投, 长期定投策略, 被动投资方法"
     status: published
@@ -49,7 +49,7 @@ topics:
     status: published
   - title: "购买保险的优先顺序与险种配置指南"
     keywords: "保险购买顺序, 家庭保险配置, 必备保险种类"
-    status: pending
+    status: published
   - title: "房贷还款方式详解：等额本息与等额本金对比"
     keywords: "等额本息 等额本金, 房贷还款方式对比, 如何选还款方式"
     status: published
@@ -61,34 +61,34 @@ topics:
     status: published
   - title: "年轻人如何规划第一笔十万元投资"
     keywords: "十万元投资规划, 年轻人理财方案, 小额资金投资"
-    status: pending
+    status: published
   - title: "家庭资产配置金字塔模型与实践案例"
     keywords: "家庭资产配置, 资产配置金字塔, 理财分配比例"
     status: pending
   - title: "如何读懂基金招募说明书与定期报告"
     keywords: "基金招募说明书, 基金报告解读, 分析基金质量"
-    status: pending
+    status: published
   - title: "可转债投资入门：打新与二级市场交易策略"
     keywords: "可转债投资入门, 可转债打新技巧, 可转债交易"
     status: pending
   - title: "退休养老规划：计算你的养老需要多少钱"
     keywords: "退休养老规划, 养老金计算, 养老储蓄目标"
-    status: pending
+    status: published
   - title: "教育金储蓄计划：为孩子准备教育基金的几种方式"
     keywords: "教育金储蓄计划, 孩子教育基金, 教育费用规划"
     status: pending
   - title: "消费主义陷阱：如何避免冲动消费并理性购物"
     keywords: "避免冲动消费, 理性购物技巧, 对抗消费主义"
-    status: pending
+    status: published
   - title: "海外投资渠道简介：港股、美股与QDII基金"
     keywords: "海外投资渠道, 港股美股投资, QDII基金介绍"
     status: pending
   - title: "财务自由之路：需要多少钱以及如何实现"
     keywords: "财务自由计算, 实现财务自由, 被动收入来源"
-    status: pending
+    status: published
   - title: "如何利用记账软件高效管理个人财务"
     keywords: "记账软件推荐, 个人财务管理, 电子记账技巧"
     status: pending
   - title: "投资中的复利效应：计算公式与真实案例演示"
     keywords: "复利效应计算, 复利投资案例, 长期复利威力"
-    status: pending
+    status: published
