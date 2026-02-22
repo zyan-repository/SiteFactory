@@ -1,0 +1,55 @@
+baseURL = "https://finance-hub-zh.search123.top/"
+themesDir = "../../themes"
+theme = "sitefactory"
+languageCode = "zh"
+title = "理财攻略"
+
+# Performance
+enableRobotsTXT = true
+enableEmoji = false
+enableGitInfo = false
+disableHugoGeneratorInject = true
+
+[params]
+  description = "个人理财与投资指南"
+  author = "Arron Zhou"
+  siteName = "finance-hub-zh"
+  # AdSense
+  adsenseEnabled = true
+  adsensePubId = "ca-pub-5531531271065052"
+  # Analytics
+  googleAnalyticsId = "G-5JJ2VHPXNQ"
+  googleSearchConsoleVerification = ""
+  # SEO
+  ogImage = ""
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = false
+  [markup.highlight]
+    style = "github"
+    lineNos = false
+    noClasses = true
+
+[outputs]
+  home = ["HTML", "RSS"]
+  section = ["HTML", "RSS"]
+
+[sitemap]
+  changefreq = "weekly"
+  priority = 0.5
+  filename = "sitemap.xml"
+
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+
+[permalinks]
+  posts = "/posts/:slug/"
+
+[minify]
+  disableCSS = false
+  disableHTML = false
+  disableJS = false
+  minifyOutput = true
