@@ -103,6 +103,10 @@ All Hugo sites share a centralized theme at `themes/sitefactory/`. Template upda
 | **OG image** | Auto-generated per site via `scripts/lib/og-image.sh` (ImageMagick with fallback) |
 | **New site** | `new-site.sh` copies only content/static/hugo.toml (NOT layouts/assets/i18n) |
 | **Theme changes** | Push to `themes/` triggers `deploy.yml` to rebuild all Hugo sites |
+| **Title fallback** | Homepage og:title/twitter:title use `homepageTitle` param, matching `<title>` tag logic |
+| **Accessibility** | All `<nav>` elements have `aria-label` via i18n keys (`mainNav`, `footerNav`, `breadcrumbNav`) |
+| **Breadcrumb i18n** | JSON-LD BreadcrumbList uses `.Site.Home.Permalink` so multilingual sites get correct language URLs |
+| **AdSense injection** | `adsensePubId` injected via `HUGO_PARAMS_ADSENSEPUBID` env var at build time; hugo.toml value left empty |
 
 ### High-Value Fork Targets
 
@@ -181,6 +185,7 @@ SiteFactory/
 5. **Naming** - Directories `kebab-case`, templates `snake_case.html`, content `slug-format.md`
 6. **Comments in English** - All code comments in English for open-source readability
 7. **No secrets in code** - AdSense publisher ID, API keys via `config.yaml` (git-ignored)
+8. **Docs follow code** - When changing theme templates, scripts, CI workflows, or config patterns: update CLAUDE.md (architecture), README (user-facing), and relevant `docs/` files in the same commit. This includes i18n key additions, new env vars, new script flags, and behavioral changes
 
 ## SEO Requirements (Non-Negotiable)
 
@@ -295,6 +300,39 @@ Rules:
 - URL structure: `/{lang}/page/` (language prefix always present)
 - Do NOT mix languages on a single page
 
+### Theme i18n Keys Reference
+
+All Hugo sites using the shared theme must provide these i18n keys in `themes/sitefactory/i18n/{lang}.toml`:
+
+| Key | Usage | EN | ZH | JA |
+|-----|-------|----|----|-----|
+| `home` | Breadcrumb & nav | Home | 首页 | ホーム |
+| `posts` | Header nav | Posts | 文章 | 記事 |
+| `about` | Header & footer nav | About | 关于 | 概要 |
+| `contact` | Header & footer nav | Contact | 联系我们 | お問い合わせ |
+| `privacy` | Footer nav | Privacy Policy | 隐私政策 | プライバシーポリシー |
+| `terms` | Footer nav | Terms of Service | 服务条款 | 利用規約 |
+| `mainNav` | Header nav aria-label | Main navigation | 主导航 | メインナビゲーション |
+| `footerNav` | Footer nav aria-label | Footer navigation | 页脚导航 | フッターナビゲーション |
+| `newer` | Pagination link | Newer | 较新 | 新しい |
+| `older` | Pagination link | Older | 较旧 | 古い |
+| `pageOf` | Pagination label | Page | 第 | ページ |
+| `readMore` | Article card link | Read more | 阅读更多 | 続きを読む |
+| `postedOn` | Article date prefix | Posted on | 发布于 | 投稿日 |
+| `allRightsReserved` | Footer copyright | All rights reserved. | 保留所有权利。 | 全著作権所有。 |
+| `breadcrumbNav` | Breadcrumb aria-label | Breadcrumb Navigation | 面包屑导航 | パンくずナビ |
+| `tableOfContents` | Article TOC heading | Table of Contents | 目录 | 目次 |
+| `minRead` | Reading time suffix | min read | 分钟阅读 | 分で読める |
+| `words` | Word count label | words | 字 | 語 |
+| `advertisement` | Ad label (Auto-Ads handles this) | Advertisement | 广告 | 広告 |
+| `moreFrom` | Cross-site links prefix | More from | 更多来自 | その他 |
+| `tools` | Header nav (optional) | Tools | 工具 | ツール |
+| `notFound` | 404 page title | 404 - Page Not Found | 404 - 页面未找到 | 404 - ページが見つかりません |
+| `notFoundMessage` | 404 page body | The page you are looking for does not exist. | 您访问的页面不存在。 | お探しのページは存在しません。 |
+| `backToHome` | 404 back link | Back to Home | 返回首页 | ホームに戻る |
+
+Adding a new language: create `themes/sitefactory/i18n/{lang}.toml` with all keys above. When adding new i18n keys, update all existing language files and this reference table simultaneously.
+
 ### Documentation Bilingual Requirement
 
 **Every project documentation file (`.md`) must have both English and Chinese versions.** This is non-negotiable.
@@ -361,7 +399,7 @@ Automation is handled at two levels:
 
 | Workflow | File | Trigger | What it does |
 |----------|------|---------|-------------|
-| Build Check | `build-check.yml` | Push/PR to main | ShellCheck + Hugo build + file verification |
+| Build Check | `build-check.yml` | Push/PR to main | ShellCheck + Hugo build + file verification (all language variants of shared files + all lib scripts) |
 | Auto Deploy | `deploy.yml` | Push to `sites/` or `themes/`, manual dispatch | Deploys changed sites to Vercel + DNS. Theme changes trigger all Hugo site rebuilds |
 | Health Check | `health-check.yml` | Every 6 hours, manual | HTTP check all sites, warn if down |
 | Content Gen | `content-generation.yml` | Manual dispatch | AI article generation → commit → push → auto-deploy |
@@ -450,7 +488,7 @@ AI-generated content must pass these quality checks:
 |---------|-----------------|
 | Duplicate content across sites | Each site must have unique, original content |
 | Missing alt text on images | Every `<img>` must have descriptive alt text |
-| Hardcoding AdSense publisher ID | Use Hugo params in `hugo.toml`, read via `.Site.Params` |
+| Hardcoding AdSense publisher ID | Leave `adsensePubId = ""` in hugo.toml; inject via `HUGO_PARAMS_ADSENSEPUBID` env var at build time (Vercel env config or CI secret) |
 | Forgetting hreflang on new language | Template must auto-generate hreflang for all translations |
 | Huge unoptimized images | Use Hugo image processing: resize, convert to WebP |
 | Inline CSS/JS in templates | Use Hugo asset pipeline: bundle, minify, fingerprint |
@@ -464,6 +502,7 @@ AI-generated content must pass these quality checks:
 | Using third-party GitHub Actions for tool installation | Prefer direct download scripts — third-party actions go unmaintained and break when upstream changes download URLs (e.g., `peaceiris/actions-hugo` broke when Hugo changed archive naming in v0.103.0+) |
 | Using `hugo-version: 'latest'` in CI | Pin Hugo to a specific version (e.g., `0.156.0`) so builds are reproducible and you control when to upgrade |
 | Hugo site Vercel project named "public" | Hugo deploys from `public/` dir, so Vercel names the project "public". `deploy.sh` auto-links correct name via `vercel_link_project`. For legacy projects, run `vercel link --project <site-name> --cwd sites/<name>/public/` |
+| Changing code without updating docs | When modifying theme, scripts, CI, or config — update CLAUDE.md, README, and relevant `docs/` files in the same commit (see Core Rule #8) |
 
 ## Code Quality
 

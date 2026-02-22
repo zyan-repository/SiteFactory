@@ -283,7 +283,7 @@ SiteFactory/
 │   ├── generate-seed-content.sh  # AI-generate initial seed articles
 │   ├── generate-dashboard.sh # Generate monitoring dashboard
 │   ├── lighthouse-check.sh  # Run Lighthouse audit
-│   └── lib/                 # Shared functions (config, logging, injection, OG image)
+│   └── lib/                 # Shared functions (config, logging, injection, OG image, Vercel helpers)
 ├── dashboard/               # Monitoring dashboard (auto-generated HTML)
 └── docs/                    # Documentation
 ```
