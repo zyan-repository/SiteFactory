@@ -274,7 +274,7 @@ git add sites/
 git push
 ```
 
-任何对 `sites/` 目录的推送都会自动触发 GitHub Actions 部署。
+任何对 `sites/` 或 `themes/` 目录的推送都会自动触发 GitHub Actions 部署。主题变更会自动重建所有 Hugo 站点。
 
 ### 第五步：同步上游更新
 
@@ -315,9 +315,16 @@ SiteFactory/
 ├── config.yaml              # 你的凭证配置（不会上传到 git）
 ├── SITES.md                 # 所有已集成站点的清单
 ├── content-plans/           # AI 内容生成计划和主题列表
+├── themes/
+│   └── sitefactory/         # 共享 Hugo 主题（所有 Hugo 站继承）
+│       ├── layouts/         # 模板（baseof、single、list、partials）
+│       ├── assets/css/      # 样式表（main.css）
+│       ├── i18n/            # UI 翻译（en、zh、ja）
+│       ├── static/          # 共享静态文件（og-default.png）
+│       └── data/sites.yaml  # 跨站注册表（驱动页脚导航）
 ├── sites/
-│   ├── _template/           # Hugo 站点模板
-│   ├── _shared/             # Fork 站共用文件（隐私政策、关于页面）
+│   ├── _template/           # Hugo 站点脚手架（hugo.toml + 内容结构）
+│   ├── _shared/             # Fork 站共用页面（en/zh/ja 三语版）
 │   ├── my-blog/             # Hugo 内容站（type: hugo）
 │   └── my-tool/             # Fork 的工具站（type: static）
 ├── scripts/                 # 自动化脚本（建站、部署、监控）
@@ -398,6 +405,9 @@ license: MIT
 | `dns-setup.sh <名字> [--verify] [--root]` | 通过 NameSilo API 添加 DNS 记录 |
 | `swap-root.sh <名字> [--verify]` | 切换主域名绑定的站点 |
 | `generate-content.sh <名字> <主题>` | AI 生成 SEO 文章 |
+| `generate-content-plan.sh <名字>` | AI 生成内容计划 |
+| `generate-seed-content.sh <名字>` | AI 生成种子文章 |
+| `update-sites.sh [名字]` | 重新注入 Fork 站的广告/SEO/合规页面 |
 | `generate-dashboard.sh` | 生成监控面板 |
 | `lighthouse-check.sh <名字\|--all>` | 运行 Lighthouse 性能审计 |
 

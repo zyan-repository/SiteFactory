@@ -228,7 +228,7 @@ git add sites/
 git push
 ```
 
-Any push that changes `sites/` triggers auto-deploy via GitHub Actions.
+Any push that changes `sites/` or `themes/` triggers auto-deploy via GitHub Actions. Theme changes rebuild all Hugo sites automatically.
 
 ### Step 5: Sync Upstream Updates
 
@@ -254,25 +254,36 @@ SiteFactory/
 ├── config.yaml              # Your credentials (git-ignored)
 ├── SITES.md                 # Registry of all integrated sites
 ├── content-plans/           # AI content generation schedules & topic lists
+├── themes/
+│   └── sitefactory/         # Shared Hugo theme (all Hugo sites inherit)
+│       ├── layouts/         # Templates (baseof, single, list, partials)
+│       ├── assets/css/      # Stylesheets (main.css)
+│       ├── i18n/            # UI translations (en, zh, ja)
+│       ├── static/          # Shared static files (og-default.png)
+│       └── data/sites.yaml  # Cross-site registry (drives footer nav)
 ├── sites/
-│   ├── _template/           # Hugo site template (SEO-optimized)
-│   ├── _shared/             # Shared pages for fork sites (privacy policy, about)
+│   ├── _template/           # Hugo site scaffold (hugo.toml + content)
+│   ├── _shared/             # Shared pages for fork sites (en/zh/ja)
 │   ├── my-blog/             # Hugo content site (type: hugo)
 │   └── my-tool/             # Forked tool site (type: static)
 ├── scripts/
 │   ├── setup.sh             # One-time setup
+│   ├── launch-site.sh       # One-click: create + deploy + DNS + verify
 │   ├── new-site.sh          # Create Hugo site from template
 │   ├── fork-site.sh         # Fork & adapt GitHub project
 │   ├── check-repo.sh        # Evaluate GitHub project compatibility
+│   ├── update-sites.sh      # Re-apply injections to all fork sites
 │   ├── deploy.sh            # Deploy single site to Vercel
 │   ├── deploy-all.sh        # Deploy all sites
 │   ├── build-all.sh         # Build all Hugo sites
 │   ├── dns-setup.sh         # Add DNS record via NameSilo API
-│   ├── generate-dashboard.sh # Generate monitoring dashboard
-│   ├── launch-site.sh       # One-click: create + deploy + DNS + verify
+│   ├── swap-root.sh         # Swap which site occupies the root domain
 │   ├── generate-content.sh  # AI-generate SEO articles
+│   ├── generate-content-plan.sh  # AI-generate content plan
+│   ├── generate-seed-content.sh  # AI-generate initial seed articles
+│   ├── generate-dashboard.sh # Generate monitoring dashboard
 │   ├── lighthouse-check.sh  # Run Lighthouse audit
-│   └── lib/                 # Shared functions (config, logging, injection, verify)
+│   └── lib/                 # Shared functions (config, logging, injection, OG image)
 ├── dashboard/               # Monitoring dashboard (auto-generated HTML)
 └── docs/                    # Documentation
 ```
@@ -355,6 +366,9 @@ Revenue potential: Even modest AdSense earnings of $0.50/day across all sites = 
 | `dns-setup.sh <name> [--verify] [--root]` | Add DNS record via NameSilo API |
 | `swap-root.sh <name> [--verify]` | Swap which site occupies the root domain |
 | `generate-content.sh <name> <topic>` | AI-generate SEO articles |
+| `generate-content-plan.sh <name>` | AI-generate content plan for a site |
+| `generate-seed-content.sh <name>` | AI-generate initial seed articles |
+| `update-sites.sh [name]` | Re-apply injections to fork sites |
 | `generate-dashboard.sh` | Generate monitoring dashboard |
 | `lighthouse-check.sh <name\|--all>` | Run Lighthouse audit |
 
