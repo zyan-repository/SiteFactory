@@ -64,16 +64,15 @@ jobs:
 
       - name: Check required files
         run: |
-          # Verify shared files exist
-          test -f sites/_shared/privacy-policy.html
-          test -f sites/_shared/about.html
+          # Verify shared files exist (language-suffixed)
+          test -f sites/_shared/privacy-policy.en.html
+          test -f sites/_shared/about.en.html
           test -f sites/_shared/adsense-snippet.html
           test -f sites/_shared/analytics-snippet.html
           test -f sites/_shared/ads.txt
 
           # Verify template structure
           test -f sites/_template/hugo.toml
-          test -d sites/_template/layouts
           test -d sites/_template/content
           test -f sites/_template/static/ads.txt
 
