@@ -18,9 +18,9 @@ disableHugoGeneratorInject = true
   siteName = "adsense-home"
   showToolsNav = true
   showCrosslinks = true
-  # AdSense
+  # AdSense (pub ID injected via HUGO_PARAMS_ADSENSEPUBID env var at build time)
   adsenseEnabled = true
-  adsensePubId = "ca-pub-5531531271065052"
+  adsensePubId = ""
   # Analytics
   googleAnalyticsId = "G-5JJ2VHPXNQ"
   googleSearchConsoleVerification = ""

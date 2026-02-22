@@ -1,5 +1,5 @@
 <nav class="breadcrumb" aria-label="{{ i18n "breadcrumbNav" }}">
-  <a href="{{ .Site.BaseURL }}">{{ i18n "home" }}</a>
+  <a href="{{ .Site.Home.Permalink }}">{{ i18n "home" }}</a>
   {{ range .Ancestors.Reverse }}
     {{ if ne .Kind "home" }}
     &rsaquo; <a href="{{ .Permalink }}">{{ .Title }}</a>
@@ -17,7 +17,7 @@
       "@type": "ListItem",
       "position": 1,
       "name": {{ i18n "home" | jsonify }},
-      "item": "{{ .Site.BaseURL }}"
+      "item": "{{ .Site.Home.Permalink }}"
     }
     {{ $pos := 1 }}
     {{ range .Ancestors.Reverse }}

@@ -33,8 +33,10 @@ for site_dir in "$REPO_ROOT/sites"/*/; do
   site_type=$(grep "^type:" "$site_dir/site.yaml" 2>/dev/null | awk '{print $2}' | tr -d '"' || echo "unknown")
   site_title=$(grep "^title:" "$site_dir/site.yaml" 2>/dev/null | sed 's/^title: *//' | tr -d '"' || echo "$name")
 
+  SITE_ENTRY=$(jq -n --arg n "$name" --arg t "$site_type" --arg title "$site_title" \
+    '{name: $n, type: $t, title: $title}')
   [[ "$FIRST" == "true" ]] && FIRST=false || SITES_JSON="$SITES_JSON,"
-  SITES_JSON="$SITES_JSON{\"name\":\"$name\",\"type\":\"$site_type\",\"title\":\"$site_title\"}"
+  SITES_JSON="$SITES_JSON$SITE_ENTRY"
 done
 SITES_JSON="$SITES_JSON]"
 

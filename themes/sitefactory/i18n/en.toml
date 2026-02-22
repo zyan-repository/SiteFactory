@@ -54,3 +54,18 @@ other = "words"
 
 [tableOfContents]
 other = "Table of Contents"
+
+[mainNav]
+other = "Main navigation"
+
+[footerNav]
+other = "Footer navigation"
+
+[newer]
+other = "Newer"
+
+[older]
+other = "Older"
+
+[pageOf]
+other = "Page"

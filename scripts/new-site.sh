@@ -22,7 +22,7 @@ SITE_DIR="$REPO_ROOT/sites/$SITE_NAME"
 TEMPLATE_DIR="$REPO_ROOT/sites/_template"
 
 # Validate site name
-if [[ ! "$SITE_NAME" =~ ^[a-z0-9][a-z0-9-]*[a-z0-9]$ ]]; then
+if [[ ! "$SITE_NAME" =~ ^[a-z0-9]([a-z0-9-]*[a-z0-9])?$ ]]; then
   log_error "Site name must be lowercase alphanumeric with hyphens (e.g., 'tech-tips')"
   exit 1
 fi

@@ -64,9 +64,13 @@ jobs:
 
       - name: Check required files
         run: |
-          # Verify shared files exist (language-suffixed)
+          # Verify shared files exist (all language variants)
           test -f sites/_shared/privacy-policy.en.html
+          test -f sites/_shared/privacy-policy.zh.html
+          test -f sites/_shared/privacy-policy.ja.html
           test -f sites/_shared/about.en.html
+          test -f sites/_shared/about.zh.html
+          test -f sites/_shared/about.ja.html
           test -f sites/_shared/adsense-snippet.html
           test -f sites/_shared/analytics-snippet.html
           test -f sites/_shared/ads.txt
@@ -87,7 +91,7 @@ jobs:
           done
 
           # Verify lib scripts exist
-          for lib in config.sh logging.sh inject.sh platform.sh llm.sh verify.sh vercel.sh; do
+          for lib in config.sh logging.sh inject.sh platform.sh llm.sh og-image.sh verify.sh vercel.sh; do
             test -f "scripts/lib/$lib"
           done
 

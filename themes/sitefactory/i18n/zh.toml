@@ -54,3 +54,18 @@ other = "字"
 
 [tableOfContents]
 other = "目录"
+
+[mainNav]
+other = "主导航"
+
+[footerNav]
+other = "页脚导航"
+
+[newer]
+other = "较新"
+
+[older]
+other = "较旧"
+
+[pageOf]
+other = "第"

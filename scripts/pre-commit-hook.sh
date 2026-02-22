@@ -19,11 +19,12 @@ fi
 
 echo "Running ShellCheck on staged scripts..."
 FAILED=0
-for f in $STAGED_SH; do
+while IFS= read -r f; do
+  [[ -z "$f" ]] && continue
   if ! shellcheck -x "$f"; then
     FAILED=1
   fi
-done
+done <<< "$STAGED_SH"
 
 if [[ "$FAILED" -eq 1 ]]; then
   echo ""

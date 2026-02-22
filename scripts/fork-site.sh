@@ -26,7 +26,7 @@ SITE_LANG="${5:-en}"
 SITE_DIR="$REPO_ROOT/sites/$SITE_NAME"
 
 # Validate site name
-if [[ ! "$SITE_NAME" =~ ^[a-z0-9][a-z0-9-]*[a-z0-9]$ ]]; then
+if [[ ! "$SITE_NAME" =~ ^[a-z0-9]([a-z0-9-]*[a-z0-9])?$ ]]; then
   log_error "Site name must be lowercase alphanumeric with hyphens (e.g., 'web-weather')"
   exit 1
 fi

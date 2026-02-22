@@ -23,7 +23,7 @@ other = "続きを読む"
 other = "投稿日"
 
 [allRightsReserved]
-other = "All rights reserved."
+other = "全著作権所有。"
 
 [breadcrumbNav]
 other = "パンくずナビ"
@@ -54,3 +54,18 @@ other = "語"
 
 [tableOfContents]
 other = "目次"
+
+[mainNav]
+other = "メインナビゲーション"
+
+[footerNav]
+other = "フッターナビゲーション"
+
+[newer]
+other = "新しい"
+
+[older]
+other = "古い"
+
+[pageOf]
+other = "ページ"

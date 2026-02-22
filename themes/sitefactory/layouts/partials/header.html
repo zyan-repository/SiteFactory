@@ -1,6 +1,6 @@
 <header class="site-header">
   <a href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a>
-  <nav>
+  <nav aria-label="{{ i18n "mainNav" | default "Main navigation" }}">
     <a href="{{ "posts/" | absURL }}">{{ i18n "posts" }}</a>
     {{ if .Site.Params.showToolsNav }}
     <a href="{{ "tools/" | absURL }}">{{ i18n "tools" | default "Tools" }}</a>
