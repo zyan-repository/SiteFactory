@@ -40,6 +40,15 @@ SF_CONTENT_SCHEDULE=$(yq '.content.default_schedule // "weekly"' "$CONFIG_FILE")
 SF_CONTENT_TOPIC_COUNT=$(yq '.content.default_topic_count // "25"' "$CONFIG_FILE")
 SF_CONTENT_SEED_ARTICLES=$(yq '.content.default_seed_articles // "5"' "$CONFIG_FILE")
 
+# Validate critical fields (yq returns literal "null" for missing keys)
+for _var in SF_DOMAIN SF_VERCEL_TOKEN; do
+  if [[ "${!_var}" == "null" || -z "${!_var}" ]]; then
+    echo "ERROR: Required config field missing or null: $_var"
+    echo "Check your config.yaml — see config.example.yaml for reference."
+    exit 1
+  fi
+done
+
 export SF_DOMAIN SF_NAMESILO_API_KEY SF_VERCEL_TOKEN SF_VERCEL_TEAM_ID
 export SF_ADSENSE_PUB_ID SF_ADSENSE_ENABLED SF_GA_ID SF_GSC_VERIFICATION
 export SF_AI_PROVIDER SF_AI_API_KEY SF_AI_MODEL SF_AI_BASE_URL

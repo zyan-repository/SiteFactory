@@ -87,7 +87,7 @@ jobs:
           done
 
           # Verify lib scripts exist
-          for lib in config.sh logging.sh inject.sh platform.sh llm.sh verify.sh; do
+          for lib in config.sh logging.sh inject.sh platform.sh llm.sh verify.sh vercel.sh; do
             test -f "scripts/lib/$lib"
           done
 

@@ -3,7 +3,9 @@
 # Injects AdSense, Analytics, SEO meta, and compliance pages into HTML files.
 # Usage: source scripts/lib/inject.sh
 
-# Load cross-platform helpers (inject_before_tag)
+# Load dependencies
+# shellcheck source=scripts/lib/logging.sh
+source "${BASH_SOURCE[0]%/*}/logging.sh"
 # shellcheck source=scripts/lib/platform.sh
 source "${BASH_SOURCE[0]%/*}/platform.sh"
 

@@ -110,7 +110,15 @@ RECORDS=$(curl -s "https://www.namesilo.com/api/dnsListRecords?version=1&type=xm
 # Helper: delete a DNS record by ID
 namesilo_delete_record() {
   local rid="$1"
-  curl -s "https://www.namesilo.com/api/dnsDeleteRecord?version=1&type=xml&key=${SF_NAMESILO_API_KEY}&domain=${SF_DOMAIN}&rrid=${rid}" >/dev/null 2>&1
+  local response
+  response=$(curl -s "https://www.namesilo.com/api/dnsDeleteRecord?version=1&type=xml&key=${SF_NAMESILO_API_KEY}&domain=${SF_DOMAIN}&rrid=${rid}" 2>/dev/null || echo "")
+  if echo "$response" | grep -q "<code>300</code>"; then
+    log_ok "  DNS record $rid deleted successfully"
+  else
+    local detail
+    detail=$(echo "$response" | grep -o '<detail>[^<]*' | cut -d'>' -f2 || echo "Unknown error")
+    log_warn "  Failed to delete DNS record $rid: $detail"
+  fi
 }
 
 # --- Apex A records: remove wrong ones, ensure Vercel IP exists ---

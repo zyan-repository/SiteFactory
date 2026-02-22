@@ -134,13 +134,17 @@ if [[ -z "$HUGO_CMD" ]]; then
   log_error "Hugo not found. Install Hugo and ensure it is in your PATH."
   exit 1
 fi
-if $HUGO_CMD -s "$SITE_DIR" --gc --minify --quiet 2>/dev/null; then
+BUILD_OUTPUT=$(mktemp)
+if $HUGO_CMD -s "$SITE_DIR" --gc --minify --quiet 2>"$BUILD_OUTPUT"; then
+  rm -f "$BUILD_OUTPUT"
   log_ok "Site '$SITE_NAME' created successfully at $SITE_DIR"
   echo ""
   echo "  Preview:  hugo server -s sites/$SITE_NAME"
   echo "  Build:    hugo -s sites/$SITE_NAME --gc --minify"
   echo "  Deploy:   ./scripts/deploy.sh $SITE_NAME"
 else
-  log_error "Build failed. Check $SITE_DIR for errors."
+  log_error "Build failed. Hugo errors:"
+  cat "$BUILD_OUTPUT" >&2
+  rm -f "$BUILD_OUTPUT"
   exit 1
 fi

@@ -115,7 +115,7 @@ fi
 log_step "Scanning for database dependencies..."
 DB_FOUND=false
 for db_keyword in DATABASE_URL MONGODB MYSQL POSTGRES REDIS_URL; do
-  if find "$REPO" -maxdepth 3 -name "*.js" -o -name "*.ts" -o -name "*.json" 2>/dev/null \
+  if find "$REPO" -maxdepth 3 \( -name "*.js" -o -name "*.ts" -o -name "*.json" \) 2>/dev/null \
     | grep -v node_modules \
     | head -50 \
     | xargs grep -l "$db_keyword" 2>/dev/null | head -1 | grep -q .; then

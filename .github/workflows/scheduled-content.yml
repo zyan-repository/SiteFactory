@@ -118,7 +118,7 @@ jobs:
           SCHEDULE="${CONTENT_SCHEDULE:-weekly}"
 
           case "$PROVIDER" in
-            claude)   MODEL="claude-sonnet-4-20250514"; BASE_URL="" ;;
+            claude)   MODEL="claude-sonnet-4-6"; BASE_URL="" ;;
             openai)   MODEL="gpt-4o"; BASE_URL="https://api.openai.com/v1" ;;
             deepseek) MODEL="deepseek-chat"; BASE_URL="https://api.deepseek.com/v1" ;;
             gemini)   MODEL="gemini-2.0-flash"; BASE_URL="" ;;

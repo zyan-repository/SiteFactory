@@ -1,5 +1,5 @@
 baseURL = "https://SITE_NAME.example.com/"
-languageCode = "zh"
+languageCode = "en"
 title = "Site Title"
 
 # Performance

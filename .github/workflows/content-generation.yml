@@ -63,7 +63,7 @@ jobs:
           # Determine model: use input if provided, otherwise provider default
           INPUT_MODEL="${{ inputs.ai_model }}"
           case "$PROVIDER" in
-            claude)   MODEL="${INPUT_MODEL:-claude-sonnet-4-20250514}"; BASE_URL="" ;;
+            claude)   MODEL="${INPUT_MODEL:-claude-sonnet-4-6}"; BASE_URL="" ;;
             openai)   MODEL="${INPUT_MODEL:-gpt-4o}"; BASE_URL="https://api.openai.com/v1" ;;
             deepseek) MODEL="${INPUT_MODEL:-deepseek-chat}"; BASE_URL="https://api.deepseek.com/v1" ;;
             gemini)   MODEL="${INPUT_MODEL:-gemini-2.0-flash}"; BASE_URL="" ;;
