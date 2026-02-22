@@ -14,7 +14,7 @@
 ./scripts/launch-site.sh hugo my-blog "我的博客" "分享技术心得"
 ```
 
-这一条命令会自动完成：创建站点 → 部署到 Vercel → 配置 DNS → 验证 DNS 传播 → 检查站点存活 → 运行 Lighthouse 审计。详见 [部署自动化](deployment-automation.md)。
+这一条命令会自动完成：创建站点 → 生成 OG 图片 → 部署到 Vercel → 配置 DNS → 验证 DNS 传播 → 检查站点存活 → 运行 Lighthouse 审计。Hugo 站点还会自动生成内容计划和种子文章。详见 [部署自动化](deployment-automation.md)。
 
 如果你想分步操作，请继续往下看。
 
@@ -42,10 +42,14 @@ SiteFactory 支持两种站点，根据你的目标选择：
 ```
 
 脚本会自动完成：
-1. 复制 `sites/_template/` 到 `sites/cooking-tips/`
-2. 替换标题、描述、域名、AdSense ID、Analytics ID
-3. 创建 `site.yaml`（标记为 `type: hugo`）
-4. 验证站点能成功构建
+1. 复制 `sites/_template/` 脚手架（hugo.toml + 内容结构）到 `sites/cooking-tips/`
+2. 替换 `hugo.toml` 中的标题、描述、域名、AdSense ID、Analytics ID
+3. 生成品牌 OG 图片（`og-default.png`）用于社交分享
+4. 创建 `site.yaml`（标记为 `type: hugo`）
+5. 注册到 `themes/sitefactory/data/sites.yaml` 实现跨站导航
+6. 验证站点能成功构建
+
+> **注意：** Hugo 站点的布局、CSS 和 i18n 字符串全部继承自共享主题 `themes/sitefactory/`。你不需要复制模板或样式表——它们会自动传播。
 
 ### 本地预览
 
@@ -139,13 +143,13 @@ site:github.com weather app html css javascript
 1. 运行兼容性检查（不通过则终止）
 2. 克隆仓库到 `sites/wifi-qr/`
 3. 删除 `.git` 目录
-4. 在所有 HTML 文件中注入 AdSense 广告代码
-5. 注入 Google Analytics 统计代码
-6. 添加 SEO meta 标签
-7. 复制隐私政策和关于页面
-8. 创建 `ads.txt`
-9. 创建 `site.yaml`（标记为 `type: static`）
-10. 在 README 中添加原项目致谢
+4. 在所有 HTML 文件中注入 AdSense 广告代码、Google Analytics 和 SEO meta 标签
+5. 复制隐私政策和关于页面（语言感知，包含主域名回链）
+6. 生成品牌 OG 图片（`og-default.png`）
+7. 创建 `ads.txt`
+8. 创建 `site.yaml`（标记为 `type: static`）
+9. 在 README 中添加原项目致谢
+10. 注册到 `themes/sitefactory/data/sites.yaml` 实现跨站导航
 
 ### 4. 检查和自定义
 

@@ -1,0 +1,7 @@
+name = "SiteFactory"
+license = "MIT"
+description = "SEO-optimized theme for SiteFactory sites"
+min_version = "0.120.0"
+
+[author]
+  name = "SiteFactory"

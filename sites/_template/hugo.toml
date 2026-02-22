@@ -1,8 +1,11 @@
 baseURL = "https://SITE_NAME.example.com/"
+themesDir = "../../themes"
+theme = "sitefactory"
 languageCode = "en"
 title = "Site Title"
 
 # Performance
+enableRobotsTXT = true
 enableEmoji = false
 enableGitInfo = false
 disableHugoGeneratorInject = true
@@ -10,6 +13,7 @@ disableHugoGeneratorInject = true
 [params]
   description = "Site description goes here"
   author = "Author Name"
+  siteName = ""
   # AdSense
   adsenseEnabled = false
   adsensePubId = ""
@@ -24,7 +28,9 @@ disableHugoGeneratorInject = true
     [markup.goldmark.renderer]
       unsafe = false
   [markup.highlight]
-    noClasses = false
+    style = "github"
+    lineNos = false
+    noClasses = true
 
 [outputs]
   home = ["HTML", "RSS"]

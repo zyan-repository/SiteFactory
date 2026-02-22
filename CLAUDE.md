@@ -16,6 +16,7 @@ Static site mass production system for AdSense monetization.
 | **Automate Everything** | Manual operation = can't scale. Everything goes through scripts and GitHub Actions |
 | **SEO is the Product** | The site itself doesn't matter. Search engine ranking is what matters |
 | **Compliance First** | AdSense ban = zero revenue. Compliance is the bottom line, not optional |
+| **Minimum Effort** | Minimize human attention and cognitive load. Automate everything possible. One command should do the job of ten |
 | **Copy before Create** | Find existing open-source sites to fork/adapt. Check licenses to avoid legal risk |
 
 ### Decision Checklist
@@ -36,7 +37,7 @@ The core philosophy: **don't build what you can fork**. GitHub has thousands of 
 
 | Type | Source | Build | Deploy | Use Case |
 |------|--------|-------|--------|----------|
-| **Hugo** | `_template/` | `hugo --minify` | `public/` dir | Blogs, articles, SEO content |
+| **Hugo** | `themes/sitefactory/` | `hugo --minify` | `public/` dir | Blogs, articles, SEO content |
 | **Static** | GitHub fork | None | Entire dir | Tools, utilities, widgets |
 
 Every site has a `site.yaml` that determines how it's built and deployed:
@@ -86,7 +87,22 @@ Before forking, run `./scripts/check-repo.sh <url>`. A project MUST pass:
 
 ### Fork Adaptation Pipeline
 
-`fork-site.sh` executes: compatibility check → clone → strip .git → inject AdSense + GA + SEO → add privacy/about pages → create ads.txt + site.yaml → add attribution.
+`fork-site.sh` executes: compatibility check → clone → strip .git → inject AdSense + GA + SEO → add privacy/about pages → generate OG image → create ads.txt + site.yaml → add attribution → register in `data/sites.yaml`.
+
+### Hugo Theme System
+
+All Hugo sites share a centralized theme at `themes/sitefactory/`. Template updates automatically propagate to all sites on next build.
+
+| Concept | Mechanism |
+|---------|-----------|
+| **Theme location** | `themes/sitefactory/` (shared by all Hugo sites) |
+| **Site config** | Each site's `hugo.toml` has `theme = "sitefactory"` |
+| **Site override** | Place files in `sites/{name}/layouts/` to override theme defaults |
+| **CSS strategy** | Theme: `assets/css/main.css` (base) + Site: `assets/css/site.css` (optional override) |
+| **Cross-site nav** | Driven by `themes/sitefactory/data/sites.yaml` (auto-rendered in footer) |
+| **OG image** | Auto-generated per site via `scripts/lib/og-image.sh` (ImageMagick with fallback) |
+| **New site** | `new-site.sh` copies only content/static/hugo.toml (NOT layouts/assets/i18n) |
+| **Theme changes** | Push to `themes/` triggers `deploy.yml` to rebuild all Hugo sites |
 
 ### High-Value Fork Targets
 
@@ -104,11 +120,18 @@ Before forking, run `./scripts/check-repo.sh <url>`. A project MUST pass:
 SiteFactory/
 ├── config.yaml              # Credentials (git-ignored)
 ├── content-plans/           # AI content schedules & topic lists
+├── themes/
+│   └── sitefactory/         # Shared Hugo theme (all Hugo sites inherit)
+│       ├── layouts/         # Templates (baseof, single, list, partials)
+│       ├── assets/css/      # Stylesheets (main.css)
+│       ├── i18n/            # UI translations (en, zh, ja)
+│       ├── static/          # Shared static files (og-default.png)
+│       └── data/sites.yaml  # Cross-site registry (drives footer nav)
 ├── sites/
-│   ├── _template/           # Hugo site template (SEO-optimized)
+│   ├── _template/           # Hugo site scaffold (hugo.toml + content)
 │   ├── _shared/             # Shared pages for fork sites
-│   │   ├── privacy-policy.html
-│   │   ├── about.html
+│   │   ├── privacy-policy.{en,zh,ja}.html
+│   │   ├── about.{en,zh,ja}.html
 │   │   ├── adsense-snippet.html
 │   │   ├── analytics-snippet.html
 │   │   └── ads.txt
@@ -121,6 +144,7 @@ SiteFactory/
 │   ├── new-site.sh          # Create Hugo site from template
 │   ├── fork-site.sh         # Fork & adapt GitHub project
 │   ├── check-repo.sh        # Evaluate GitHub project compatibility
+│   ├── update-sites.sh      # Re-apply injections to all fork sites
 │   ├── deploy.sh            # Deploy (auto-detects hugo/static, --verify flag)
 │   ├── deploy-all.sh        # Deploy all sites
 │   ├── build-all.sh         # Build all Hugo sites
@@ -137,6 +161,7 @@ SiteFactory/
 │       ├── logging.sh       # Colored log helpers
 │       ├── inject.sh        # HTML injection (AdSense/GA/SEO)
 │       ├── llm.sh           # Unified LLM API wrapper (6+ providers)
+│       ├── og-image.sh      # OG image generation (ImageMagick)
 │       ├── platform.sh      # Cross-platform utilities
 │       ├── verify.sh        # DNS polling + HTTP health check
 │       └── vercel.sh        # Vercel project linking helpers
@@ -208,6 +233,40 @@ Ad placement: SiteFactory uses **Auto-Ads** by default — Google automatically 
 1. Top of article (below H1, above first paragraph)
 2. Mid-article (after 3rd or 4th paragraph)
 3. End of article (before related posts)
+
+## AdSense Approval: Lessons Learned
+
+Based on 3 rejection cycles for search123.top. These patterns are **confirmed triggers** for AdSense rejection.
+
+### Red Flags That Cause Rejection
+
+| Signal | Why Google Rejects | Prevention |
+|--------|-------------------|------------|
+| Ads on non-content pages | "Showing ads on screens without publisher content" | Use whitelist: ads only on `.IsHome` + `.IsPage` (not `.Params.noAds`) |
+| Language mismatch | Chinese pages on `lang="en"` site = policy violation | All content must match `languageCode` in hugo.toml |
+| Rapid content burst | 20 articles in 48h = "content farm" signal | Spread dates across 4-8 weeks minimum |
+| No author identity | Missing E-E-A-T signals | Every article needs author byline + site needs About page with author bio |
+| Misleading homepage | "Search portal" claims when it's a blog | Homepage must accurately describe the site's actual purpose |
+| Thin compliance pages | <100 word privacy/about | Privacy >600 words, About >300 words, specific to site |
+| Pure text articles | No images, no visual elements | Include TOC, reading time, styled code blocks, data tables |
+| Empty og:image | Signals low-effort site | Every site must have at least a default branded OG image |
+| Ads on utility pages | Contact, Terms, Privacy with ads | Set `noAds: true` in frontmatter for all non-content pages |
+
+### Pre-Approval Checklist (Run Before Applying)
+
+- [ ] 15+ articles, each 800+ words with unique topics
+- [ ] Publication dates spread across 4+ weeks (not bulk-published)
+- [ ] Author name on every article + detailed About page
+- [ ] Homepage 300+ words with honest site description
+- [ ] Privacy Policy 600+ words (accurate, mentions GA + AdSense)
+- [ ] Terms of Service page present
+- [ ] Contact page with real email
+- [ ] No ads on: 404, taxonomy, terms, privacy, about, contact pages
+- [ ] All text in `<html lang>` declared language (no language mixing)
+- [ ] og:image set (at least site default)
+- [ ] Lighthouse SEO score >= 95
+- [ ] Mobile responsive at 375px width
+- [ ] No "click here" or arrows pointing at ad areas
 
 ## I18n Architecture
 
@@ -303,7 +362,7 @@ Automation is handled at two levels:
 | Workflow | File | Trigger | What it does |
 |----------|------|---------|-------------|
 | Build Check | `build-check.yml` | Push/PR to main | ShellCheck + Hugo build + file verification |
-| Auto Deploy | `deploy.yml` | Push to `sites/`, manual dispatch | Deploys changed sites to Vercel + DNS |
+| Auto Deploy | `deploy.yml` | Push to `sites/` or `themes/`, manual dispatch | Deploys changed sites to Vercel + DNS. Theme changes trigger all Hugo site rebuilds |
 | Health Check | `health-check.yml` | Every 6 hours, manual | HTTP check all sites, warn if down |
 | Content Gen | `content-generation.yml` | Manual dispatch | AI article generation → commit → push → auto-deploy |
 | Scheduled Content | `scheduled-content.yml` | Daily 09:00 UTC, manual | Auto-generate content for sites with content plans |
@@ -325,6 +384,31 @@ Automation is handled at two levels:
 - Never share direct ad unit URLs
 - Use Google Analytics to cross-reference traffic patterns
 - Alert thresholds: CTR > 5%, revenue drop > 30%, Lighthouse < 80
+
+## Content Quality Requirements
+
+AI-generated content must pass these quality checks:
+- **Varied structure**: Mix listicles, how-tos, comparisons, deep dives. Never 5+ articles with same format
+- **Internal linking**: Each article should link to 2-3 existing articles on the same site
+- **Personal voice**: Use "I" occasionally, include testing observations
+- **Publication cadence**: Weekly schedule via GitHub Actions. Never bulk-publish
+- **Content plan auto-refresh**: When pending topics < 3, `scheduled-content.yml` auto-regenerates
+- **Tool cross-references**: Articles reference relevant tools from `data/sites.yaml` when topically appropriate
+
+### Automation Levels
+
+| Task | Automation | Human Action |
+|------|-----------|-------------|
+| Content plan generation | Auto (GitHub Actions) | None |
+| Article generation | Auto (daily cron) | None |
+| Build & deploy | Auto (push triggers) | None |
+| Theme updates | Auto (theme changes trigger all Hugo rebuilds) | None |
+| Cross-site navigation | Auto (driven by `data/sites.yaml`) | None |
+| DNS setup | Auto (`launch-site.sh`) | None |
+| OG image generation | Auto (`og-image.sh` on site creation) | None |
+| AdSense application | Manual | Submit once, wait 2-4 weeks |
+| Google Search Console | Manual | Submit sitemap once per site |
+| Finding fork targets | Manual | Browse GitHub for candidates |
 
 ## Adding a New Site
 

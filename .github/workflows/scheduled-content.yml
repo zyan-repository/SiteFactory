@@ -160,12 +160,18 @@ jobs:
               email: ""
           EOF
 
-      - name: Ensure content plan exists for ${{ matrix.site }}
+      - name: Ensure content plan exists and has pending topics
         run: |
           PLAN="content-plans/${{ matrix.site }}.yaml"
           if [ ! -f "$PLAN" ]; then
             echo "No content plan found, generating one..."
             ./scripts/generate-content-plan.sh "${{ matrix.site }}"
+          else
+            PENDING=$(yq '[.topics[] | select(.status == "pending")] | length' "$PLAN" 2>/dev/null || echo "0")
+            if [ "$PENDING" -lt 3 ]; then
+              echo "Only $PENDING pending topics remaining, regenerating plan..."
+              ./scripts/generate-content-plan.sh "${{ matrix.site }}"
+            fi
           fi
 
       - name: Generate article for ${{ matrix.site }}

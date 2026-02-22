@@ -1,0 +1,11 @@
+{{ if .IsPage }}
+{{ if eq .Section "posts" }}
+{{ with .Site.Params.authorBio }}
+<div class="author-box">
+  <div class="author-label">Written by</div>
+  <div class="author-name">{{ $.Site.Params.author }}</div>
+  <div class="author-bio">{{ . }}</div>
+</div>
+{{ end }}
+{{ end }}
+{{ end }}

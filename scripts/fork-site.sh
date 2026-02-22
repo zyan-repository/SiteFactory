@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
 # fork-site.sh - Fork a GitHub project and adapt it for SiteFactory.
-# Usage: ./scripts/fork-site.sh <github-url> <site-name> ["Site Title"] ["Description"]
+# Usage: ./scripts/fork-site.sh <github-url> <site-name> ["Site Title"] ["Description"] [language]
 #
 # Steps:
 # 1. Run compatibility check
 # 2. Clone and strip .git
-# 3. Inject AdSense, Analytics, SEO meta
-# 4. Add privacy policy and about pages
+# 3. Inject AdSense, Analytics, SEO meta (with full OG, canonical, JSON-LD)
+# 4. Add privacy policy and about pages (language-aware)
 # 5. Create ads.txt and site.yaml
 # 6. Add license attribution
+# 7. Register in theme data/sites.yaml
 
 set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -16,10 +17,11 @@ source "$REPO_ROOT/scripts/lib/logging.sh"
 source "$REPO_ROOT/scripts/lib/platform.sh"
 source "$REPO_ROOT/scripts/lib/inject.sh"
 
-REPO_URL="${1:?Usage: fork-site.sh <github-url> <site-name> [\"title\"] [\"description\"]}"
+REPO_URL="${1:?Usage: fork-site.sh <github-url> <site-name> [\"title\"] [\"description\"] [language]}"
 SITE_NAME="${2:?Please provide a site name}"
 SITE_TITLE="${3:-$SITE_NAME}"
 SITE_DESC="${4:-A useful web tool}"
+SITE_LANG="${5:-en}"
 
 SITE_DIR="$REPO_ROOT/sites/$SITE_NAME"
 
@@ -42,11 +44,11 @@ else
   SF_DOMAIN="example.com"
   SF_ADSENSE_PUB_ID=""
   SF_GA_ID=""
-  SF_AUTHOR_NAME="Author"
   SF_AUTHOR_EMAIL=""
 fi
 
 DATE=$(date +%Y-%m-%d)
+SITE_URL="https://${SITE_NAME}.${SF_DOMAIN}/"
 
 # Step 1: Compatibility check
 log_info "=== Forking: $REPO_URL ==="
@@ -82,11 +84,12 @@ for f in LICENSE LICENSE.md LICENSE.txt LICENCE; do
   fi
 done
 
-# Step 3: Inject AdSense + Analytics into all HTML files
+# Step 3: Inject AdSense + Analytics + full SEO into all HTML files
 log_step "Injecting AdSense, Analytics, and SEO meta..."
 INJECT_COUNT=0
 while IFS= read -r html_file; do
-  inject_all "$html_file" "$SF_ADSENSE_PUB_ID" "$SF_GA_ID" "$SITE_TITLE" "$SITE_DESC"
+  inject_all "$html_file" "$SF_ADSENSE_PUB_ID" "$SF_GA_ID" "$SITE_TITLE" "$SITE_DESC" \
+    "$SITE_URL" "$SITE_TITLE" "$SF_DOMAIN"
   INJECT_COUNT=$((INJECT_COUNT + 1))
 done < <(find "$SITE_DIR" -name "*.html" -maxdepth 2 -type f)
 if [[ "$INJECT_COUNT" -eq 0 ]]; then
@@ -94,31 +97,46 @@ if [[ "$INJECT_COUNT" -eq 0 ]]; then
   log_warn "The forked project may require a build step first."
 fi
 
-# Step 4: Add compliance pages
+# Step 4: Add compliance pages (language-aware)
 log_step "Adding compliance pages..."
 SHARED_DIR="$REPO_ROOT/sites/_shared"
 
-for page in privacy-policy.html about.html; do
-  if [[ -f "$SHARED_DIR/$page" ]]; then
-    cp "$SHARED_DIR/$page" "$SITE_DIR/$page"
+for base_page in privacy-policy about; do
+  # Try language-specific version, fall back to English
+  local_page="${base_page}.${SITE_LANG}.html"
+  if [[ ! -f "$SHARED_DIR/$local_page" ]]; then
+    local_page="${base_page}.en.html"
+  fi
+  if [[ -f "$SHARED_DIR/$local_page" ]]; then
+    cp "$SHARED_DIR/$local_page" "$SITE_DIR/${base_page}.html"
     sed_inplace \
       -e "s|{{SITE_TITLE}}|${SITE_TITLE}|g" \
       -e "s|{{AUTHOR_EMAIL}}|${SF_AUTHOR_EMAIL}|g" \
       -e "s|{{DATE}}|${DATE}|g" \
-      -e "s|{{LANGUAGE}}|en|g" \
-      "$SITE_DIR/$page"
-    log_ok "  Added $page"
+      -e "s|{{DOMAIN}}|${SF_DOMAIN}|g" \
+      -e "s|{{LANGUAGE}}|${SITE_LANG}|g" \
+      "$SITE_DIR/${base_page}.html"
+    log_ok "  Added ${base_page}.html (${local_page})"
   fi
 done
 
-# Step 5: Create ads.txt
+# Step 5: Generate OG image
+source "$REPO_ROOT/scripts/lib/og-image.sh"
+log_step "Generating OG image..."
+if generate_og_image "$SITE_TITLE" "$SITE_DIR/og-default.png"; then
+  log_ok "  OG image generated"
+else
+  log_warn "  OG image generation failed (non-critical)"
+fi
+
+# Step 6: Create ads.txt
 PUB_NUMERIC="${SF_ADSENSE_PUB_ID#ca-pub-}"
 if [[ -n "$PUB_NUMERIC" ]] && [[ "$PUB_NUMERIC" != *"XXXX"* ]]; then
   echo "google.com, $PUB_NUMERIC, DIRECT, f08c47fec0942fa0" > "$SITE_DIR/ads.txt"
   log_ok "  Created ads.txt"
 fi
 
-# Step 6: Create site.yaml
+# Step 7: Create site.yaml
 cat > "$SITE_DIR/site.yaml" << EOF
 type: static
 name: ${SITE_NAME}
@@ -126,12 +144,12 @@ title: "${SITE_TITLE}"
 description: "${SITE_DESC}"
 source: ${REPO_URL}
 license: ${LICENSE_TYPE}
-language: en
+language: ${SITE_LANG}
 created: ${DATE}
 EOF
 log_ok "  Created site.yaml"
 
-# Step 7: Add attribution to README
+# Step 8: Add attribution to README
 if [[ -f "$SITE_DIR/README.md" ]]; then
   # Prepend attribution
   TMPFILE=$(mktemp)
@@ -146,6 +164,17 @@ EOF
   cat "$SITE_DIR/README.md" >> "$TMPFILE"
   mv "$TMPFILE" "$SITE_DIR/README.md"
   log_ok "  Added attribution to README.md"
+fi
+
+# Step 9: Register in theme data/sites.yaml
+SITES_YAML="$REPO_ROOT/themes/sitefactory/data/sites.yaml"
+if [[ -f "$SITES_YAML" ]] && command -v yq &>/dev/null; then
+  if ! yq -e ".sites[] | select(.name == \"$SITE_NAME\")" "$SITES_YAML" &>/dev/null; then
+    yq -i ".sites += [{\"name\": \"$SITE_NAME\", \"title\": \"$SITE_TITLE\", \"description\": \"$SITE_DESC\", \"type\": \"static\", \"category\": \"tool\"}]" "$SITES_YAML"
+    log_ok "  Registered in theme data/sites.yaml"
+  else
+    log_info "  Already registered in data/sites.yaml"
+  fi
 fi
 
 log_ok "=== Fork complete: $SITE_NAME ==="

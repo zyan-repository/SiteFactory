@@ -1,0 +1,15 @@
+# Site registry for cross-linking navigation.
+# Adding a site here automatically shows it in all Hugo sites' footers.
+domain: search123.top
+sites:
+  - name: adsense-home
+    title: "Search123"
+    description: "Search smarter, work faster, stay safe online"
+    type: hugo
+    category: content
+    root: true
+  - name: wifi-qr
+    title: "WiFi QR Generator"
+    description: "Generate WiFi QR codes instantly in your browser"
+    type: static
+    category: generator

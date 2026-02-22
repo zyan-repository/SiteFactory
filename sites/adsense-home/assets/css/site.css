@@ -1,0 +1,44 @@
+/* adsense-home site-specific styles */
+
+/* Homepage hero */
+.homepage-hero {
+  text-align: center;
+  padding: 2.5rem 0 2rem;
+  margin-bottom: 1.5rem;
+}
+.homepage-hero h1 {
+  font-size: 2rem;
+  margin: 0 0 0.5rem;
+}
+.homepage-hero .tagline {
+  color: var(--muted);
+  font-size: 1.1rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Homepage intro overrides */
+.homepage-intro h2 {
+  margin-top: 0;
+  font-size: 1.3rem;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.homepage-intro h3 { font-size: 1.05rem; margin-top: 1.2em; }
+
+/* Latest articles section */
+.latest-articles { margin-top: 1rem; }
+.latest-articles h2 {
+  font-size: 1.3rem;
+  margin-top: 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--accent);
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+/* Responsive overrides */
+@media (max-width: 600px) {
+  .homepage-hero h1 { font-size: 1.6rem; }
+  .homepage-hero .tagline { font-size: 1rem; }
+}

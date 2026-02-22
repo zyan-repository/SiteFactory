@@ -1,0 +1,56 @@
+[home]
+other = "ホーム"
+
+[posts]
+other = "記事"
+
+[about]
+other = "概要"
+
+[contact]
+other = "お問い合わせ"
+
+[privacy]
+other = "プライバシーポリシー"
+
+[terms]
+other = "利用規約"
+
+[readMore]
+other = "続きを読む"
+
+[postedOn]
+other = "投稿日"
+
+[allRightsReserved]
+other = "All rights reserved."
+
+[breadcrumbNav]
+other = "パンくずナビ"
+
+[notFound]
+other = "404 - ページが見つかりません"
+
+[notFoundMessage]
+other = "お探しのページは存在しません。"
+
+[backToHome]
+other = "ホームに戻る"
+
+[tools]
+other = "ツール"
+
+[moreFrom]
+other = "その他"
+
+[advertisement]
+other = "広告"
+
+[minRead]
+other = "分で読める"
+
+[words]
+other = "語"
+
+[tableOfContents]
+other = "目次"

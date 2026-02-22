@@ -1,8 +1,11 @@
 baseURL = "https://search123.top/"
+themesDir = "../../themes"
+theme = "sitefactory"
 languageCode = "en"
 title = "Search123"
 
 # Performance
+enableRobotsTXT = true
 enableEmoji = false
 enableGitInfo = false
 disableHugoGeneratorInject = true
@@ -12,21 +15,25 @@ disableHugoGeneratorInject = true
   homepageTitle = "Search123 - Search Smarter, Work Faster, Stay Safe Online"
   author = "Arron Zhou"
   authorBio = "Arron is a web developer and digital productivity enthusiast who writes about search techniques, online tools, and internet security. He personally tests every tool reviewed and verifies every technique recommended on this site."
+  siteName = "adsense-home"
+  showToolsNav = true
+  showCrosslinks = true
   # AdSense
   adsenseEnabled = true
   adsensePubId = "ca-pub-5531531271065052"
   # Analytics
   googleAnalyticsId = "G-5JJ2VHPXNQ"
   googleSearchConsoleVerification = ""
-  # SEO
-  ogImage = ""
+  # SEO (og:image auto-falls back to static/og-default.png)
 
 [markup]
   [markup.goldmark]
     [markup.goldmark.renderer]
       unsafe = false
   [markup.highlight]
-    noClasses = false
+    style = "github"
+    lineNos = false
+    noClasses = true
 
 [outputs]
   home = ["HTML", "RSS"]

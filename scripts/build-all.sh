@@ -38,14 +38,14 @@ for site_dir in "$SITES_DIR"/*/; do
 
   if [[ "$site_type" == "static" ]]; then
     log_info "Skipping (static): $site_name"
-    ((SKIPPED++))
+    SKIPPED=$((SKIPPED + 1))
     continue
   fi
 
   log_info "Building: $site_name"
   if $HUGO_CMD -s "$site_dir" --gc --minify --quiet 2>/dev/null; then
     log_ok "  OK"
-    ((SUCCEEDED++))
+    SUCCEEDED=$((SUCCEEDED + 1))
   else
     log_error "  FAILED"
     FAILED+=("$site_name")

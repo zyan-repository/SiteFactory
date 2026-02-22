@@ -14,7 +14,7 @@ For the fastest path from idea to live site, use `launch-site.sh`:
 ./scripts/launch-site.sh hugo my-blog "My Blog" "A blog about things"
 ```
 
-This single command: creates the site → deploys to Vercel → sets up DNS → verifies DNS propagation → checks site is live → runs Lighthouse audit. See [Deployment Automation](deployment-automation.md) for details.
+This single command: creates the site → generates OG image → deploys to Vercel → sets up DNS → verifies DNS propagation → checks site is live → runs Lighthouse audit. For Hugo sites, it also generates a content plan and seed articles automatically. See [Deployment Automation](deployment-automation.md) for details.
 
 If you prefer step-by-step control, continue reading below.
 
@@ -42,10 +42,14 @@ Example:
 ```
 
 What happens:
-1. Copies `sites/_template/` to `sites/cooking-tips/`
-2. Replaces title, description, domain, AdSense ID, Analytics ID
-3. Creates `site.yaml` with `type: hugo`
-4. Verifies the site builds successfully
+1. Copies `sites/_template/` scaffold (hugo.toml + content structure) to `sites/cooking-tips/`
+2. Replaces title, description, domain, AdSense ID, Analytics ID in `hugo.toml`
+3. Generates a branded OG image (`og-default.png`) for social sharing
+4. Creates `site.yaml` with `type: hugo`
+5. Registers the site in `themes/sitefactory/data/sites.yaml` for cross-site navigation
+6. Verifies the site builds successfully
+
+> **Note:** Hugo sites inherit all layouts, CSS, and i18n strings from the shared theme at `themes/sitefactory/`. You do NOT need to copy templates or stylesheets — they propagate automatically.
 
 ### Preview Locally
 
@@ -139,13 +143,13 @@ What happens:
 1. Runs `check-repo.sh` (aborts if incompatible)
 2. Clones the repo to `sites/wifi-qr/`
 3. Removes `.git` directory
-4. Injects AdSense Auto-Ads into all HTML files
-5. Injects Google Analytics
-6. Adds SEO meta tags (description, Open Graph)
-7. Copies privacy policy and about pages from `_shared/`
-8. Creates `ads.txt`
-9. Creates `site.yaml` with `type: static`
-10. Adds attribution notice to README
+4. Injects AdSense Auto-Ads, Google Analytics, and SEO meta tags into all HTML files
+5. Copies privacy policy and about pages from `_shared/` (language-aware, with main domain back-links)
+6. Generates a branded OG image (`og-default.png`)
+7. Creates `ads.txt`
+8. Creates `site.yaml` with `type: static`
+9. Adds attribution notice to README
+10. Registers the site in `themes/sitefactory/data/sites.yaml` for cross-site navigation
 
 ### 4. Review and Customize
 

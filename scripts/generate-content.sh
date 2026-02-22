@@ -120,6 +120,22 @@ if [[ -n "$SITE_TITLE_CONTEXT" && "$SITE_TITLE_CONTEXT" != "null" ]]; then
   SITE_CONTEXT=" You are writing for the website '${SITE_TITLE_CONTEXT}'."
 fi
 
+# Collect existing article slugs for internal linking
+EXISTING_SLUGS=""
+if [[ -d "$POST_DIR" ]]; then
+  EXISTING_SLUGS=$(find "$POST_DIR" -name "*.md" -not -name "_index.md" -exec basename {} .md \; 2>/dev/null | tr '\n' ', ')
+fi
+
+# Collect tool information from sites.yaml for cross-references
+TOOLS_INFO=""
+SITES_YAML="$REPO_ROOT/themes/sitefactory/data/sites.yaml"
+if [[ -f "$SITES_YAML" ]] && command -v yq &>/dev/null; then
+  DOMAIN=$(yq '.domain // ""' "$SITES_YAML" 2>/dev/null || echo "")
+  if [[ -n "$DOMAIN" && "$DOMAIN" != "null" ]]; then
+    TOOLS_INFO=$(yq -r ".sites[] | select(.type == \"static\") | .title + \" (\" + .description + \") - https://\" + .name + \".${DOMAIN}/\"" "$SITES_YAML" 2>/dev/null | tr '\n' '; ')
+  fi
+fi
+
 SYSTEM_PROMPT="You are an expert SEO content writer${NICHE_CONTEXT}. Generate a high-quality, SEO-optimized blog article in Markdown format.${SITE_CONTEXT} The article MUST begin with Hugo-compatible YAML frontmatter enclosed in --- delimiters. Follow these rules:
 
 1. Frontmatter must include: title, date (use ${DATE}), description (compelling meta description under 160 chars), tags (array of relevant tags), categories (array), draft: false
@@ -130,13 +146,34 @@ SYSTEM_PROMPT="You are an expert SEO content writer${NICHE_CONTEXT}. Generate a 
 6. Add a conclusion with a call-to-action
 7. Naturally incorporate the provided keywords without keyword stuffing
 8. Target the specified word count (approximate is fine)
-9. Write in a professional yet accessible tone"
+9. Write in a professional yet accessible tone
+10. Vary article structure — use a MIX of: listicles, how-to guides, comparisons, deep dives, problem-solution. Do NOT always follow the same template
+11. Include 2-3 internal links to related articles from this site using markdown links (format: [text](/posts/slug/)). I will provide a list of existing article slugs
+12. Write with a personal voice — use \"I\" occasionally, share brief observations from testing. Avoid generic AI prose patterns like \"In today's digital world\" or \"In this comprehensive guide\"
+13. Include 1-2 data points or statistics with approximate attribution
+14. If any available tools on the site network are relevant to the topic, mention and link to them naturally"
 
 USER_PROMPT="Write a blog article about the following topic:
 
 Topic: ${TOPIC}
 Target keywords: ${KEYWORDS}
-Target word count: ${WORD_COUNT}
+Target word count: ${WORD_COUNT}"
+
+# Add existing article slugs for internal linking
+if [[ -n "$EXISTING_SLUGS" ]]; then
+  USER_PROMPT="${USER_PROMPT}
+
+Existing articles on this site (use for internal links where relevant): ${EXISTING_SLUGS}"
+fi
+
+# Add tool references
+if [[ -n "$TOOLS_INFO" ]]; then
+  USER_PROMPT="${USER_PROMPT}
+
+Available tools on the site network (link if relevant to the topic): ${TOOLS_INFO}"
+fi
+
+USER_PROMPT="${USER_PROMPT}
 
 Please output ONLY the markdown content (with frontmatter). No explanations or extra text."
 

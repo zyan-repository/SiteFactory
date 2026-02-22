@@ -1,0 +1,56 @@
+[home]
+other = "Home"
+
+[posts]
+other = "Posts"
+
+[about]
+other = "About"
+
+[contact]
+other = "Contact"
+
+[privacy]
+other = "Privacy Policy"
+
+[terms]
+other = "Terms of Service"
+
+[readMore]
+other = "Read more"
+
+[postedOn]
+other = "Posted on"
+
+[allRightsReserved]
+other = "All rights reserved."
+
+[breadcrumbNav]
+other = "Breadcrumb Navigation"
+
+[notFound]
+other = "404 - Page Not Found"
+
+[notFoundMessage]
+other = "The page you are looking for does not exist."
+
+[backToHome]
+other = "Back to Home"
+
+[tools]
+other = "Tools"
+
+[moreFrom]
+other = "More from"
+
+[advertisement]
+other = "Advertisement"
+
+[minRead]
+other = "min read"
+
+[words]
+other = "words"
+
+[tableOfContents]
+other = "Table of Contents"

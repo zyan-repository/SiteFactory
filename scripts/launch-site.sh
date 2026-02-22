@@ -81,6 +81,18 @@ case "$MODE" in
 esac
 echo ""
 
+# --- Phase 1.5: Generate initial content (Hugo sites only) ---
+if [[ "$MODE" == "hugo" ]]; then
+  if [[ -f "$REPO_ROOT/config.yaml" ]] && command -v yq &>/dev/null; then
+    AI_KEY=$(yq ".ai.providers.$(yq '.ai.provider' "$REPO_ROOT/config.yaml" 2>/dev/null).api_key // \"\"" "$REPO_ROOT/config.yaml" 2>/dev/null || echo "")
+    if [[ -n "$AI_KEY" && "$AI_KEY" != "null" && "$AI_KEY" != *"XXXX"* ]]; then
+      log_step "Phase 1.5: Generating content plan and seed articles..."
+      "$REPO_ROOT/scripts/generate-content-plan.sh" "$SITE_NAME" 2>/dev/null || log_warn "Content plan generation failed (non-critical)"
+      "$REPO_ROOT/scripts/generate-seed-content.sh" "$SITE_NAME" 2>/dev/null || log_warn "Seed content generation failed (non-critical)"
+    fi
+  fi
+fi
+
 # --- Phase 2: Deploy ---
 log_step "Phase 2/6: Deploying to production..."
 "$REPO_ROOT/scripts/deploy.sh" "$SITE_NAME" $ROOT_FLAG

@@ -1,0 +1,11 @@
+<header class="site-header">
+  <a href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a>
+  <nav>
+    <a href="{{ "posts/" | absURL }}">{{ i18n "posts" }}</a>
+    {{ if .Site.Params.showToolsNav }}
+    <a href="{{ "tools/" | absURL }}">{{ i18n "tools" | default "Tools" }}</a>
+    {{ end }}
+    <a href="{{ "about/" | absURL }}">{{ i18n "about" }}</a>
+    <a href="{{ "contact/" | absURL }}">{{ i18n "contact" }}</a>
+  </nav>
+</header>

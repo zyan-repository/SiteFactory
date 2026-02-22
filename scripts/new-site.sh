@@ -48,9 +48,14 @@ fi
 
 DATE=$(date +%Y-%m-%d)
 
-# Step 1: Copy template
+# Step 1: Copy template (only content, static, config — layouts/assets/i18n come from theme)
 log_step "Copying template..."
-cp -r "$TEMPLATE_DIR" "$SITE_DIR"
+mkdir -p "$SITE_DIR"
+for item in content static hugo.toml archetypes; do
+  if [[ -e "$TEMPLATE_DIR/$item" ]]; then
+    cp -r "$TEMPLATE_DIR/$item" "$SITE_DIR/$item"
+  fi
+done
 
 # Step 2: Configure hugo.toml
 log_step "Configuring site..."
@@ -67,6 +72,7 @@ sed_inplace \
   -e "s|adsensePubId = \"\"|adsensePubId = \"${SF_ADSENSE_PUB_ID}\"|g" \
   -e "s|googleAnalyticsId = \"\"|googleAnalyticsId = \"${SF_GA_ID}\"|g" \
   -e "s|googleSearchConsoleVerification = \"\"|googleSearchConsoleVerification = \"${SF_GSC_VERIFICATION}\"|g" \
+  -e "s|siteName = \"\"|siteName = \"${SITE_NAME}\"|g" \
   "$SITE_DIR/hugo.toml"
 
 # Replace placeholders in content files
@@ -99,7 +105,25 @@ language: ${SITE_LANG}
 created: ${DATE}
 EOF
 
-# Step 4: AI content generation (optional, requires AI config)
+# Step 4: Generate OG image
+source "$REPO_ROOT/scripts/lib/og-image.sh"
+log_step "Generating OG image..."
+if generate_og_image "$SITE_TITLE" "$SITE_DIR/static/og-default.png"; then
+  log_ok "  OG image generated"
+else
+  log_warn "  OG image generation failed (non-critical)"
+fi
+
+# Step 5: Register in theme data/sites.yaml
+SITES_YAML="$REPO_ROOT/themes/sitefactory/data/sites.yaml"
+if [[ -f "$SITES_YAML" ]] && command -v yq &>/dev/null; then
+  if ! yq -e ".sites[] | select(.name == \"$SITE_NAME\")" "$SITES_YAML" &>/dev/null; then
+    yq -i ".sites += [{\"name\": \"$SITE_NAME\", \"title\": \"$SITE_TITLE\", \"description\": \"$SITE_DESC\", \"type\": \"hugo\", \"category\": \"content\"}]" "$SITES_YAML"
+    log_ok "  Registered in theme data/sites.yaml"
+  fi
+fi
+
+# Step 5: AI content generation (optional, requires AI config)
 # Content plans are stored in content-plans/ (outside sites/)
 if [[ -f "$REPO_ROOT/config.yaml" ]] && command -v yq &>/dev/null; then
   AI_KEY=$(yq ".ai.providers.$(yq '.ai.provider' "$REPO_ROOT/config.yaml").api_key // \"\"" "$REPO_ROOT/config.yaml" 2>/dev/null || echo "")
