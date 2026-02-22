@@ -1,6 +1,6 @@
 ---
 title: "A Guide to Using Wayback Machine and Internet Archives"
-date: 2026-02-19
+date: 2026-01-30
 description: "Learn how to use Wayback Machine and search internet archives to explore the history of the web, recover lost content, and conduct research."
 tags: ["Wayback Machine", "Internet Archive", "web history", "digital preservation", "research tools"]
 categories: ["Guides", "Technology", "Research"]

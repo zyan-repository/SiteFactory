@@ -1,65 +1,65 @@
 ---
-title: "隐私政策"
-description: "Search123 的隐私政策 — 了解我们如何收集、使用和保护您的数据"
+title: "Privacy Policy"
+description: "Search123 Privacy Policy — Learn how we collect, use, and protect your data"
 hideDate: true
 noAds: true
 ---
 
-## 隐私政策
+## Privacy Policy
 
-**最后更新：2026-02-20**
+**Last updated: February 20, 2026**
 
-本隐私政策适用于 Search123（以下简称"本网站"，网址为 search123.top）。本网站尊重您的隐私，并致力于保护您在访问和使用本网站时可能提供的任何信息。本政策详细说明了我们收集哪些信息、如何使用这些信息以及您可以采取的措施来保护自己的隐私。
+This Privacy Policy applies to Search123 (referred to as "this website," accessible at search123.top). This website respects your privacy and is committed to protecting any information you may provide while visiting and using this site. This policy explains what information we collect, how we use it, and what steps you can take to protect your privacy.
 
-### 信息收集概述
+### Information Collection Overview
 
-本网站是一个纯静态内容网站，我们不会要求您注册账号，也不会通过表单直接收集您的个人信息（如姓名、地址、电话号码等）。但是，本网站使用的第三方服务可能会自动收集某些匿名数据，具体说明如下。
+This website is a purely static content site. We do not require you to register an account, nor do we collect personal information (such as your name, address, or phone number) through forms. However, the third-party services used by this website may automatically collect certain anonymous data, as described below.
 
-### Google Analytics（谷歌分析）
+### Google Analytics
 
-我们使用 Google Analytics 来了解访客如何使用本网站。Google Analytics 通过在您的浏览器中放置 Cookie 来收集匿名的使用数据，包括但不限于：
+We use Google Analytics to understand how visitors use this website. Google Analytics collects anonymous usage data by placing cookies in your browser, including but not limited to:
 
-- 访问的页面和浏览路径
-- 在网站上的停留时间
-- 使用的设备类型和操作系统
-- 浏览器类型和版本
-- 大致的地理位置（基于 IP 地址，但不会记录完整 IP）
-- 流量来源（搜索引擎、直接访问或外部链接）
+- Pages visited and browsing paths
+- Time spent on the website
+- Device type and operating system used
+- Browser type and version
+- Approximate geographic location (based on IP address, though the full IP is not recorded)
+- Traffic sources (search engines, direct visits, or external links)
 
-这些数据以汇总和匿名形式呈现，帮助我们了解哪些内容最受欢迎，从而改进网站内容和用户体验。如需了解更多关于 Google Analytics 如何处理数据的信息，请参阅 [Google 隐私政策](https://policies.google.com/privacy)。
+This data is presented in aggregated and anonymized form to help us understand which content is most popular, allowing us to improve website content and user experience. For more information about how Google Analytics processes data, please refer to the [Google Privacy Policy](https://policies.google.com/privacy).
 
-### Google AdSense（谷歌广告）
+### Google AdSense
 
-本网站通过 Google AdSense 展示广告以维持运营。Google AdSense 可能会使用 Cookie 和类似技术来根据您之前对本网站或其他网站的访问记录来投放个性化广告。具体而言：
+This website displays advertisements through Google AdSense to support its operations. Google AdSense may use cookies and similar technologies to serve personalized ads based on your previous visits to this website or other websites. Specifically:
 
-- Google 使用 Cookie（如 DART Cookie）来基于您访问本网站及互联网上其他网站的历史向您展示广告
-- 第三方广告供应商或广告网络也可能使用 Cookie、JavaScript 或网络信标来衡量广告效果并为您提供个性化广告内容
-- 本网站无法访问或控制第三方广告商使用的 Cookie
+- Google uses cookies (such as the DART cookie) to display ads based on your browsing history on this website and other sites across the internet
+- Third-party ad vendors or ad networks may also use cookies, JavaScript, or web beacons to measure ad effectiveness and deliver personalized ad content
+- This website does not have access to or control over cookies used by third-party advertisers
 
-您可以通过访问 [Google 广告设置](https://adssettings.google.com) 来管理或退出 Google 个性化广告。您也可以访问 [www.aboutads.info](http://www.aboutads.info/choices/) 来退出第三方供应商使用 Cookie 进行个性化广告投放。
+You can manage or opt out of Google personalized advertising by visiting [Google Ad Settings](https://adssettings.google.com). You can also visit [www.aboutads.info](http://www.aboutads.info/choices/) to opt out of third-party vendors using cookies for personalized advertising.
 
-### Cookie 使用说明
+### How We Use Cookies
 
-Cookie 是存储在您浏览器中的小型文本文件。本网站自身不设置 Cookie，但上述第三方服务（Google Analytics 和 Google AdSense）会通过本网站设置 Cookie。您可以通过浏览器设置来管理 Cookie 偏好：
+Cookies are small text files stored in your browser. This website itself does not set cookies, but the third-party services mentioned above (Google Analytics and Google AdSense) do set cookies through this website. You can manage your cookie preferences through your browser settings:
 
-- **Chrome**：设置 → 隐私和安全 → Cookie 和其他网站数据
-- **Firefox**：设置 → 隐私与安全 → Cookie 和网站数据
-- **Safari**：偏好设置 → 隐私 → Cookie 和网站数据
+- **Chrome**: Settings > Privacy and Security > Cookies and Other Site Data
+- **Firefox**: Settings > Privacy & Security > Cookies and Site Data
+- **Safari**: Preferences > Privacy > Cookies and Website Data
 
-请注意，禁用 Cookie 可能会影响您在本网站及其他网站上的浏览体验。
+Please note that disabling cookies may affect your browsing experience on this website and others.
 
-### 数据安全
+### Data Security
 
-本网站通过 HTTPS 加密传输所有数据，以保护您与网站之间的通信安全。由于我们不直接收集或存储任何个人数据，因此不存在数据泄露的风险。第三方服务对其收集的数据安全负责。
+This website transmits all data via HTTPS encryption to protect the security of communication between you and the site. Since we do not directly collect or store any personal data, there is no risk of data breaches from our end. Third-party services are responsible for the security of the data they collect.
 
-### 儿童隐私
+### Children's Privacy
 
-本网站不面向 13 岁以下的儿童，我们不会故意收集儿童的个人信息。如果您认为我们的网站上存在不适合儿童的内容，请通过联系页面告知我们。
+This website is not directed at children under the age of 13, and we do not knowingly collect personal information from children. If you believe our website contains content unsuitable for children, please let us know through the contact page.
 
-### 政策变更
+### Changes to This Policy
 
-我们可能会不时更新本隐私政策以反映服务变更或法律要求的变化。更新后的政策将发布在本页面上，并更新"最后更新"日期。我们建议您定期查看本页面以了解最新的隐私保护措施。
+We may update this Privacy Policy from time to time to reflect changes in our services or legal requirements. Updated policies will be posted on this page with a revised "Last updated" date. We recommend checking this page periodically to stay informed about our latest privacy practices.
 
-### 联系方式
+### Contact Us
 
-如果您对本隐私政策有任何疑问或顾虑，请通过 arronzhou003@gmail.com 与我们联系。我们将尽力在 1-2 个工作日内回复您的咨询。
+If you have any questions or concerns about this Privacy Policy, please contact us at arronzhou003@gmail.com. We will do our best to respond to your inquiry within 1-2 business days.

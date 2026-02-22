@@ -1,6 +1,6 @@
 ---
 title: "Boolean Search Explained: A Beginner's Guide for Better Queries"
-date: 2026-02-19
+date: 2026-01-11
 description: "Master your searches with this beginner's guide to Boolean logic. Learn how to use AND, OR, NOT for precise and powerful query results."
 tags: ["boolean search", "search operators", "online research", "search tips", "beginner guide"]
 categories: ["Tutorials", "Search Skills"]

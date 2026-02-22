@@ -1,6 +1,6 @@
 ---
 title: "How to Create Custom Search Engines for Your Projects"
-date: 2026-02-19
+date: 2026-01-27
 description: "Learn how to create a custom search engine to streamline research and improve information discovery for your specific projects and websites."
 tags: ["custom search engine", "google programmable search engine", "site search", "project management", "web development"]
 categories: ["Tutorials", "Productivity Tools"]

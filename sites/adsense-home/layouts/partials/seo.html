@@ -7,9 +7,11 @@
   "description": {{ with .Description }}{{ . | jsonify }}{{ else }}{{ .Summary | plainify | truncate 160 | jsonify }}{{ end }},
   "datePublished": "{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}",
   "dateModified": "{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}",
+  "wordCount": {{ .WordCount }},
   "author": {
     "@type": "Person",
-    "name": "{{ .Site.Params.author }}"
+    "name": "{{ .Site.Params.author }}",
+    "url": "{{ "about/" | absURL }}"
   },
   "publisher": {
     "@type": "Organization",
@@ -28,7 +30,11 @@
   "@type": "WebSite",
   "name": "{{ .Site.Title }}",
   "url": "{{ .Site.BaseURL }}",
-  "description": "{{ .Site.Params.description }}"
+  "description": "{{ .Site.Params.description }}",
+  "author": {
+    "@type": "Person",
+    "name": "{{ .Site.Params.author }}"
+  }
 }
 </script>
 {{ end }}

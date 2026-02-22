@@ -1,6 +1,7 @@
 ---
 title: "Best Browser Extensions to Supercharge Your Search Experience"
-date: 2026-02-19
+date: 2026-02-05
+lastmod: 2026-02-18
 description: "Discover the top browser extensions for search that will streamline your workflow, eliminate distractions, and help you find information faster."
 tags: ["browser extensions", "productivity", "search tools", "chrome extensions", "firefox add-ons"]
 categories: ["Technology", "Productivity"]

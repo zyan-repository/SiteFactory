@@ -1,6 +1,6 @@
 ---
 title: "How to Set Up and Use RSS Feeds for News and Updates"
-date: 2026-02-19
+date: 2026-02-16
 description: "Learn how to set up RSS feed readers and use RSS feeds to streamline your news consumption and stay updated without the noise."
 tags: ["RSS feeds", "news aggregation", "productivity", "digital tools", "content curation"]
 categories: ["Technology Tutorials", "Productivity"]

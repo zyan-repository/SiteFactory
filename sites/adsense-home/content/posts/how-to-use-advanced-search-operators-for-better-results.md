@@ -1,6 +1,7 @@
 ---
 title: "Master Your Queries: How to Use Advanced Search Operators for Better Results"
-date: 2026-02-19
+date: 2026-01-08
+lastmod: 2026-02-10
 description: "Unlock the power of Google search with our guide to advanced search operators. Get precise, relevant results and save time instantly."
 tags: ["advanced search operators", "Google search tips", "better search results", "search techniques", "online research"]
 categories: ["Search Tips", "Productivity", "Technology"]

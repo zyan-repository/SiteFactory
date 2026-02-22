@@ -1,6 +1,6 @@
 ---
 title: "How to Use Search Engines to Fact-Check Information Online"
-date: 2026-02-19
+date: 2026-01-24
 description: "Learn proven strategies to fact-check with search and verify information online. A step-by-step guide to becoming a smarter digital citizen."
 tags: ["fact-checking", "digital literacy", "online verification", "search skills", "misinformation"]
 categories: ["Digital Skills", "Online Safety", "Research"]

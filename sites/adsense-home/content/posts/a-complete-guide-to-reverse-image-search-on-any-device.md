@@ -1,6 +1,6 @@
 ---
 title: "A Complete Guide to Reverse Image Search on Any Device"
-date: 2026-02-19
+date: 2026-01-21
 description: "Master reverse image search with our definitive guide. Learn how to find image sources, identify objects, and verify authenticity on any device."
 tags: ["reverse image search", "image verification", "online search", "digital tools", "find image source"]
 categories: ["Technology Guides", "How-To", "Search Tips"]

@@ -1,32 +1,32 @@
 ---
-title: "联系我们"
-description: "与 Search123 团队取得联系，提交反馈或报告问题"
+title: "Contact Us"
+description: "Get in touch with the Search123 team — submit feedback, report issues, or suggest topics"
 hideDate: true
 noAds: true
 ---
 
-## 联系我们
+## Contact Us
 
-我们很乐意听到您的声音。无论您有任何问题、建议，或者想报告一个问题，都欢迎随时联系我们。Search123 团队致力于为每一位用户提供最好的体验，您的反馈是我们不断改进的重要动力。
+We would love to hear from you. Whether you have a question, a suggestion, or want to report an issue, feel free to reach out at any time. The Search123 team is dedicated to providing the best experience for every reader, and your feedback is an important driving force behind our continuous improvement.
 
-### 电子邮件
+### Email
 
-您可以通过以下邮箱与我们取得联系：**arronzhou003@gmail.com**
+You can reach us at: **arronzhou003@gmail.com**
 
-我们会尽量在 1-2 个工作日内回复您的邮件。为了帮助我们更快地处理您的请求，请在邮件中包含以下信息：
+We aim to respond to your email within 1-2 business days. To help us process your request more quickly, please include the following information in your message:
 
-- **问题类型**：内容建议、错误报告、合作咨询或其他
-- **详细描述**：尽可能清晰地描述您的问题或建议
-- **相关页面链接**：如果您的反馈涉及特定页面，请附上网址
+- **Type of inquiry**: Content suggestion, bug report, collaboration inquiry, or other
+- **Detailed description**: Describe your question or suggestion as clearly as possible
+- **Relevant page link**: If your feedback relates to a specific page, please include the URL
 
-### 内容建议
+### Content Suggestions
 
-如果您希望我们撰写某个主题的文章，或者发现了一款值得推荐的在线工具，欢迎告诉我们。我们的编辑团队会认真评估每一条建议，并在合适的时候将其纳入我们的内容计划。
+If you would like us to write an article on a particular topic or have discovered an online tool worth recommending, we would be happy to hear about it. Our editorial team carefully evaluates every suggestion and incorporates suitable ones into our content plan when appropriate.
 
-### 错误报告
+### Bug Reports
 
-如果您在浏览本网站时发现了任何技术问题，例如链接失效、页面显示异常或内容错误，请通过上述邮箱告知我们。准确的错误描述和截图将帮助我们更快地定位和修复问题。
+If you encounter any technical issues while browsing this website, such as broken links, page display errors, or content inaccuracies, please let us know via the email address above. Accurate descriptions and screenshots will help us locate and fix problems more quickly.
 
-### 关于本站
+### About This Site
 
-Search123 致力于为读者提供实用且准确的搜索技巧和工具评测内容。我们尊重每一位访客的时间，承诺持续提供高质量、有价值的信息资源。如果您发现任何可以改进的地方，请告知我们，我们将不胜感激。
+Search123 is committed to providing readers with practical and accurate content on search techniques and tool reviews. We respect every visitor's time and promise to continue delivering high-quality, valuable information resources. If you notice anything that can be improved, please let us know — we greatly appreciate your input.

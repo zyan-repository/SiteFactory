@@ -1,6 +1,6 @@
 ---
 title: "How to Search the Deep Web Safely and Effectively"
-date: 2026-02-19
+date: 2026-01-18
 description: "A practical guide on how to search the deep web safely and effectively. Learn essential tools, techniques, and security protocols."
 tags: ["deep web", "online privacy", "tor browser", "internet security", "search engines"]
 categories: ["Cybersecurity", "Digital Literacy", "Guides"]

@@ -1,0 +1,18 @@
+{{ if .IsPage }}
+{{ if eq .Section "posts" }}
+{{ $related := .Site.RegularPages.Related . | first 3 }}
+{{ with $related }}
+<section class="related-articles">
+  <h2>You Might Also Like</h2>
+  <ul class="post-list">
+    {{ range . }}
+    <li class="post-item">
+      <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
+      {{ with .Description }}<p>{{ . }}</p>{{ end }}
+    </li>
+    {{ end }}
+  </ul>
+</section>
+{{ end }}
+{{ end }}
+{{ end }}

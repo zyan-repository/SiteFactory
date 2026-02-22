@@ -8,8 +8,9 @@ enableGitInfo = false
 disableHugoGeneratorInject = true
 
 [params]
-  description = "Your go-to search and tools hub"
+  description = "Practical guides to search smarter, work faster, and stay safe online"
   author = "Arron Zhou"
+  authorBio = "Arron is a web developer and digital productivity enthusiast who writes about search techniques, online tools, and internet security. He personally tests every tool reviewed and verifies every technique recommended on this site."
   # AdSense
   adsenseEnabled = true
   adsensePubId = "ca-pub-5531531271065052"

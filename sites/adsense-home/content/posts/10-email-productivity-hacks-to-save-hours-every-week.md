@@ -1,6 +1,6 @@
 ---
 title: "10 Email Productivity Hacks to Save Hours Every Week"
-date: 2026-02-20
+date: 2026-02-18
 description: "Drowning in emails? These 10 proven email productivity hacks will help you manage your inbox efficiently and reclaim hours of your work week."
 tags: ["email productivity", "inbox management", "productivity tips", "email hacks", "time management"]
 categories: ["Productivity", "Technology"]

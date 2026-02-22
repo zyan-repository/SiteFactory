@@ -1,63 +1,63 @@
 ---
-title: "服务条款"
-description: "Search123 的服务条款 — 使用本网站前请仔细阅读"
+title: "Terms of Service"
+description: "Search123 Terms of Service — Please read carefully before using this website"
 hideDate: true
 noAds: true
 ---
 
-## 服务条款
+## Terms of Service
 
-**最后更新：2026-02-20**
+**Last updated: February 20, 2026**
 
-欢迎访问 Search123（以下简称"本网站"，网址为 search123.top）。在访问和使用本网站之前，请仔细阅读以下服务条款。访问和使用本网站即表示您同意受这些条款的约束。如果您不同意这些条款，请不要使用本网站。
+Welcome to Search123 (referred to as "this website," accessible at search123.top). Please read the following Terms of Service carefully before accessing and using this website. By accessing and using this website, you agree to be bound by these terms. If you do not agree to these terms, please do not use this website.
 
-### 服务描述
+### Service Description
 
-Search123 是一个提供搜索技巧指南、在线工具评测和数字效率提升建议的内容网站。本网站的所有内容仅供一般参考和教育目的，不构成专业建议。我们尽力确保内容的准确性和时效性，但不对任何内容的准确性、完整性或可靠性做出明确或隐含的保证。
+Search123 is a content website that provides guides on search techniques, online tool reviews, and digital productivity tips. All content on this website is for general reference and educational purposes only and does not constitute professional advice. We strive to ensure the accuracy and timeliness of our content but make no express or implied warranties regarding the accuracy, completeness, or reliability of any content.
 
-### 知识产权
+### Intellectual Property
 
-本网站上的所有原创内容（包括但不限于文章文本、图片、页面设计和标志）均受版权法保护，归 Search123 及其内容创作者所有。您可以：
+All original content on this website (including but not limited to article text, images, page design, and logos) is protected by copyright law and belongs to Search123 and its content creators. You may:
 
-- 为个人非商业目的浏览和阅读本网站的内容
-- 分享本网站文章的链接到社交媒体或其他平台
-- 合理引用本网站的内容，但需注明出处并提供原文链接
+- Browse and read the content of this website for personal, non-commercial purposes
+- Share links to articles on this website on social media or other platforms
+- Reasonably quote content from this website, provided you credit the source and include a link to the original
 
-未经我们书面许可，您不得：
+Without our written permission, you may not:
 
-- 以任何方式大量复制或转载本网站的内容
-- 将本网站内容用于商业目的
-- 修改、改编或创作基于本网站内容的衍生作品
+- Reproduce or republish the content of this website in bulk by any means
+- Use the content of this website for commercial purposes
+- Modify, adapt, or create derivative works based on the content of this website
 
-### 第三方链接
+### Third-Party Links
 
-本网站的文章中可能包含指向第三方网站的链接。这些链接仅为方便读者而提供。我们不控制这些第三方网站，也不对其内容、隐私政策或做法承担任何责任。访问第三方网站需自行承担风险，我们建议您在离开本网站时阅读所访问网站的条款和隐私政策。
+Articles on this website may contain links to third-party websites. These links are provided solely for the convenience of readers. We do not control these third-party websites and are not responsible for their content, privacy policies, or practices. Visiting third-party websites is at your own risk, and we recommend reading the terms and privacy policies of any website you visit after leaving this site.
 
-### 广告
+### Advertising
 
-本网站通过 Google AdSense 展示广告以维持网站运营。这些广告由 Google 及其广告合作伙伴提供，受 Google 各自的条款和政策约束。广告内容不代表本网站的观点或推荐。如果您对广告内容有任何疑问，请直接联系相关广告商。
+This website displays advertisements through Google AdSense to support its operations. These advertisements are provided by Google and its advertising partners and are subject to Google's respective terms and policies. Advertising content does not represent the views or recommendations of this website. If you have any questions about advertising content, please contact the relevant advertiser directly.
 
-### 用户行为
+### User Conduct
 
-在使用本网站时，您同意不会：
+When using this website, you agree not to:
 
-- 以任何可能损害、禁用或过度加载本网站的方式使用本网站
-- 使用自动化工具（如爬虫、机器人）大量抓取本网站内容
-- 尝试未经授权访问本网站的任何部分或相关系统
-- 以任何违反适用法律法规的方式使用本网站
+- Use this website in any way that could damage, disable, or overburden the site
+- Use automated tools (such as crawlers or bots) to scrape content from this website in bulk
+- Attempt unauthorized access to any part of this website or related systems
+- Use this website in any manner that violates applicable laws and regulations
 
-### 免责声明
+### Disclaimer
 
-本网站及其内容按"现状"和"可用"的基础提供，不作任何形式的明确或隐含保证。在法律允许的最大范围内：
+This website and its content are provided on an "as is" and "as available" basis, without warranties of any kind, either express or implied. To the maximum extent permitted by law:
 
-- 我们不保证本网站将不间断、及时、安全或无错误地运行
-- 我们不保证通过本网站获得的结果将是准确或可靠的
-- 对于因使用或无法使用本网站而导致的任何直接、间接、附带或后果性损害，我们不承担责任
+- We do not guarantee that this website will operate without interruption, be timely, secure, or error-free
+- We do not guarantee that results obtained through this website will be accurate or reliable
+- We shall not be liable for any direct, indirect, incidental, or consequential damages arising from the use of or inability to use this website
 
-### 条款变更
+### Changes to These Terms
 
-我们保留随时修改这些服务条款的权利，恕不另行通知。更新后的条款将发布在本页面上，并更新"最后更新"日期。继续使用本网站即表示您接受修改后的条款。我们建议您定期查看本页面以了解最新的条款内容。
+We reserve the right to modify these Terms of Service at any time without prior notice. Updated terms will be posted on this page with a revised "Last updated" date. Continued use of this website constitutes acceptance of the modified terms. We recommend checking this page periodically for the latest terms.
 
-### 联系方式
+### Contact Us
 
-如果您对这些服务条款有任何疑问，请通过 arronzhou003@gmail.com 与我们联系。
+If you have any questions about these Terms of Service, please contact us at arronzhou003@gmail.com.

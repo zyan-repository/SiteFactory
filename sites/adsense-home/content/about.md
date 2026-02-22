@@ -1,41 +1,38 @@
 ---
-title: "关于我们"
-description: "了解更多关于 Search123 的信息 — 我们的使命、团队和愿景"
+title: "About"
+description: "About Search123 and its author — our mission, values, and commitment to quality"
 hideDate: true
 ---
 
 ## About Search123
 
-Welcome to Search123, your dedicated hub for search techniques, online tool reviews, and digital productivity tips. We are a team of digital enthusiasts and information specialists committed to simplifying your online experience. Our mission is to cut through the clutter of the internet, providing you with a reliable, straightforward, and efficient starting point for all your searches and digital tasks.
+Hi, I'm Arron Zhou, the creator and writer behind Search123. I started this site because I noticed something frustrating: most people use only a tiny fraction of what search engines and online tools can actually do. After years of working as a web developer and spending countless hours helping friends and colleagues find better ways to navigate the internet, I decided to put everything I know into one place.
 
-### Our Mission
+### Why Search123 Exists
 
-In an era of information overload, finding the right tools and techniques to navigate the web efficiently has become more important than ever. Search123 was created with a simple goal: to be the most practical and trustworthy resource for anyone looking to improve their digital skills. We believe that everyone deserves access to clear, well-researched guides that help them get more done in less time.
+The internet is full of incredible tools — from advanced search operators that can pinpoint exactly the page you need, to free alternatives that rival expensive paid software. But discovering these tools and learning to use them effectively takes time most people don't have. Search123 bridges that gap with clear, practical guides that anyone can follow.
 
-### What We Offer
+Every article I publish comes from real experience. When I review a tool, I have actually used it. When I explain a search technique, I have tested it across multiple scenarios. I believe the best way to teach is through honest, firsthand experience rather than rewritten press releases.
 
-At Search123, you will find a curated collection of in-depth articles and guides covering a wide range of topics:
+### What You Will Find Here
 
-- **Search Techniques**: Master advanced search operators, discover specialized search engines, and learn strategies to find exactly what you need faster.
-- **Online Tool Reviews**: Honest, detailed reviews of free and premium online tools for productivity, file conversion, image editing, and more.
-- **Digital Privacy**: Practical advice on protecting your personal information online, understanding browser privacy settings, and using secure communication tools.
-- **Productivity Tips**: Workflow optimization strategies, browser extensions recommendations, and keyboard shortcuts that save you hours every week.
+Search123 covers four main areas:
 
-### Our Commitment to Quality
+- **Search Techniques**: Advanced search operators, specialized search engines, research strategies, and methods to find exactly what you need faster.
+- **Online Tool Reviews**: Honest, tested reviews of free and premium tools for productivity, file conversion, privacy, and everyday tasks.
+- **Digital Privacy**: Practical guidance on protecting your personal information, choosing VPNs, managing passwords, and understanding browser privacy settings.
+- **Productivity Tips**: Workflow optimization, browser extensions, email strategies, and shortcuts that save real time every day.
 
-Every article on Search123 goes through a rigorous editorial process. We personally test every tool we review, verify every technique we recommend, and update our content regularly to ensure accuracy. When a tool changes its features or pricing, we update our reviews. When a search technique becomes outdated, we revise our guides. You can trust that the information you find here is current and reliable.
+### My Commitment to Quality
 
-We are also committed to transparency. Our site is supported through advertising, which allows us to keep all our content free for readers. We never let advertising influence our editorial decisions — our reviews and recommendations are based solely on merit and usefulness.
+Every article goes through a careful editorial process. I personally test every tool I review, verify every technique I recommend, and update content regularly when things change. If a tool updates its pricing or features, I revise the review. If a search trick stops working, I note it. You can trust that what you read here is accurate and current.
 
-### Our Values
+### Transparency
 
-- **Accuracy First**: We fact-check everything and provide sources where possible
-- **User-Centric**: Every piece of content is written with the reader's needs in mind
-- **Continuous Improvement**: We regularly update and expand our content library
-- **Transparency**: We are open about how our site operates and generates revenue
+This site is supported through advertising via Google AdSense, which allows me to keep all content free. Advertising never influences my editorial decisions — reviews and recommendations are based solely on merit and usefulness. I have no affiliate relationships with any tools I review unless explicitly stated.
 
 ### Get In Touch
 
-We love hearing from our readers. Whether you have a question, a suggestion for a topic you would like us to cover, or feedback on an existing article, please do not hesitate to reach out through our [Contact page](/contact/). Your input helps us create better content for everyone.
+I love hearing from readers. Whether you have a question, a suggestion for a topic you would like me to cover, or feedback on an existing article, please reach out through the [Contact page](/contact/). Your input directly shapes what I write next.
 
-Thank you for choosing Search123. We are here to help you search smarter and work simpler.
+Thank you for visiting Search123. I hope these guides help you search smarter and work more efficiently.

@@ -1,25 +1,31 @@
 {{ define "main" }}
-<h1>{{ .Site.Title }}</h1>
+<div class="homepage-hero">
+  <h1>{{ .Site.Title }}</h1>
+  <p class="tagline">{{ .Site.Params.description }}</p>
+</div>
 
 {{ with .Content }}
 <div class="homepage-intro">
   {{ . }}
 </div>
-{{ else }}
-<p>{{ .Site.Params.description }}</p>
 {{ end }}
 
 {{ $posts := where .Site.RegularPages "Section" "posts" }}
 {{ if $posts }}
-<h2>Latest Posts</h2>
-<ul class="post-list">
-  {{ range first 10 $posts }}
-  <li class="post-item">
-    <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
-    <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
-    {{ with .Description }}<p>{{ . }}</p>{{ end }}
-  </li>
-  {{ end }}
-</ul>
+<section class="latest-articles">
+  <h2>Latest Articles</h2>
+  <ul class="post-list">
+    {{ range first 10 $posts }}
+    <li class="post-item">
+      <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
+      <div class="post-meta">
+        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
+        {{ with $.Site.Params.author }}<span class="author">By {{ . }}</span>{{ end }}
+      </div>
+      {{ with .Description }}<p>{{ . }}</p>{{ end }}
+    </li>
+    {{ end }}
+  </ul>
+</section>
 {{ end }}
 {{ end }}

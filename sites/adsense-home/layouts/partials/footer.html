@@ -1,6 +1,7 @@
 <footer class="site-footer">
   <p>&copy; {{ now.Year }} {{ .Site.Title }}. {{ i18n "allRightsReserved" }}</p>
   <nav>
+    <a href="{{ "about/" | absURL }}">{{ i18n "about" }}</a> &middot;
     <a href="{{ "privacy-policy/" | absURL }}">{{ i18n "privacy" }}</a> &middot;
     <a href="{{ "terms/" | absURL }}">{{ i18n "terms" }}</a> &middot;
     <a href="{{ "contact/" | absURL }}">{{ i18n "contact" }}</a>
