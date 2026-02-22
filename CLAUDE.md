@@ -187,6 +187,41 @@ SiteFactory/
 7. **No secrets in code** - AdSense publisher ID, API keys via `config.yaml` (git-ignored)
 8. **Docs follow code** - When changing theme templates, scripts, CI workflows, or config patterns: update CLAUDE.md (architecture), README (user-facing), and relevant `docs/` files in the same commit. This includes i18n key additions, new env vars, new script flags, and behavioral changes
 
+### Documentation Depth Standard
+
+Documentation updates must **match the depth and style of existing sections**. Adding a directory name to the project tree without describing its behavior is insufficient.
+
+**Before updating**: Read the existing sections of the same type in the target document. Match that depth.
+
+| Document | Depth Reference (existing sections) | New content must include |
+|----------|-------------------------------------|--------------------------|
+| `CLAUDE.md` | Hugo Theme System table: concept + mechanism + location; i18n keys table: key + usage + 3-language translations | Mechanism location, behavior, config method; complete 3-language i18n key entries |
+| `README.md` | Scripts table: name + description + usage | Full entry for new scripts/commands |
+| `docs/*.md` | setup-guide: step-by-step + code examples + caveats | Equally detailed step-by-step instructions |
+
+**Common omission traps**:
+
+| Only updated | Must also update |
+|--------------|-----------------|
+| Directory name in project tree | Directory purpose, key files, usage context |
+| Script name in Scripts table | Parameters, usage examples, dependencies |
+| New param in hugo.toml | Config explanation in CLAUDE.md, env var injection method |
+| New key in i18n files | i18n keys reference table with 3-language entries |
+| New step in CI workflow | Automation table + `docs/deployment-automation.md` |
+| New theme partial | Hugo Theme System table with concept + mechanism |
+| New pitfall discovered | Common Pitfalls table entry |
+
+**Post-update checklist**:
+
+- [ ] New scripts have entries in both Project Structure and README Scripts table
+- [ ] New i18n keys have complete 3-language entries in i18n keys reference table
+- [ ] New environment variables are documented in CLAUDE.md
+- [ ] New theme mechanisms have entries in Hugo Theme System table
+- [ ] New CI workflows have entries in Automation table and `docs/deployment-automation.md`
+- [ ] New common mistakes are recorded in Common Pitfalls table
+- [ ] English and Chinese docs updated simultaneously
+- [ ] README documentation index includes new docs with bilingual links
+
 ## SEO Requirements (Non-Negotiable)
 
 Every page MUST have:
