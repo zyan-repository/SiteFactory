@@ -107,6 +107,8 @@ All Hugo sites share a centralized theme at `themes/sitefactory/`. Template upda
 | **Accessibility** | All `<nav>` elements have `aria-label` via i18n keys (`mainNav`, `footerNav`, `breadcrumbNav`) |
 | **Breadcrumb i18n** | JSON-LD BreadcrumbList uses `.Site.Home.Permalink` so multilingual sites get correct language URLs |
 | **AdSense injection** | `adsensePubId` injected via `HUGO_PARAMS_ADSENSEPUBID` env var at build time; hugo.toml value left empty |
+| **Sitemap filtering** | Custom `layouts/_default/sitemap.xml` excludes taxonomy/term pages from sitemap; only content pages (home, section, page) appear. Prevents GSC "noindex exclusion" alerts |
+| **Taxonomy noindex** | `head.html` adds `<meta name="robots" content="noindex, follow">` for taxonomy/term pages. robots.txt does NOT Disallow these paths (would conflict with noindex) |
 
 ### High-Value Fork Targets
 
@@ -552,6 +554,8 @@ AI-generated content must pass these quality checks:
 | Using `hugo-version: 'latest'` in CI | Pin Hugo to a specific version (e.g., `0.156.0`) so builds are reproducible and you control when to upgrade |
 | Hugo site Vercel project named "public" | Hugo deploys from `public/` dir, so Vercel names the project "public". `deploy.sh` auto-links correct name via `vercel_link_project`. For legacy projects, run `vercel link --project <site-name> --cwd sites/<name>/public/` |
 | Changing code without updating docs | When modifying theme, scripts, CI, or config — update CLAUDE.md, README, and relevant `docs/` files in the same commit (see Core Rule #8) |
+| Sitemap including noindex pages | Custom sitemap template must exclude taxonomy/term pages. Never submit pages to Google that have noindex — it triggers GSC "excluded by noindex" alerts |
+| Using robots.txt Disallow AND noindex together | Choose one: noindex meta tag (recommended) or robots.txt Disallow. If robots.txt blocks crawling, Google can't see the noindex tag and may still show the URL in results |
 
 ## Code Quality
 
