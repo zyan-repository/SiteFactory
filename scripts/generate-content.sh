@@ -46,7 +46,20 @@ generate_slug() {
 SITE_NAME="${1:?Usage: generate-content.sh <site-name> [\"<topic>\"] [\"keywords\"] [word_count]}"
 TOPIC="${2:-}"
 KEYWORDS="${3:-}"
-WORD_COUNT="${4:-1200}"
+WORD_COUNT="${4:-1500}"
+MIN_WORD_COUNT=300
+
+# Count words/characters depending on content language.
+# CJK languages: count characters (wc -m) since there are no word-separating spaces.
+# Latin languages: count words (wc -w) as usual.
+count_words() {
+  local file="$1"
+  local lang="${2:-en}"
+  case "$lang" in
+    zh*|ja*|ko*) wc -m < "$file" | tr -d ' ' ;;
+    *)           wc -w < "$file" | tr -d ' ' ;;
+  esac
+}
 
 SITE_DIR="$REPO_ROOT/sites/$SITE_NAME"
 POST_DIR="$SITE_DIR/content/posts"
@@ -67,6 +80,10 @@ NICHE=""
 SITE_TITLE_CONTEXT=""
 PLAN_FILE="$REPO_ROOT/content-plans/$SITE_NAME.yaml"
 SITE_YAML="$SITE_DIR/site.yaml"
+SITE_LANG="en"
+if [[ -f "$SITE_DIR/site.yaml" ]]; then
+  SITE_LANG=$(yq '.language // "en"' "$SITE_DIR/site.yaml")
+fi
 
 if [[ -z "$TOPIC" ]]; then
   if [[ ! -f "$PLAN_FILE" ]]; then
@@ -175,7 +192,7 @@ SYSTEM_PROMPT="You are an expert SEO content writer${NICHE_CONTEXT}. Generate a 
 5. Include bullet points and numbered lists where appropriate
 6. Add a conclusion with a call-to-action
 7. Naturally incorporate the provided keywords without keyword stuffing
-8. Target the specified word count (approximate is fine)
+8. You MUST write at least ${WORD_COUNT} words. This is a hard minimum requirement, not a suggestion. Articles under ${MIN_WORD_COUNT} words will be rejected
 9. Write in a professional yet accessible tone
 10. Vary article structure — use a MIX of: listicles, how-to guides, comparisons, deep dives, problem-solution. Do NOT always follow the same template
 11. Include 2-3 internal links to related articles from this site using markdown links (format: [text](/posts/slug/)). I will provide a list of existing article slugs
@@ -244,8 +261,22 @@ mkdir -p "$POST_DIR"
 FILE_PATH="$POST_DIR/${SLUG}.md"
 echo "$MARKDOWN" > "$FILE_PATH"
 
-ACTUAL_WORDS=$(wc -w < "$FILE_PATH" | tr -d ' ')
-log_ok "Article saved: $FILE_PATH ($ACTUAL_WORDS words)"
+ACTUAL_WORDS=$(count_words "$FILE_PATH" "$SITE_LANG")
+WORD_UNIT="words"
+case "$SITE_LANG" in zh*|ja*|ko*) WORD_UNIT="chars" ;; esac
+
+# Reject articles that are too short (LLM didn't follow word count instruction)
+if [[ "$ACTUAL_WORDS" -lt "$MIN_WORD_COUNT" ]]; then
+  rm -f "$FILE_PATH"
+  # Revert in_progress status on failure
+  if [[ -n "${PLAN_INDEX:-}" && "$PLAN_INDEX" != "null" ]]; then
+    yq -i ".topics[$PLAN_INDEX].status = \"pending\"" "$PLAN_FILE"
+  fi
+  log_error "Article too short: $ACTUAL_WORDS $WORD_UNIT (minimum $MIN_WORD_COUNT). Deleted and reverted to pending."
+  exit 1
+fi
+
+log_ok "Article saved: $FILE_PATH ($ACTUAL_WORDS $WORD_UNIT)"
 
 # Update content plan status if in plan mode
 if [[ -n "$PLAN_INDEX" && "$PLAN_INDEX" != "null" ]]; then

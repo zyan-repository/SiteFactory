@@ -19,7 +19,7 @@ on:
       word_count:
         description: 'Target word count'
         required: false
-        default: '1200'
+        default: '1500'
         type: string
       ai_provider:
         description: 'AI provider'
