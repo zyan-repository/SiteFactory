@@ -443,6 +443,8 @@ Automation is handled at two levels:
 | Content Gen | `content-generation.yml` | Manual dispatch | AI article generation → commit → push → auto-deploy |
 | Scheduled Content | `scheduled-content.yml` | Daily 09:00 UTC, manual | Auto-generate content for sites with content plans |
 
+**CI config.yaml consistency rule**: Workflows that create `config.yaml` (`deploy.yml`, `content-generation.yml`, `scheduled-content.yml`) must include all required fields validated by `scripts/lib/config.sh`. Use `deploy.yml`'s config template as the reference baseline. When modifying `config.sh` validation or adding new workflows, verify all config-creating workflows stay in sync.
+
 ## Monitoring
 
 ### Required Metrics Per Site
@@ -556,6 +558,7 @@ AI-generated content must pass these quality checks:
 | Changing code without updating docs | When modifying theme, scripts, CI, or config — update CLAUDE.md, README, and relevant `docs/` files in the same commit (see Core Rule #8) |
 | Sitemap including noindex pages | Custom sitemap template must exclude taxonomy/term pages. Never submit pages to Google that have noindex — it triggers GSC "excluded by noindex" alerts |
 | Using robots.txt Disallow AND noindex together | Choose one: noindex meta tag (recommended) or robots.txt Disallow. If robots.txt blocks crawling, Google can't see the noindex tag and may still show the URL in results |
+| CI config.yaml template missing secrets | All workflows that create `config.yaml` must map every field validated by `config.sh` (currently `SF_DOMAIN`, `SF_VERCEL_TOKEN`). When adding a new workflow or modifying config validation, cross-check `deploy.yml` config template as the reference baseline and `config.sh` validation loop for required fields |
 
 ## Code Quality
 

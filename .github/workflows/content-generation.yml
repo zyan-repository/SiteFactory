@@ -57,8 +57,10 @@ jobs:
           PROVIDER: ${{ inputs.ai_provider }}
           AI_API_KEY: ${{ secrets.SF_AI_API_KEY }}
           SF_DOMAIN: ${{ secrets.SF_DOMAIN }}
+          VERCEL_TOKEN: ${{ secrets.SF_VERCEL_TOKEN }}
           ADSENSE_PUB_ID: ${{ secrets.SF_ADSENSE_PUB_ID }}
           GA_ID: ${{ secrets.SF_GA_ID }}
+          CONTENT_SCHEDULE: ${{ secrets.SF_CONTENT_SCHEDULE }}
         run: |
           # Determine model: use input if provided, otherwise provider default
           INPUT_MODEL="${{ inputs.ai_model }}"
@@ -76,7 +78,7 @@ jobs:
             name: "${SF_DOMAIN}"
             namesilo_api_key: ""
           vercel:
-            token: ""
+            token: "${VERCEL_TOKEN}"
             team_id: ""
           adsense:
             publisher_id: "${ADSENSE_PUB_ID}"
@@ -91,6 +93,10 @@ jobs:
                 api_key: "${AI_API_KEY}"
                 model: "${MODEL}"
                 base_url: "${BASE_URL}"
+          content:
+            default_schedule: "${CONTENT_SCHEDULE}"
+            default_topic_count: 25
+            default_seed_articles: 5
           monitoring:
             uptimerobot_api_key: ""
           defaults:

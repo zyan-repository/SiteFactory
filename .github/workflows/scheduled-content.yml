@@ -109,6 +109,7 @@ jobs:
         env:
           AI_API_KEY: ${{ secrets.SF_AI_API_KEY }}
           SF_DOMAIN: ${{ secrets.SF_DOMAIN }}
+          VERCEL_TOKEN: ${{ secrets.SF_VERCEL_TOKEN }}
           ADSENSE_PUB_ID: ${{ secrets.SF_ADSENSE_PUB_ID }}
           GA_ID: ${{ secrets.SF_GA_ID }}
           CONTENT_SCHEDULE: ${{ secrets.SF_CONTENT_SCHEDULE }}
@@ -131,7 +132,7 @@ jobs:
             name: "${SF_DOMAIN}"
             namesilo_api_key: ""
           vercel:
-            token: ""
+            token: "${VERCEL_TOKEN}"
             team_id: ""
           adsense:
             publisher_id: "${ADSENSE_PUB_ID}"
