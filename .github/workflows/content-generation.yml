@@ -44,6 +44,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      actions: write
     steps:
       - uses: actions/checkout@v4
 
@@ -122,3 +123,13 @@ jobs:
           git add "sites/${{ inputs.site_name }}/content/" || true
           git commit -m "content(${{ inputs.site_name }}): add AI-generated article on '${{ inputs.topic }}'" || echo "Nothing to commit"
           git push
+
+      - name: Trigger deployment
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run deploy.yml \
+            -f site_name="${{ inputs.site_name }}" \
+            --ref main
+          echo "Triggered deploy.yml for ${{ inputs.site_name }}"

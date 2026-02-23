@@ -440,8 +440,8 @@ Automation is handled at two levels:
 | Build Check | `build-check.yml` | Push/PR to main | ShellCheck + Hugo build + file verification (all language variants of shared files + all lib scripts) |
 | Auto Deploy | `deploy.yml` | Push to `sites/` or `themes/`, manual dispatch | Deploys changed sites to Vercel + DNS. Theme changes trigger all Hugo site rebuilds |
 | Health Check | `health-check.yml` | Every 6 hours, manual | HTTP check all sites, warn if down |
-| Content Gen | `content-generation.yml` | Manual dispatch | AI article generation → commit → push → auto-deploy |
-| Scheduled Content | `scheduled-content.yml` | Daily 09:00 UTC, manual | Auto-generate content for sites with content plans |
+| Content Gen | `content-generation.yml` | Manual dispatch | AI article generation → commit → push → trigger deploy.yml |
+| Scheduled Content | `scheduled-content.yml` | Daily 09:00 UTC, manual | Auto-generate content → commit → push → trigger deploy.yml |
 
 **CI config.yaml consistency rule**: Workflows that create `config.yaml` (`deploy.yml`, `content-generation.yml`, `scheduled-content.yml`) must include all required fields validated by `scripts/lib/config.sh`. Use `deploy.yml`'s config template as the reference baseline. When modifying `config.sh` validation or adding new workflows, verify all config-creating workflows stay in sync.
 
@@ -559,6 +559,8 @@ AI-generated content must pass these quality checks:
 | Sitemap including noindex pages | Custom sitemap template must exclude taxonomy/term pages. Never submit pages to Google that have noindex — it triggers GSC "excluded by noindex" alerts |
 | Using robots.txt Disallow AND noindex together | Choose one: noindex meta tag (recommended) or robots.txt Disallow. If robots.txt blocks crawling, Google can't see the noindex tag and may still show the URL in results |
 | CI config.yaml template missing secrets | All workflows that create `config.yaml` must map every field validated by `config.sh` (currently `SF_DOMAIN`, `SF_VERCEL_TOKEN`). When adding a new workflow or modifying config validation, cross-check `deploy.yml` config template as the reference baseline and `config.sh` validation loop for required fields |
+| Generating slugs with ASCII-only regex for non-ASCII titles | `sed 's/[^a-z0-9 -]//g'` strips all Chinese/Japanese characters, producing empty filenames. Use `generate_slug` in `generate-content.sh`: plan slug (LLM-generated English) → ASCII extraction → md5 hash fallback. Content plans must include `slug` field |
+| Expecting `GITHUB_TOKEN` push to trigger other workflows | GitHub blocks `push` events from `GITHUB_TOKEN` to prevent loops. Content workflows must explicitly trigger `deploy.yml` via `gh workflow run` (`workflow_dispatch` events ARE allowed). Requires `actions: write` permission |
 
 ## Code Quality
 

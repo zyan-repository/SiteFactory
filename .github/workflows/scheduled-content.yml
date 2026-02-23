@@ -93,6 +93,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      actions: write
     strategy:
       matrix:
         site: ${{ fromJSON(needs.discover-sites.outputs.sites) }}
@@ -189,3 +190,13 @@ jobs:
           git commit -m "content(${{ matrix.site }}): auto-generate scheduled article" || echo "Nothing to commit"
           git pull --rebase || true
           git push
+
+      - name: Trigger deployment
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run deploy.yml \
+            -f site_name="${{ matrix.site }}" \
+            --ref main
+          echo "Triggered deploy.yml for ${{ matrix.site }}"

@@ -15,6 +15,34 @@ source "$REPO_ROOT/scripts/lib/config.sh"
 source "$REPO_ROOT/scripts/lib/logging.sh"
 source "$REPO_ROOT/scripts/lib/llm.sh"
 
+# Generate a URL-safe slug from a topic title.
+# Priority: 1) pre-generated slug from content plan, 2) ASCII extraction, 3) md5 hash fallback
+generate_slug() {
+  local topic="$1"
+  local plan_slug="${2:-}"
+  local slug=""
+
+  # Priority 1: use pre-generated slug from content plan
+  if [[ -n "$plan_slug" && "$plan_slug" != "null" ]]; then
+    slug=$(echo "$plan_slug" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9-]//g' | sed 's/-\{2,\}/-/g' | sed 's/^-//;s/-$//' | cut -c1-60)
+  fi
+
+  # Priority 2: extract ASCII characters from topic
+  if [[ -z "$slug" ]]; then
+    slug=$(echo "$topic" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9 -]//g' | sed 's/ /-/g' | sed 's/-\{2,\}/-/g' | sed 's/^-//;s/-$//' | cut -c1-60)
+  fi
+
+  # Priority 3: hash-based fallback for non-ASCII topics
+  if [[ -z "$slug" ]]; then
+    local hash
+    hash=$(printf '%s' "$topic" | md5sum 2>/dev/null || printf '%s' "$topic" | md5)
+    slug="post-${hash%% *}"
+    slug="${slug:0:20}"
+  fi
+
+  echo "$slug"
+}
+
 SITE_NAME="${1:?Usage: generate-content.sh <site-name> [\"<topic>\"] [\"keywords\"] [word_count]}"
 TOPIC="${2:-}"
 KEYWORDS="${3:-}"
@@ -62,7 +90,8 @@ if [[ -z "$TOPIC" ]]; then
     [[ -z "$CANDIDATE" || "$CANDIDATE" == "null" ]] && continue
 
     # Check if article file already exists (dedup by slug)
-    CANDIDATE_SLUG=$(echo "$CANDIDATE" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9 -]//g' | sed 's/ /-/g' | sed 's/-\{2,\}/-/g' | sed 's/^-//;s/-$//' | cut -c1-60)
+    CANDIDATE_PLAN_SLUG=$(yq "[.topics[] | select(.status == \"pending\")][$idx].slug // \"\"" "$PLAN_FILE")
+    CANDIDATE_SLUG=$(generate_slug "$CANDIDATE" "$CANDIDATE_PLAN_SLUG")
     if [[ -f "$POST_DIR/${CANDIDATE_SLUG}.md" ]]; then
       log_info "Skipping '$CANDIDATE' (article already exists)"
       # Mark as published since the article exists
@@ -75,6 +104,7 @@ if [[ -z "$TOPIC" ]]; then
 
     TOPIC="$CANDIDATE"
     KEYWORDS=$(yq "[.topics[] | select(.status == \"pending\")][$idx].keywords // \"\"" "$PLAN_FILE")
+    PLAN_SLUG=$(yq "[.topics[] | select(.status == \"pending\")][$idx].slug // \"\"" "$PLAN_FILE")
     PLAN_INDEX=$(yq ".topics | to_entries[] | select(.value.title == \"$TOPIC\") | .key" "$PLAN_FILE")
     FOUND=true
     break
@@ -102,8 +132,8 @@ else
   fi
 fi
 
-# Generate slug from topic
-SLUG=$(echo "$TOPIC" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9 -]//g' | sed 's/ /-/g' | sed 's/-\{2,\}/-/g' | sed 's/^-//;s/-$//' | cut -c1-60)
+# Generate slug from topic (uses plan slug if available, falls back to hash for non-ASCII)
+SLUG=$(generate_slug "$TOPIC" "${PLAN_SLUG:-}")
 DATE=$(date +%Y-%m-%d)
 
 log_info "Generating article: $TOPIC"

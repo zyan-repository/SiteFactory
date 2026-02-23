@@ -62,13 +62,16 @@ SYSTEM_PROMPT="You are an SEO content strategist. Given a website's niche, title
 - Be practical and useful for the target audience
 
 Output ONLY a valid YAML array. No markdown code fences. No explanations.
-Each item must have exactly two fields: title (string) and keywords (comma-separated string).
+Each item must have exactly three fields: title (string), keywords (comma-separated string), and slug (URL-friendly English slug, lowercase letters/numbers/hyphens only, max 60 chars).
+The slug must ALWAYS be in English regardless of the title language — it should be a concise English translation or summary of the title.
 
 Example output format:
 - title: \"Best Pour-Over Technique for Beginners\"
   keywords: \"pour over coffee, pour over technique, beginner pour over\"
+  slug: \"best-pour-over-technique-beginners\"
 - title: \"French Press vs AeroPress: Complete Comparison\"
-  keywords: \"french press vs aeropress, coffee press comparison\""
+  keywords: \"french press vs aeropress, coffee press comparison\"
+  slug: \"french-press-vs-aeropress-comparison\""
 
 USER_PROMPT="Website title: ${SITE_TITLE}
 Description: ${SITE_DESC}
