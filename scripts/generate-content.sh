@@ -46,8 +46,8 @@ generate_slug() {
 SITE_NAME="${1:?Usage: generate-content.sh <site-name> [\"<topic>\"] [\"keywords\"] [word_count]}"
 TOPIC="${2:-}"
 KEYWORDS="${3:-}"
-WORD_COUNT="${4:-1500}"
-MIN_WORD_COUNT=300
+WORD_COUNT="${4:-2000}"
+MIN_WORD_COUNT=800
 
 # Count words/characters depending on content language.
 # CJK languages: count characters (wc -m) since there are no word-separating spaces.
@@ -192,7 +192,7 @@ SYSTEM_PROMPT="You are an expert SEO content writer${NICHE_CONTEXT}. Generate a 
 5. Include bullet points and numbered lists where appropriate
 6. Add a conclusion with a call-to-action
 7. Naturally incorporate the provided keywords without keyword stuffing
-8. You MUST write at least ${WORD_COUNT} words. This is a hard minimum requirement, not a suggestion. Articles under ${MIN_WORD_COUNT} words will be rejected
+8. You MUST write between ${WORD_COUNT} and 5000 words. This is a hard requirement, not a suggestion. Articles under ${MIN_WORD_COUNT} words will be rejected
 9. Write in a professional yet accessible tone
 10. Vary article structure — use a MIX of: listicles, how-to guides, comparisons, deep dives, problem-solution. Do NOT always follow the same template
 11. Include 2-3 internal links to related articles from this site using markdown links (format: [text](/posts/slug/)). I will provide a list of existing article slugs
