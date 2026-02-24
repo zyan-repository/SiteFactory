@@ -133,8 +133,12 @@ Go to your repo's **Settings → Secrets and variables → Actions → New repos
 | `SF_ADSENSE_PUB_ID` | AdSense publisher ID | `config.yaml` → `adsense.publisher_id` |
 | `SF_GA_ID` | Google Analytics ID | `config.yaml` → `analytics.google_analytics_id` |
 | `SF_AI_API_KEY` | API key for your chosen AI provider | `config.yaml` → `ai.providers.<provider>.api_key` |
+| `SF_AI_PROVIDER` | AI provider name (`claude`, `deepseek`, `openai`, `gemini`, `moonshot`, `zhipu`). Defaults to `claude` — **must match `SF_AI_API_KEY`** | `config.yaml` → `ai.provider` |
+| `SF_VERCEL_TEAM_ID` | *(Optional)* Vercel team/org ID for team deployments | `config.yaml` → `vercel.team_id` |
+| `SF_CONTENT_SCHEDULE` | *(Optional)* Content frequency: `daily`, `2x-week`, `weekly` (default), `biweekly` | `config.yaml` → `content.default_schedule` |
+| `SF_GSC_KEY_JSON` | *(Optional)* Google Search Console service account JSON key content | See [setup guide](setup-guide.md#google-search-console) |
 
-> **Note:** `SF_AI_API_KEY` is shared across all providers. When triggering Content Generation, you select the provider (claude, openai, deepseek, gemini, moonshot, zhipu) — the key must match the provider you choose.
+> **Note:** `SF_AI_API_KEY` is shared across all providers. The scheduled content workflow uses `SF_AI_PROVIDER` to determine which API to call — if not set, it defaults to `claude`. Make sure the key matches the provider, or content generation will fail with an authentication error.
 
 ### Available Workflows
 

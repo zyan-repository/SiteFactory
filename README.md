@@ -189,9 +189,10 @@ In **your fork's** Settings → Secrets and variables → Actions, add these sec
 | `SF_ADSENSE_PUB_ID` | AdSense publisher ID |
 | `SF_GA_ID` | Google Analytics measurement ID |
 | `SF_AI_API_KEY` | AI provider API key (for content generation) |
+| `SF_AI_PROVIDER` | AI provider name (`claude`, `deepseek`, `openai`, `gemini`, `moonshot`, `zhipu`). Defaults to `claude` — **must match the provider of `SF_AI_API_KEY`** |
 | `SF_VERCEL_TEAM_ID` | *(Optional)* Vercel team/org ID for team deployments |
-| `SF_AI_PROVIDER` | *(Optional)* AI provider name, defaults to `claude` |
 | `SF_CONTENT_SCHEDULE` | *(Optional)* Content frequency: `daily`, `2x-week`, `weekly` (default), `biweekly` |
+| `SF_GSC_KEY_JSON` | *(Optional)* Google Search Console service account JSON key content (for auto sitemap submission on deploy) |
 
 ### Step 3: Local Setup
 

@@ -133,8 +133,12 @@ SiteFactory 提供两种部署自动化方式，根据需求选择：
 | `SF_ADSENSE_PUB_ID` | AdSense 发布者 ID | `config.yaml` → `adsense.publisher_id` |
 | `SF_GA_ID` | Google Analytics ID | `config.yaml` → `analytics.google_analytics_id` |
 | `SF_AI_API_KEY` | 所选 AI 服务的 API 密钥 | `config.yaml` → `ai.providers.<provider>.api_key` |
+| `SF_AI_PROVIDER` | AI 服务商名称（`claude`、`deepseek`、`openai`、`gemini`、`moonshot`、`zhipu`），默认 `claude` — **必须与 `SF_AI_API_KEY` 匹配** | `config.yaml` → `ai.provider` |
+| `SF_VERCEL_TEAM_ID` | *（可选）* Vercel 团队/组织 ID，用于团队部署 | `config.yaml` → `vercel.team_id` |
+| `SF_CONTENT_SCHEDULE` | *（可选）* 内容生成频率：`daily`、`2x-week`、`weekly`（默认）、`biweekly` | `config.yaml` → `content.default_schedule` |
+| `SF_GSC_KEY_JSON` | *（可选）* Google Search Console 服务账号 JSON 密钥内容 | 参见[配置指南](../setup-guide.md#google-search-console) |
 
-> **注意：** `SF_AI_API_KEY` 是所有 AI 服务共用的。触发内容生成时可以选择 provider（claude、openai、deepseek、gemini、moonshot、zhipu），密钥需要与所选 provider 匹配。
+> **注意：** `SF_AI_API_KEY` 是所有 AI 服务共用的。定时内容生成工作流通过 `SF_AI_PROVIDER` 决定调用哪个 API——如未设置则默认使用 `claude`。请确保密钥与服务商匹配，否则内容生成会因认证错误而失败。
 
 ### 可用工作流
 

@@ -236,9 +236,10 @@ nano sites/adsense-home/content/posts/my-article.md
 | `SF_ADSENSE_PUB_ID` | AdSense 发布者 ID |
 | `SF_GA_ID` | Google Analytics 衡量 ID |
 | `SF_AI_API_KEY` | AI 服务的 API 密钥（用于内容生成） |
+| `SF_AI_PROVIDER` | AI 服务商名称（`claude`、`deepseek`、`openai`、`gemini`、`moonshot`、`zhipu`），默认 `claude` — **必须与 `SF_AI_API_KEY` 的服务商匹配** |
 | `SF_VERCEL_TEAM_ID` | *（可选）* Vercel 团队/组织 ID，用于团队部署 |
-| `SF_AI_PROVIDER` | *（可选）* AI 服务商名称，默认 `claude` |
 | `SF_CONTENT_SCHEDULE` | *（可选）* 内容生成频率：`daily`、`2x-week`、`weekly`（默认）、`biweekly` |
+| `SF_GSC_KEY_JSON` | *（可选）* Google Search Console 服务账号 JSON 密钥内容（部署时自动提交 sitemap） |
 
 ### 第三步：本地配置
 
