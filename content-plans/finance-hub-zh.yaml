@@ -4,7 +4,7 @@
 site: finance-hub-zh
 niche: "理财攻略"
 publishing_schedule: "weekly"
-last_generated: ""
+last_generated: "2026-02-25"
 target_keywords:
   - ETF基金
   - ETF交易规则
@@ -19,7 +19,7 @@ target_keywords:
 topics:
   - title: "新手如何开始个人理财第一步"
     keywords: "个人理财入门, 新手理财, 理财第一步"
-    status: pending
+    status: published
   - title: "家庭月度预算表怎么做"
     keywords: "家庭预算表, 月度预算, 家庭理财规划"
     status: pending
