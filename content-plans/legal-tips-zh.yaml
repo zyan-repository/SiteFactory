@@ -4,7 +4,7 @@
 site: legal-tips-zh
 niche: "法律小知识"
 publishing_schedule: "weekly"
-last_generated: ""
+last_generated: "2026-02-25"
 target_keywords:
   - 12315投诉流程
   - 被骗钱如何报警
@@ -19,7 +19,7 @@ target_keywords:
 topics:
   - title: "劳动合同必备条款有哪些？"
     keywords: "劳动合同必备条款, 劳动合同内容, 签订劳动合同注意事项"
-    status: pending
+    status: published
   - title: "民间借贷纠纷如何收集证据？"
     keywords: "民间借贷证据收集, 借钱不还怎么办, 借贷纠纷起诉证据"
     status: pending
