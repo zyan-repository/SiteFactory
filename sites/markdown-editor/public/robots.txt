@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://markdown-editor.search123.top/sitemap.xml

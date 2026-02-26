@@ -15,7 +15,5 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  // Base public path for GitHub Pages deployment
-  // Change this if deploying to a different subdirectory
-  base: '/markdown-renderer/',
+  base: '/',
 })

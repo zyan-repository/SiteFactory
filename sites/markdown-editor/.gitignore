@@ -5,3 +5,6 @@
 /dist
 .DS_Store
 .vercel
+
+# Override root .gitignore: Vite public/ is static assets, not build output
+!public/
