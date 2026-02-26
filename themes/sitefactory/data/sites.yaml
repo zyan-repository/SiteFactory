@@ -64,3 +64,53 @@ sites:
       ja: "資産運用ガイド"
     type: hugo
     category: content
+  - name: word-counter
+    title: Word Counter
+    description: Count words, characters, sentences and paragraphs instantly
+    type: static
+    category: tool
+    language: en
+    titles:
+      en: Word Counter
+      zh: 字数统计
+      ja: ワードカウンター
+  - name: timestamp-converter
+    title: Unix Timestamp Converter
+    description: Convert Unix timestamps to human-readable dates and vice versa
+    type: static
+    category: tool
+    language: en
+    titles:
+      en: Unix Timestamp Converter
+      zh: Unix 时间戳转换器
+      ja: Unix タイムスタンプ変換ツール
+  - name: color-converter
+    title: Color Converter
+    description: Convert between HEX and RGB color formats with live preview
+    type: static
+    category: tool
+    language: en
+    titles:
+      en: Color Converter
+      zh: 颜色转换器
+      ja: カラーコンバーター
+  - name: json-linter
+    title: JSON Formatter & Validator
+    description: Format, validate, minify and lint JSON data online
+    type: static
+    category: tool
+    language: en
+    titles:
+      en: JSON Formatter & Validator
+      zh: JSON 格式化与验证器
+      ja: JSON フォーマッター＆バリデーター
+  - name: markdown-editor
+    title: Markdown Editor
+    description: Live markdown editor with syntax highlighting and instant preview
+    type: static
+    category: tool
+    language: en
+    titles:
+      en: Markdown Editor
+      zh: Markdown编辑器
+      ja: Markdownエディター

@@ -10,6 +10,11 @@ SiteFactory 中所有已集成的站点。**贡献者添加或移除站点时必
 |------|------|------|--------|------|
 | adsense-home | hugo | template | — | 搜索与工具聚合首页（Search123），部署在根域名 |
 | wifi-qr | static | [evgeni/qifi](https://github.com/evgeni/qifi) | MIT | WiFi 二维码生成器 — 输入 SSID 和密码，生成可扫描的二维码 |
+| word-counter | static | [letchagan/Simple-Word-counter](https://github.com/letchagan/Simple-Word-counter) | MIT | 字数、字符、句子、段落统计工具 |
+| timestamp-converter | static | [miguelmota/unix-timestamp-converter](https://github.com/miguelmota/unix-timestamp-converter) | MIT | Unix 时间戳与日期互转工具 |
+| color-converter | static | [Murtaza-Ax/Color-Converter](https://github.com/Murtaza-Ax/Color-Converter) | MIT | HEX/RGB 颜色转换器，带实时预览 |
+| json-linter | static | [njoylab/json-linter-tool](https://github.com/njoylab/json-linter-tool) | MIT | JSON 格式化、校验、压缩工具 |
+| markdown-editor | static | [matinkg/markdown-renderer](https://github.com/matinkg/markdown-renderer) | MIT | Markdown 实时编辑与预览工具 |
 
 ## 如何更新
 

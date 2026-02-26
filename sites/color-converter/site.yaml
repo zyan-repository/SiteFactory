@@ -1,0 +1,8 @@
+type: static
+name: color-converter
+title: "Color Converter"
+description: "Convert between HEX and RGB color formats with live preview"
+source: https://github.com/Murtaza-Ax/Color-Converter
+license: Unknown
+language: en
+created: 2026-02-25

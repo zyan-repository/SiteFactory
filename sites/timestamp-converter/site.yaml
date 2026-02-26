@@ -1,0 +1,8 @@
+type: static
+name: timestamp-converter
+title: "Unix Timestamp Converter"
+description: "Convert Unix timestamps to human-readable dates and vice versa"
+source: https://github.com/miguelmota/unix-timestamp-converter
+license: Unknown
+language: en
+created: 2026-02-25
