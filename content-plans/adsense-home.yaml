@@ -4,7 +4,7 @@
 site: adsense-home
 niche: "search123"
 publishing_schedule: "weekly"
-last_generated: "2026-02-19"
+last_generated: "2026-02-26"
 target_keywords:
   - advanced search operators
   - beginner boolean search guide
@@ -64,7 +64,7 @@ topics:
     status: published
   - title: "How to Search for Government Data and Public Records"
     keywords: "search government data, find public records online"
-    status: pending
+    status: published
   - title: "Best Free Online File Converters for Documents and Media"
     keywords: "free online file converter, document and media converter"
     status: pending
