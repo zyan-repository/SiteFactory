@@ -95,6 +95,7 @@ jobs:
       contents: write
       actions: write
     strategy:
+      fail-fast: false
       matrix:
         site: ${{ fromJSON(needs.discover-sites.outputs.sites) }}
       max-parallel: 1
