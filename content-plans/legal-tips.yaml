@@ -4,7 +4,7 @@
 site: legal-tips
 niche: "legal tips"
 publishing_schedule: "weekly"
-last_generated: "2026-02-21"
+last_generated: "2026-03-01"
 target_keywords:
   - becoming a legal guardian
   - business partnership agreement template
@@ -43,7 +43,7 @@ topics:
     status: published
   - title: "How to Expunge or Seal Your Criminal Record"
     keywords: "how to expunge a criminal record, seal criminal record process, clearing your criminal history"
-    status: pending
+    status: published
   - title: "A Guide to Understanding and Responding to a Cease and Desist Letter"
     keywords: "how to respond to cease and desist letter, what is a cease and desist, cease and desist legal advice"
     status: pending
