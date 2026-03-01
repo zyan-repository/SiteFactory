@@ -4,7 +4,7 @@
 site: finance-hub
 niche: "finance hub"
 publishing_schedule: "weekly"
-last_generated: "2026-02-21"
+last_generated: "2026-03-01"
 target_keywords:
   - 401k vs ira vs hsa
   - 50 30 20 budget rule
@@ -34,7 +34,7 @@ topics:
     status: published
   - title: "The 50/30/20 Budget Rule Explained with Real-Life Examples"
     keywords: "50 30 20 budget rule, how to use the 50 30 20 rule"
-    status: pending
+    status: published
   - title: "How to Improve Your Credit Score from Fair to Excellent in 12 Months"
     keywords: "how to improve credit score fast, raise credit score in one year"
     status: pending
