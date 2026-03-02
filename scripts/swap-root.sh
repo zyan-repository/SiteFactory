@@ -44,6 +44,9 @@ CNAME_TARGET="cname.vercel-dns.com"
 # --- Phase 1: Validate ---
 log_step "Phase 1: Validating..."
 
+# Validate Vercel token before any Vercel CLI operations
+verify_vercel_token "$SF_VERCEL_TOKEN" || exit 1
+
 if [[ ! -d "$SITE_DIR" ]]; then
   log_error "Site not found: $SITE_DIR"
   exit 1

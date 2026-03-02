@@ -31,6 +31,10 @@ if [[ ! -d "$SITE_DIR" ]]; then
   exit 1
 fi
 
+# Validate Vercel token before any Vercel CLI operations
+log_step "Validating Vercel token..."
+verify_vercel_token "$SF_VERCEL_TOKEN" || exit 1
+
 # Detect site type from site.yaml
 SITE_TYPE="static"
 if [[ -f "$SITE_DIR/site.yaml" ]]; then
@@ -114,9 +118,22 @@ VERCEL_ARGS=("$DEPLOY_DIR" "--token" "$SF_VERCEL_TOKEN" "--yes")
 # Stream output in real-time while capturing the deploy URL
 VERCEL_OUTPUT_FILE=$(mktemp)
 npx vercel "${VERCEL_ARGS[@]}" 2>&1 | tee "$VERCEL_OUTPUT_FILE"
+
+# Check for auth errors in deploy output
+if check_vercel_auth_error "$VERCEL_OUTPUT_FILE"; then
+  rm -f "$VERCEL_OUTPUT_FILE"
+  exit 1
+fi
+
 # Extract the last https:// URL from output (the production/preview URL)
 DEPLOY_URL=$(grep -oE 'https://[^ ]+' "$VERCEL_OUTPUT_FILE" | tail -1)
 rm -f "$VERCEL_OUTPUT_FILE"
+
+if [[ -z "$DEPLOY_URL" ]]; then
+  log_error "Deploy failed — no deployment URL in Vercel output."
+  log_info "Check the output above for details."
+  exit 1
+fi
 
 echo ""
 

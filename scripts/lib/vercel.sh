@@ -1,7 +1,70 @@
 #!/usr/bin/env bash
 # vercel.sh - Vercel project management helpers.
 # Ensures deploy directories are linked to correctly-named Vercel projects.
+# Requires: logging.sh must be sourced before this file.
 # Usage: source scripts/lib/vercel.sh
+
+# Verify that the Vercel API token is valid and not expired.
+# Makes a lightweight HTTP call to the Vercel user endpoint.
+# Returns 1 with a clear error message if the token is invalid.
+# Network failures are non-fatal (token may still be valid).
+#
+# Usage: verify_vercel_token <token> || exit 1
+verify_vercel_token() {
+  local token="$1"
+
+  if [[ -z "$token" ]]; then
+    log_error "Vercel token is empty. Check config.yaml or SF_VERCEL_TOKEN env var."
+    log_info "Generate a token at: https://vercel.com/account/tokens"
+    return 1
+  fi
+
+  local http_code
+  http_code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 \
+    -H "Authorization: Bearer $token" \
+    "https://api.vercel.com/v2/user" 2>/dev/null || echo "000")
+
+  case "$http_code" in
+    200)
+      return 0
+      ;;
+    401|403)
+      log_error "Vercel token is invalid or expired (HTTP $http_code)."
+      log_info "Generate a new token at: https://vercel.com/account/tokens"
+      log_info "Then update config.yaml -> vercel.token (or SF_VERCEL_TOKEN in CI secrets)."
+      return 1
+      ;;
+    000)
+      log_warn "Could not reach Vercel API (network issue). Proceeding anyway."
+      return 0
+      ;;
+    *)
+      log_warn "Vercel API returned unexpected HTTP $http_code. Proceeding anyway."
+      return 0
+      ;;
+  esac
+}
+
+# Check Vercel CLI output for authentication error patterns.
+# Returns 0 if auth errors found (meaning: there IS a problem), 1 if clean.
+#
+# Usage: if check_vercel_auth_error "$output_file"; then exit 1; fi
+check_vercel_auth_error() {
+  local output_file="$1"
+
+  if [[ ! -f "$output_file" ]]; then
+    return 1
+  fi
+
+  if grep -qiE "not_authorized|invalid_token|The specified token is not valid|token is not valid|forbidden" "$output_file"; then
+    log_error "Vercel authentication failed. Your token is invalid or expired."
+    log_info "Generate a new token at: https://vercel.com/account/tokens"
+    log_info "Then update config.yaml -> vercel.token (or SF_VERCEL_TOKEN in CI secrets)."
+    return 0
+  fi
+
+  return 1
+}
 
 # Link a deploy directory to a Vercel project with the correct name.
 # This creates .vercel/project.json in the target directory, ensuring
