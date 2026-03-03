@@ -610,6 +610,51 @@ Current asset naming convention (Hugo v0.103.0+):
 shellcheck scripts/*.sh scripts/lib/*.sh && scripts/build-all.sh && scripts/lighthouse-check.sh
 ```
 
+## Closed-Loop Development Principles
+
+Every change must satisfy three closed-loop conditions before merging:
+
+### 1. Verification Loop
+
+Changes must include runnable verification (tests/scripts/checklists) proving they work as expected. "I looked at the code and it seems fine" does not count.
+
+| Change Type | Required Verification |
+|-------------|----------------------|
+| New feature | New tests covering both happy path and error path |
+| Bug fix | Regression test (reproduce first, then fix) |
+| Refactor | All existing tests pass + assertion of no behavior change |
+
+### 2. Propagation Loop
+
+Exhaustively identify all impact points; each one must have corresponding verification.
+
+| Change | Must Check |
+|--------|-----------|
+| Internal interface change | All callers (including shadow paths) |
+| Data model change | Serialization / deserialization / API surface |
+| Feature removal | `grep -r` all references, clean up each one |
+
+Completion criteria: `grep -r "keyword"` returns zero results, or every result has been addressed.
+
+### 3. Observability Loop
+
+Every operation path (success / failure / timeout) must produce an observable signal.
+
+| Scenario | Requirement |
+|----------|------------|
+| Background task | Success notification + failure notification appear as a pair |
+| Async operation | Completion callback or queryable status change |
+| Error handling | Log entry + error report; never silently swallow |
+
+### PR Merge Self-Check
+
+```
+- [ ] I can verify this change works with a single command (paste the command)
+- [ ] I have grepped all impact points and addressed each one
+- [ ] Both success and failure paths have test or log coverage
+- [ ] Docs / config / test mapping tables are updated in sync
+```
+
 ## Git Conventions
 
 Format: `<type>(<scope>): <subject>`
