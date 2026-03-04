@@ -41,7 +41,7 @@ topics:
     word_count_max: 1600
     opening: "scenario"
     closing: "specific_action"
-    status: pending
+    status: published
   - title: "Boolean Search Explained: A Beginner's Guide for Better Queries"
     keywords: "boolean search explained, beginner boolean search guide"
     archetype: "definitive-resource"
