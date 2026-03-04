@@ -169,7 +169,7 @@ topics:
     word_count_max: 2500
     opening: "statistic"
     closing: "what_id_change"
-    status: pending
+    status: published
   - title: "How to Choose and Use a VPN for Online Privacy"
     keywords: "how to choose VPN, VPN for online privacy"
     archetype: "personal-test-report"
