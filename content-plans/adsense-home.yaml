@@ -224,7 +224,7 @@ topics:
     word_count_max: 2800
     opening: "personal_anecdote"
     closing: "reader_challenge"
-    status: pending
+    status: published
   # === REMAINING PENDING (original plan) ===
   - title: "How to Use Voice Search Effectively on All Your Devices"
     keywords: "how to use voice search, effective voice search tips"
