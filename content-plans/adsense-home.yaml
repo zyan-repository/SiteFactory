@@ -33,7 +33,7 @@ topics:
     word_count_max: 2000
     opening: "micro_story"
     closing: "reader_challenge"
-    status: pending
+    status: published
   - title: "A Complete Guide to Reverse Image Search on Any Device"
     keywords: "how to reverse image search, reverse image search guide"
     archetype: "step-by-step-tutorial"
