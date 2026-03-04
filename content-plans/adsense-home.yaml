@@ -188,7 +188,7 @@ topics:
     word_count_max: 3500
     opening: "micro_story"
     closing: "reflection"
-    status: pending
+    status: published
   - title: "My 10 Favorite Google Search Tricks Nobody Talks About"
     keywords: "hidden Google search tricks, advanced Google tips"
     slug: "hidden-google-search-tricks"
