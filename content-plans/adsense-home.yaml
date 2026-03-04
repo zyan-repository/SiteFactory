@@ -113,7 +113,7 @@ topics:
     word_count_max: 1800
     opening: "scenario"
     closing: "what_id_change"
-    status: pending
+    status: published
   - title: "Comparing Top Search Engines: Google, Bing, DuckDuckGo"
     keywords: "search engine comparison, Google vs Bing vs DuckDuckGo"
     archetype: "head-to-head"
