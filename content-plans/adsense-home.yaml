@@ -161,7 +161,7 @@ topics:
     word_count_max: 2000
     opening: "scenario"
     closing: "specific_action"
-    status: pending
+    status: published
   - title: "Complete Guide to Password Managers"
     keywords: "password manager guide, best password managers"
     archetype: "personal-test-report"
