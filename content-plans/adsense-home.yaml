@@ -57,7 +57,7 @@ topics:
     word_count_max: 1800
     opening: "contrarian_claim"
     closing: "reflection"
-    status: pending
+    status: published
   - title: "Best Free Alternatives to Popular Paid Software Tools"
     keywords: "free alternatives to paid software, best free software tools"
     archetype: "head-to-head"
