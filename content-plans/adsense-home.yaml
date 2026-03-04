@@ -177,7 +177,7 @@ topics:
     word_count_max: 2500
     opening: "micro_story"
     closing: "reflection"
-    status: pending
+    status: published
   # online-tools-and-productivity-tips: DELETED (duplicate of top-10-free-online-tools)
   # === NEW HIGH-ORIGINALITY ARTICLES ===
   - title: "I Tested 5 Search Engines for a Week — Here's My Raw Data"
