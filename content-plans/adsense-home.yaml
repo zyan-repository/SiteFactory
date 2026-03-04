@@ -89,7 +89,7 @@ topics:
     word_count_max: 1500
     opening: "statistic"
     closing: "reader_challenge"
-    status: pending
+    status: published
   - title: "A Guide to Using Wayback Machine and Internet Archives"
     keywords: "how to use Wayback Machine, search internet archives"
     archetype: "beginners-roadmap"
