@@ -206,7 +206,7 @@ topics:
     word_count_max: 2000
     opening: "scenario"
     closing: "what_id_change"
-    status: pending
+    status: published
   - title: "The Real Cost of Free VPNs: What Happens to Your Data"
     keywords: "free VPN risks, free VPN data collection"
     slug: "real-cost-free-vpns"
