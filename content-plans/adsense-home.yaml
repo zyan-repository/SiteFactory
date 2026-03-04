@@ -105,7 +105,7 @@ topics:
     word_count_max: 900
     opening: "contrarian_claim"
     closing: "no_conclusion"
-    status: pending
+    status: published
   - title: "How to Find Academic Papers and Research for Free"
     keywords: "find free academic papers, search scholarly articles"
     archetype: "beginners-roadmap"
