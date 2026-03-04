@@ -215,7 +215,7 @@ topics:
     word_count_max: 2500
     opening: "contrarian_claim"
     closing: "specific_action"
-    status: pending
+    status: published
   - title: "Building a Research Workflow from Scratch: My Step-by-Step Process"
     keywords: "research workflow, systematic research process"
     slug: "research-workflow-from-scratch"
