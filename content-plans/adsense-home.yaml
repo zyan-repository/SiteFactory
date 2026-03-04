@@ -65,7 +65,7 @@ topics:
     word_count_max: 2800
     opening: "statistic"
     closing: "reader_challenge"
-    status: pending
+    status: published
   - title: "How to Create Custom Search Engines for Your Projects"
     keywords: "create custom search engine, custom Google search engine"
     archetype: "step-by-step-tutorial"
