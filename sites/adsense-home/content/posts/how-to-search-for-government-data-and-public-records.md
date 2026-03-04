@@ -1,17 +1,20 @@
 ---
 title: "How to Search for Government Data and Public Records Online"
-date: 2026-03-04
-lastmod: 2026-03-04
+date: 2026-02-19
+lastmod: 2026-02-19
 description: "A hands-on guide to finding and using official government datasets, public records, and open data portals, with tested strategies and specific tools."
 tags: ["search government data", "find public records online", "open data", "freedom of information", "research"]
 categories: ["guides", "search", "productivity"]
-image: ""
+image: "/images/posts/government-data.jpg"
 draft: false
 ---
 
 Last month, I needed to verify the zoning history for a property my family was considering. A simple web search led me to a confusing maze of third-party sites demanding fees for what should be public information. After an hour of frustration, I realized I was approaching it wrong. I wasn't searching for *data*; I was searching for *websites that sell data*. That experience sent me down a rabbit hole of learning how to find government data and public records directly at the source. Over the past few weeks, I've tested dozens of portals, filed test FOIA requests, and compiled what I learned into this guide.
 
 ## What Are Public Records and Government Data?
+
+\![How to Search for Government Data and Public Records Online](/images/posts/government-data.jpg)
+
 
 First, let's clarify the landscape. "Public records" and "government data" are related but distinct concepts, and knowing the difference shapes your search strategy.
 

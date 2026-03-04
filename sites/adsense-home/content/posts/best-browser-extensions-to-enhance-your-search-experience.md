@@ -1,15 +1,18 @@
 ---
 title: "The Browser Extensions That Actually Change How You Search"
-date: 2026-03-04
-lastmod: 2026-03-04
+date: 2026-02-08
+lastmod: 2026-02-08
 description: "Forget the obvious picks. These under-the-radar browser extensions fundamentally alter your search workflow, tested hands-on."
 tags: ["browser extensions", "productivity", "search tools", "chrome extensions", "firefox addons"]
 categories: ["Productivity", "Software Tools"]
-image: ""
+image: "/images/posts/browser-extensions.jpg"
 draft: false
 ---
 
 Most lists of "best search extensions" are just glorified adware roundups. The real game-changers aren't the ones that promise to "supercharge" your browser; they're the utilities that quietly eliminate friction, letting you search across contexts you didn't know were possible. After testing over two dozen extensions on Chrome 134 and Firefox 135, I've found a handful that have permanently altered my workflow.
+
+\![The Browser Extensions That Actually Change How You Search](/images/posts/browser-extensions.jpg)
+
 
 ### 1. Search Everywhere with a Universal Search Bar
 The single biggest upgrade to my search habits came from installing a launcher-style extension. Tools like **uLauncher** or **Omni** (for Firefox) create a keyboard shortcut (I use `Alt+Space`) to summon a search bar that queries multiple sources at once. It's not just for your bookmarks or history.

@@ -1,0 +1,176 @@
+<div class="tool-widget search-builder" id="search-builder">
+  <h3 class="tool-widget-title">Search Operator Builder</h3>
+  <p class="tool-widget-desc">Build advanced search queries visually. Select operators, fill in your terms, and search.</p>
+
+  <div class="sb-form">
+    <div class="sb-row">
+      <label for="sb-engine">Search Engine</label>
+      <select id="sb-engine">
+        <option value="google" selected>Google</option>
+        <option value="bing">Bing</option>
+        <option value="duckduckgo">DuckDuckGo</option>
+      </select>
+    </div>
+
+    <div class="sb-row">
+      <label for="sb-keywords">Keywords</label>
+      <input type="text" id="sb-keywords" placeholder='e.g. best password manager 2026'>
+    </div>
+
+    <div class="sb-row">
+      <label for="sb-exact">Exact Phrase</label>
+      <input type="text" id="sb-exact" placeholder='e.g. open source'>
+    </div>
+
+    <div class="sb-row">
+      <label for="sb-site">site: (limit to domain)</label>
+      <input type="text" id="sb-site" placeholder="e.g. reddit.com">
+    </div>
+
+    <div class="sb-row">
+      <label for="sb-filetype">filetype:</label>
+      <select id="sb-filetype">
+        <option value="">Any</option>
+        <option value="pdf">PDF</option>
+        <option value="doc">DOC</option>
+        <option value="xls">XLS</option>
+        <option value="ppt">PPT</option>
+        <option value="csv">CSV</option>
+        <option value="txt">TXT</option>
+      </select>
+    </div>
+
+    <div class="sb-row">
+      <label for="sb-inurl">inurl:</label>
+      <input type="text" id="sb-inurl" placeholder="e.g. review">
+    </div>
+
+    <div class="sb-row">
+      <label for="sb-intitle">intitle:</label>
+      <input type="text" id="sb-intitle" placeholder="e.g. comparison">
+    </div>
+
+    <div class="sb-row">
+      <label for="sb-exclude">Exclude words (-)</label>
+      <input type="text" id="sb-exclude" placeholder="e.g. ads spam">
+    </div>
+
+    <div class="sb-row">
+      <label for="sb-daterange">Time Range</label>
+      <select id="sb-daterange">
+        <option value="">Any time</option>
+        <option value="d">Past 24 hours</option>
+        <option value="w">Past week</option>
+        <option value="m">Past month</option>
+        <option value="y">Past year</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="sb-output">
+    <label>Generated Query</label>
+    <div class="sb-query-box">
+      <code id="sb-query"></code>
+    </div>
+    <div class="sb-actions">
+      <button type="button" id="sb-search" class="sb-btn sb-btn-primary">Search Now</button>
+      <button type="button" id="sb-copy" class="sb-btn sb-btn-secondary">Copy Query</button>
+    </div>
+  </div>
+</div>
+
+<style>
+.search-builder{background:var(--surface,#f8f9fa);border:1px solid var(--border,#dee2e6);border-radius:12px;padding:1.5rem;margin:2rem 0}
+.tool-widget-title{margin:0 0 .25rem;font-size:1.25rem}
+.tool-widget-desc{margin:0 0 1.25rem;color:var(--muted,#6c757d);font-size:.9rem}
+.sb-form{display:grid;grid-template-columns:1fr 1fr;gap:.75rem 1.25rem}
+.sb-row{display:flex;flex-direction:column;gap:.25rem}
+.sb-row label{font-size:.8rem;font-weight:600;color:var(--muted,#6c757d);text-transform:uppercase;letter-spacing:.03em}
+.sb-row input,.sb-row select{padding:.5rem .75rem;border:1px solid var(--border,#dee2e6);border-radius:6px;font-size:.95rem;background:#fff;transition:border-color .15s}
+.sb-row input:focus,.sb-row select:focus{outline:none;border-color:var(--accent,#2563eb);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.sb-output{margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--border,#dee2e6)}
+.sb-output>label{font-size:.8rem;font-weight:600;color:var(--muted,#6c757d);text-transform:uppercase;letter-spacing:.03em}
+.sb-query-box{background:#1e293b;color:#e2e8f0;padding:.75rem 1rem;border-radius:6px;margin:.5rem 0;min-height:2.5rem;font-family:monospace;font-size:.9rem;word-break:break-all}
+.sb-actions{display:flex;gap:.5rem;margin-top:.75rem}
+.sb-btn{padding:.5rem 1.25rem;border:none;border-radius:6px;font-size:.9rem;font-weight:600;cursor:pointer;transition:all .15s}
+.sb-btn-primary{background:var(--accent,#2563eb);color:#fff}
+.sb-btn-primary:hover{opacity:.9}
+.sb-btn-secondary{background:transparent;border:1px solid var(--border,#dee2e6);color:var(--text,#1e293b)}
+.sb-btn-secondary:hover{background:var(--surface,#f8f9fa)}
+@media(max-width:600px){.sb-form{grid-template-columns:1fr}}
+</style>
+
+<script>
+(function(){
+  var engines = {
+    google: 'https://www.google.com/search?q=',
+    bing: 'https://www.bing.com/search?q=',
+    duckduckgo: 'https://duckduckgo.com/?q='
+  };
+  var tbs = {d:'qdr:d',w:'qdr:w',m:'qdr:m',y:'qdr:y'};
+
+  function buildQuery(){
+    var parts = [];
+    var kw = document.getElementById('sb-keywords').value.trim();
+    if(kw) parts.push(kw);
+    var exact = document.getElementById('sb-exact').value.trim();
+    if(exact) parts.push('"'+exact+'"');
+    var site = document.getElementById('sb-site').value.trim();
+    if(site) parts.push('site:'+site);
+    var ft = document.getElementById('sb-filetype').value;
+    if(ft) parts.push('filetype:'+ft);
+    var inurl = document.getElementById('sb-inurl').value.trim();
+    if(inurl) parts.push('inurl:'+inurl);
+    var intitle = document.getElementById('sb-intitle').value.trim();
+    if(intitle) parts.push('intitle:'+intitle);
+    var exclude = document.getElementById('sb-exclude').value.trim();
+    if(exclude){
+      exclude.split(/\s+/).forEach(function(w){
+        if(w) parts.push('-'+w);
+      });
+    }
+    return parts.join(' ');
+  }
+
+  function update(){
+    var q = buildQuery();
+    document.getElementById('sb-query').textContent = q || '(enter keywords above)';
+  }
+
+  var inputs = document.querySelectorAll('#search-builder input, #search-builder select');
+  for(var i=0;i<inputs.length;i++){
+    inputs[i].addEventListener('input', update);
+    inputs[i].addEventListener('change', update);
+  }
+
+  document.getElementById('sb-search').addEventListener('click', function(){
+    var q = buildQuery();
+    if(!q) return;
+    var engine = document.getElementById('sb-engine').value;
+    var url = engines[engine] + encodeURIComponent(q);
+    var dr = document.getElementById('sb-daterange').value;
+    if(dr && engine === 'google') url += '&tbs=' + tbs[dr];
+    window.open(url, '_blank');
+  });
+
+  document.getElementById('sb-copy').addEventListener('click', function(){
+    var q = buildQuery();
+    if(!q) return;
+    if(navigator.clipboard){
+      navigator.clipboard.writeText(q);
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = q;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+    }
+    this.textContent = 'Copied!';
+    var btn = this;
+    setTimeout(function(){ btn.textContent = 'Copy Query'; }, 1500);
+  });
+
+  update();
+})();
+</script>

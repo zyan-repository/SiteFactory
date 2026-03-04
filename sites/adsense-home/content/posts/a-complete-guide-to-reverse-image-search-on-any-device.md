@@ -1,11 +1,11 @@
 ---
 title: "A Complete Guide to Reverse Image Search on Any Device"
-date: 2026-03-04
-lastmod: 2026-03-04
+date: 2025-12-19
+lastmod: 2025-12-19
 description: "Learn how to perform a reverse image search on desktop, mobile, and in-browser to verify sources, find originals, and identify objects."
 tags: ["reverse image search", "image verification", "google lens", "tineye", "productivity"]
 categories: ["guides", "technology"]
-image: ""
+image: "/images/posts/reverse-image.jpg"
 draft: false
 ---
 
@@ -14,6 +14,9 @@ You’ve just been sent a screenshot of a stunning product, but the link is dead
 As a frontend engineer, I often need to track down the source of UI components or verify design assets. I tested the major reverse image search methods across my devices in February 2026, using Chrome 131, Safari 18.2, and an iPhone 17 Pro. The process is surprisingly versatile, but the best method depends entirely on your device and goal. This guide will walk you through every option.
 
 ## What is Reverse Image Search and Why Use It?
+
+\![A Complete Guide to Reverse Image Search on Any Device](/images/posts/reverse-image.jpg)
+
 
 Reverse image search is a technique where you provide an image as your query, instead of text. Search engines and specialized tools analyze the visual content, colors, and patterns to find identical or similar images, related webpages, and contextual information.
 

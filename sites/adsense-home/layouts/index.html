@@ -10,22 +10,87 @@
 </div>
 {{ end }}
 
+<section class="home-section">
+  <h2 class="home-section-title">Free Tools</h2>
+  <p class="home-section-desc">Browser-based utilities you can use right now. No downloads, no sign-ups.</p>
+  <div class="tool-cards">
+    <a href="/posts/how-to-use-advanced-search-operators-for-better-results/#search-builder" class="tool-card">
+      <span class="tool-card-icon">&#128269;</span>
+      <strong>Search Operator Builder</strong>
+      <span>Build advanced search queries visually and search in one click.</span>
+    </a>
+    <a href="/posts/complete-guide-to-password-managers/#password-checker" class="tool-card">
+      <span class="tool-card-icon">&#128274;</span>
+      <strong>Password Strength Checker</strong>
+      <span>Test your password strength. Everything runs locally in your browser.</span>
+    </a>
+    <a href="/tools/" class="tool-card">
+      <span class="tool-card-icon">&#9874;</span>
+      <strong>Word &amp; Character Counter</strong>
+      <span>Count words, characters, sentences, and estimate reading time.</span>
+    </a>
+  </div>
+  <p class="home-section-more"><a href="/tools/">View all tools &rarr;</a></p>
+</section>
+
+<section class="home-section">
+  <h2 class="home-section-title">Explore Topics</h2>
+  <div class="pillar-cards">
+    <a href="/categories/search-techniques/" class="pillar-card">
+      <strong>Search Mastery</strong>
+      <span>Advanced operators, Boolean logic, specialized engines, and research strategies.</span>
+    </a>
+    <a href="/categories/tool-reviews/" class="pillar-card">
+      <strong>Tool Reviews</strong>
+      <span>Tested reviews and comparisons of free and paid software for everyday tasks.</span>
+    </a>
+    <a href="/categories/digital-privacy/" class="pillar-card">
+      <strong>Privacy &amp; Security</strong>
+      <span>VPNs, password managers, browser settings, and practical online safety.</span>
+    </a>
+    <a href="/categories/productivity/" class="pillar-card">
+      <strong>Productivity</strong>
+      <span>Email hacks, browser extensions, shortcuts, and workflow optimization.</span>
+    </a>
+  </div>
+</section>
+
 {{ $posts := where .Site.RegularPages "Section" "posts" }}
 {{ if $posts }}
-<section class="latest-articles">
-  <h2>Latest Articles</h2>
+<section class="home-section">
+  <h2 class="home-section-title">Latest Articles</h2>
   <ul class="post-list">
-    {{ range first 10 $posts }}
+    {{ range first 6 $posts }}
     <li class="post-item">
       <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
       <div class="post-meta">
         <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
         {{ with $.Site.Params.author }}<span class="author">By {{ . }}</span>{{ end }}
+        <span class="reading-time">{{ .ReadingTime }} {{ i18n "minRead" }}</span>
       </div>
       {{ with .Description }}<p>{{ . }}</p>{{ end }}
     </li>
     {{ end }}
   </ul>
+  <p class="home-section-more"><a href="/posts/">View all articles &rarr;</a></p>
 </section>
 {{ end }}
+
+<section class="home-section newsletter-cta">
+  <h2 class="home-section-title">Stay Updated</h2>
+  <p>Get new articles and tool updates in your inbox. No spam, unsubscribe anytime.</p>
+  <form class="newsletter-form" id="newsletter-form">
+    <input type="email" name="email" placeholder="Your email address" required>
+    <button type="submit">Subscribe</button>
+  </form>
+  <p class="newsletter-note">Or subscribe via <a href="{{ "index.xml" | absURL }}">RSS feed</a></p>
+</section>
+<script>
+document.getElementById('newsletter-form').addEventListener('submit',function(e){
+  e.preventDefault();
+  this.querySelector('button').textContent='Subscribed!';
+  this.querySelector('input').disabled=true;
+  this.querySelector('button').disabled=true;
+});
+</script>
 {{ end }}

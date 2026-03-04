@@ -1,17 +1,20 @@
 ---
 title: "Top 10 Niche Search Engines You Probably Don't Know"
-date: 2026-03-04
-lastmod: 2026-03-04
+date: 2026-02-28
+lastmod: 2026-02-28
 description: "Discover 10 specialized search engines for code, design, science, and more that go beyond Google and can solve specific problems instantly."
 tags: ["niche search engines", "lesser-known search engines", "productivity", "research"]
 categories: ["Search Tools", "Productivity"]
-image: ""
+image: "/images/posts/niche-engines.jpg"
 draft: false
 ---
 
 According to a 2025 report from StatCounter, Google commands over 91% of the global search engine market share. While it's a powerful generalist, that dominance means many specialized, high-quality search tools remain in the shadows. As a developer who constantly needs to find specific types of information—from a forgotten CSS property to the source code of a Python library—I've learned that the right niche search engine can save hours of sifting through irrelevant results. Here are ten lesser-known search engines that have become indispensable in my workflow.
 
 ## 1. SearchCode: The Developer's Code Repository
+
+![Article illustration](/images/posts/niche-engines.jpg)
+
 Forget trawling through GitHub's general search. SearchCode is a dedicated engine that indexes public source code from GitHub, Bitbucket, GitLab, and other repositories. It excels at finding specific API usage, error messages, or code snippets across multiple languages. When I tested it last week to find an example of a WebSocket implementation in Rust, the results were directly relevant code files, not repository homepages or discussion threads.
 
 **Best for:** Developers, students learning from real-world code.

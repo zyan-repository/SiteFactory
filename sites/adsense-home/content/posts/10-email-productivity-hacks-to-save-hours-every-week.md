@@ -1,17 +1,20 @@
 ---
 title: "10 Email Productivity Hacks to Save Hours Every Week"
-date: 2026-03-04
-lastmod: 2026-03-04
+date: 2026-03-02
+lastmod: 2026-03-02
 description: "Tired of email overload? I tested these 10 specific strategies on my own inbox to reclaim over 5 hours weekly. Here's what actually worked."
 tags: ["email productivity hacks", "email management tips", "gmail", "outlook", "time management"]
 categories: ["productivity", "software"]
-image: ""
+image: "/images/posts/email-hacks.jpg"
 draft: false
 ---
 
 According to a 2025 report from the McKinsey Global Institute, the average knowledge worker still spends about 28% of their workweek reading and answering emails. That's over 11 hours a week, often fragmented into reactive, context-switching bursts that drain focus. I know the feeling—my own Gmail inbox used to be a chaotic, 10,000+ message graveyard where important requests vanished. Last month, I decided to systematically test and measure the impact of specific email strategies. The result? I clawed back over 5 hours a week. These aren't vague tips; they are the specific, actionable hacks that delivered real time savings.
 
 ## The Foundation: Shifting from Reactive to Proactive
+
+\![10 Email Productivity Hacks to Save Hours Every Week](/images/posts/email-hacks.jpg)
+
 
 The biggest mistake is treating email as a live chat. Every unscheduled check breaks your concentration. A study published in the *Journal of Applied Psychology* found it takes an average of over 23 minutes to refocus after an interruption. My first hack is the most critical: schedule your email time.
 

@@ -1,11 +1,11 @@
 ---
 title: "A Practical Guide to Using Wayback Machine and Internet Archives"
-date: 2026-03-04
-lastmod: 2026-03-04
+date: 2026-01-31
+lastmod: 2026-01-31
 description: "Learn how to use the Wayback Machine to view deleted websites, fact-check content, and preserve digital history. A step-by-step guide for researchers and curious minds."
 tags: ["wayback machine", "internet archive", "digital preservation", "research", "fact-checking"]
 categories: ["guides", "research tools"]
-image: ""
+image: "/images/posts/wayback-machine.jpg"
 draft: false
 ---
 
@@ -14,6 +14,9 @@ Last week, I was trying to find an old technical blog post I remembered reading 
 The Internet Archive's Wayback Machine is one of the most powerful, yet underutilized, tools for developers, researchers, writers, and anyone who needs to verify information or recover lost content. It’s more than just a novelty; it’s a critical utility for the modern web. Let’s break down how to use it effectively, moving from basic lookups to advanced archival techniques.
 
 ## What Exactly Is the Wayback Machine?
+
+\![A Practical Guide to Using Wayback Machine and Internet Archives](/images/posts/wayback-machine.jpg)
+
 
 The Wayback Machine is a digital archive of the World Wide Web, maintained by the non-profit Internet Archive. Founded in 1996 by Brewster Kahle, the archive's mission is to provide "universal access to all knowledge." As of my last check in March 2026, it contains over **800 billion web pages** and is growing by hundreds of millions of pages each week. It’s not a real-time search engine; it’s a historical library, capturing snapshots of websites at specific points in time.
 

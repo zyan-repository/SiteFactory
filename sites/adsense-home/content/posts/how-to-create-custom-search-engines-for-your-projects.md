@@ -1,11 +1,11 @@
 ---
 title: "How to Build a Custom Search Engine for Your Project or Team"
-date: 2026-03-04
-lastmod: 2026-03-04
+date: 2026-01-13
+lastmod: 2026-01-13
 description: "A hands-on guide to creating a tailored Google Custom Search Engine. Learn to filter results, boost specific sites, and embed it into your workflow."
 tags: ["custom search engine", "google search", "productivity", "web development", "research"]
 categories: ["tutorials", "productivity"]
-image: ""
+image: "/images/posts/custom-search.jpg"
 draft: false
 ---
 
@@ -14,6 +14,9 @@ You've just joined a new project. The team's knowledge is scattered across a doz
 A custom search engine (CSE) lets you define exactly *where* Google searches. You can restrict it to a handful of trusted sites, boost results from your primary documentation, and even exclude entire domains. It turns the overwhelming noise of the open web into a focused signal. In this guide, I'll walk you through creating, refining, and deploying your own CSE, based on my experience building several for client projects and internal teams.
 
 ## What Exactly Are You Building?
+
+\![How to Build a Custom Search Engine for Your Project or Team](/images/posts/custom-search.jpg)
+
 
 Think of a custom search engine as a search bar with a pre-applied filter. Instead of searching `site:example.com` every time, you bake that logic into the engine itself. Google's free [Programmable Search Engine](https://programmablesearchengine.google.com/) (formerly Google Custom Search) is the tool we'll use. As of March 2026, the free tier allows up to 10,000 queries per day and 10 search engines per account, which is more than sufficient for most team or project use cases.
 

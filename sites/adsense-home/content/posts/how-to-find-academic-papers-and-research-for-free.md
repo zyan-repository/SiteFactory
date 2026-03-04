@@ -1,11 +1,11 @@
 ---
 title: "How to Find Academic Papers and Research for Free"
-date: 2026-03-04
-lastmod: 2026-03-04
+date: 2026-02-14
+lastmod: 2026-02-14
 description: "A practical guide for students and researchers on accessing scholarly articles without institutional paywalls, based on hands-on testing of tools and strategies."
 tags: ["academic research", "open access", "scholarly articles", "free tools"]
 categories: ["guides", "productivity"]
-image: ""
+image: "/images/posts/academic-papers.jpg"
 draft: false
 ---
 
@@ -14,6 +14,9 @@ You’re staring at the abstract of a perfect research paper. It’s exactly wha
 Based on my testing over the past year—using a MacBook Pro (M3, macOS Sequoia 15.4) and various browsers—I’ve found that free access hinges on three pillars: using specialized search engines, leveraging institutional backdoors, and knowing where to request what you can’t immediately find. Let’s break down this learning path.
 
 ## Start Here: Master the Academic Search Engines
+
+\![How to Find Academic Papers and Research for Free](/images/posts/academic-papers.jpg)
+
 
 Your first stop shouldn’t be Google, but a search engine built for academia. These tools index metadata from thousands of publishers and repositories, and they have built-in filters to show you only open-access (free) versions.
 

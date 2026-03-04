@@ -1,0 +1,72 @@
+<div class="tool-widget word-counter" id="word-counter">
+  <h3 class="tool-widget-title">Word &amp; Character Counter</h3>
+  <p class="tool-widget-desc">Paste or type text below to instantly see word count, character count, sentence count, and estimated reading time.</p>
+
+  <textarea id="wc-input" rows="8" placeholder="Paste or type your text here..."></textarea>
+
+  <div class="wc-stats" id="wc-stats">
+    <div class="wc-stat">
+      <span class="wc-stat-num" id="wc-words">0</span>
+      <span class="wc-stat-label">Words</span>
+    </div>
+    <div class="wc-stat">
+      <span class="wc-stat-num" id="wc-chars">0</span>
+      <span class="wc-stat-label">Characters</span>
+    </div>
+    <div class="wc-stat">
+      <span class="wc-stat-num" id="wc-chars-ns">0</span>
+      <span class="wc-stat-label">No Spaces</span>
+    </div>
+    <div class="wc-stat">
+      <span class="wc-stat-num" id="wc-sentences">0</span>
+      <span class="wc-stat-label">Sentences</span>
+    </div>
+    <div class="wc-stat">
+      <span class="wc-stat-num" id="wc-paragraphs">0</span>
+      <span class="wc-stat-label">Paragraphs</span>
+    </div>
+    <div class="wc-stat">
+      <span class="wc-stat-num" id="wc-reading">0</span>
+      <span class="wc-stat-label">Min Read</span>
+    </div>
+  </div>
+</div>
+
+<style>
+.word-counter{background:var(--surface,#f8f9fa);border:1px solid var(--border,#dee2e6);border-radius:12px;padding:1.5rem;margin:2rem 0}
+.word-counter textarea{width:100%;padding:.75rem;border:1px solid var(--border,#dee2e6);border-radius:6px;font-size:.95rem;font-family:inherit;resize:vertical;background:#fff;box-sizing:border-box}
+.word-counter textarea:focus{outline:none;border-color:var(--accent,#2563eb);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.wc-stats{display:grid;grid-template-columns:repeat(6,1fr);gap:.75rem;margin-top:1rem}
+.wc-stat{text-align:center;padding:.75rem .5rem;background:#fff;border:1px solid var(--border,#dee2e6);border-radius:8px}
+.wc-stat-num{display:block;font-size:1.5rem;font-weight:700;color:var(--accent,#2563eb);line-height:1.2}
+.wc-stat-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted,#6c757d);font-weight:600}
+@media(max-width:600px){.wc-stats{grid-template-columns:repeat(3,1fr)}}
+</style>
+
+<script>
+(function(){
+  function count(text){
+    var trimmed = text.trim();
+    var words = trimmed ? trimmed.split(/\s+/).length : 0;
+    var chars = text.length;
+    var charsNs = text.replace(/\s/g,'').length;
+    var sentences = trimmed ? (trimmed.match(/[.!?]+(\s|$)/g) || []).length : 0;
+    if(trimmed && sentences === 0 && words > 0) sentences = 1;
+    var paragraphs = trimmed ? trimmed.split(/\n\s*\n/).filter(function(p){return p.trim().length > 0;}).length : 0;
+    if(trimmed && paragraphs === 0) paragraphs = 1;
+    var reading = Math.max(1, Math.ceil(words / 238));
+    if(words === 0) reading = 0;
+
+    document.getElementById('wc-words').textContent = words.toLocaleString();
+    document.getElementById('wc-chars').textContent = chars.toLocaleString();
+    document.getElementById('wc-chars-ns').textContent = charsNs.toLocaleString();
+    document.getElementById('wc-sentences').textContent = sentences.toLocaleString();
+    document.getElementById('wc-paragraphs').textContent = paragraphs.toLocaleString();
+    document.getElementById('wc-reading').textContent = reading;
+  }
+
+  document.getElementById('wc-input').addEventListener('input', function(){
+    count(this.value);
+  });
+})();
+</script>

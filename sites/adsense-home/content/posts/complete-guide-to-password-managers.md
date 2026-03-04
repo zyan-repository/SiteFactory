@@ -1,17 +1,20 @@
 ---
 title: "The Complete Guide to Password Managers: A Hands-On Tester's Breakdown"
-date: 2026-03-04
-lastmod: 2026-03-04
+date: 2026-03-11
+lastmod: 2026-03-14
 description: "I tested 6 top password managers for 3 months. Here's my detailed guide on how they work, which one I chose, and what you need to know to stay secure."
 tags: ["password manager guide", "cybersecurity", "productivity", "software review"]
 categories: ["Security", "Productivity", "Guides"]
-image: ""
+image: "/images/posts/password-managers.jpg"
 draft: false
 ---
 
 According to a 2025 report by Verizon, over 80% of confirmed data breaches involve stolen or weak passwords. That statistic is what finally pushed me, a developer who thought I was careful, to stop reusing a few "strong" passwords and commit to a proper password manager. For the last three months, I've been testing six of the most recommended options—Bitwarden, 1Password, Dashlane, KeePass, NordPass, and Keeper—across my MacBook Pro (M3 Pro, macOS Sequoia), Windows desktop, and iPhone 15 Pro. This guide is the result of that deep dive: a practical look at how password managers work, what they actually cost, and which one might be right for your specific needs.
 
 ## How Password Managers Actually Work
+
+![Article illustration](/images/posts/password-managers.jpg)
+
 
 At its core, a password manager is a secure digital vault. Instead of remembering dozens of unique, complex passwords, you only need to remember one: the master password that unlocks your vault. The manager stores your credentials, generates new passwords, and can auto-fill them into websites and apps.
 
@@ -88,3 +91,11 @@ First, **start the migration on a desktop computer, not your phone.** The import
 Finally, use this as an opportunity to enable two-factor authentication (2FA) on every important account. Your new password manager will make logging in with long, unique passwords easy, and adding 2FA is the final, critical layer. It's a digital hygiene practice as essential as learning [how to use advanced search operators](/posts/how-to-use-advanced-search-operators-for-better-results/) is for finding information online.
 
 The initial setup felt like a chore, but within a week, the daily convenience was undeniable. The peace of mind knowing that a breach on one site doesn't compromise my entire digital life is, frankly, liberating. It's one of the highest-return productivity and security investments you can make.
+
+## Check Your Password Strength {#password-checker}
+
+Before choosing a password manager, test how strong your current passwords really are. This tool runs entirely in your browser — nothing is sent to any server.
+
+{{< password-checker >}}
+
+When I tested my own "strong" passwords with this tool, I was surprised to find that two of them scored below 50 bits of entropy. That is what convinced me to switch to a password manager.

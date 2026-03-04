@@ -1,11 +1,11 @@
 ---
 title: "How to Fact-Check Information Online Using Search Engines"
-date: 2026-03-04
-lastmod: 2026-03-04
+date: 2026-01-25
+lastmod: 2026-01-25
 description: "A practical guide to verifying claims online using search techniques, from reverse image lookups to advanced operators. Learn to spot misinformation."
 tags: ["fact-check", "search techniques", "misinformation", "online verification"]
 categories: ["guides", "productivity"]
-image: ""
+image: "/images/posts/fact-check.jpg"
 draft: false
 ---
 
@@ -14,6 +14,9 @@ According to a 2025 study by the Reuters Institute, 58% of people who encounter 
 The biggest misconception is that fact-checking requires special tools or membership to elite websites. In reality, the most powerful verification engine is already in your browser tab, if you know how to use it. This guide is the hands-on methodology I now use.
 
 ## The Core Strategy: Lateral Reading vs. Vertical Reading
+
+\![How to Fact-Check Information Online Using Search Engines](/images/posts/fact-check.jpg)
+
 
 When I tested my own habits, I realized I was a "vertical reader." I’d land on a webpage about a controversial topic and read it top to bottom, evaluating its internal logic. This is how we’re taught in school, but it’s a trap online. A well-designed site with fake citations can feel incredibly authoritative.
 

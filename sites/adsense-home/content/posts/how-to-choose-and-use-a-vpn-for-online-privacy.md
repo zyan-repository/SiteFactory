@@ -1,11 +1,11 @@
 ---
 title: "How to Choose and Use a VPN for Online Privacy: A Hands-On Tester's Guide"
-date: 2026-03-04
-lastmod: 2026-03-04
+date: 2026-03-16
+lastmod: 2026-03-16
 description: "A practical guide to selecting and configuring a VPN based on real-world testing, covering privacy audits, speed trade-offs, and common pitfalls to avoid."
 tags: ["vpn", "online privacy", "security", "tools", "guide"]
 categories: ["privacy", "security", "how-to"]
-image: ""
+image: "/images/posts/vpn-privacy.jpg"
 draft: false
 ---
 
@@ -14,6 +14,9 @@ Last week I was helping a friend set up a secure connection to access a public d
 Over the past month, I've tested six popular VPN providers on my primary setup: a 2025 MacBook Pro (M3 Pro) running macOS Sequoia 15.4, an iPhone 16 Pro on iOS 20, and a Windows 11 desktop. My testing scenarios included daily browsing, large file downloads, streaming geo-restricted content, and connecting to public Wi-Fi at three different coffee shops. My goal wasn't just to crown a "best" VPN, but to build a framework for how to choose one based on your specific privacy needs.
 
 ## What a VPN Actually Does (And Doesn't Do)
+
+![Article illustration](/images/posts/vpn-privacy.jpg)
+
 
 Before we dive into selection criteria, it's crucial to set realistic expectations. A Virtual Private Network creates an encrypted tunnel between your device and a server operated by the VPN company. Your internet traffic then exits onto the public internet from that server. This accomplishes two primary things:
 

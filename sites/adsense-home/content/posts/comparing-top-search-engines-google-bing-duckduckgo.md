@@ -1,11 +1,11 @@
 ---
 title: "Search Engine Showdown: A Hands-On Comparison of Google, Bing, and DuckDuckGo"
-date: 2026-03-04
-lastmod: 2026-03-04
+date: 2025-10-23
+lastmod: 2026-03-01
 description: "I spent a week testing Google, Bing, and DuckDuckGo side-by-side. Here's my detailed breakdown of their results, privacy, and unique features."
 tags: ["search engine comparison", "Google", "Bing", "DuckDuckGo", "privacy", "productivity"]
 categories: ["Software Tools", "Productivity"]
-image: ""
+image: "/images/posts/search-engines.jpg"
 draft: false
 ---
 
@@ -14,6 +14,9 @@ Last week, I was trying to find a specific, obscure error message from a Node.js
 My goal wasn't just to see which one is "best," but to understand their distinct personalities, strengths, and ideal use cases. I tested on a MacBook Pro (M3 Pro, macOS 15.4) and an iPhone 16 Pro (iOS 20.0.1), using Chrome, Safari, and Brave browsers. Here’s what I found.
 
 ## The Core Contenders at a Glance
+
+\![Search Engine Showdown: A Hands-On Comparison of Google, Bing, and DuckDuckGo](/images/posts/search-engines.jpg)
+
 
 Before diving into the details, here's a high-level comparison of the three giants based on my testing and publicly available data.
 

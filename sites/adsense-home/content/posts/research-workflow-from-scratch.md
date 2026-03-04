@@ -1,11 +1,11 @@
 ---
 title: "Building a Research Workflow from Scratch: My Step-by-Step Process"
-date: 2026-03-04
-lastmod: 2026-03-04
+date: 2026-03-09
+lastmod: 2026-03-09
 description: "I built a systematic research process from the ground up. Here's my tested, step-by-step workflow for gathering, organizing, and synthesizing information efficiently."
 tags: ["research workflow", "productivity", "information management", "note-taking", "systematic research process"]
 categories: ["Productivity", "How-To Guides"]
-image: ""
+image: "/images/posts/research-workflow.jpg"
 draft: false
 ---
 
@@ -14,6 +14,9 @@ A few months ago, I needed to write a detailed technical comparison of modern fr
 This article is the result of that project. It’s the step-by-step system I now use for everything from technical deep-dives to planning personal purchases. It’s designed to take you from a vague question to a synthesized, actionable output without the panic.
 
 ## The Foundation: Defining Your Research Pipeline
+
+\![Building a Research Workflow from Scratch: My Step-by-Step Process](/images/posts/research-workflow.jpg)
+
 
 Before you open a single tab, you need a map. A research workflow isn't about the tools first; it's about the stages of thinking. I conceptualize it as a four-stage pipeline: **Capture, Process, Synthesize, and Output**. Each stage has a specific goal and a set of allowed actions. Jumping ahead or mixing stages is what leads to chaos.
 

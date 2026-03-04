@@ -14,7 +14,10 @@ disableHugoGeneratorInject = true
   description = "Practical guides to search smarter, work faster, and stay safe online"
   homepageTitle = "Search123 - Search Smarter, Work Faster, Stay Safe Online"
   author = "Arron Zhou"
-  authorBio = "Arron is a web developer and digital productivity enthusiast who writes about search techniques, online tools, and internet security. He personally tests every tool reviewed and verifies every technique recommended on this site."
+  authorBio = "Arron Zhou is a frontend engineer with 8 years of experience building web applications. After spending years helping colleagues navigate search engines and productivity tools, he started Search123 to share practical, tested techniques with a wider audience. Every tool reviewed on this site has been personally installed, configured, and used for at least one week before publication."
+  authorAvatar = "/images/author.jpg"
+  authorGithub = "https://github.com/arronzhou"
+  authorLinkedin = "https://linkedin.com/in/arronzhou"
   siteName = "adsense-home"
   showToolsNav = true
   showCrosslinks = true
@@ -25,6 +28,14 @@ disableHugoGeneratorInject = true
   googleAnalyticsId = "G-5JJ2VHPXNQ"
   googleSearchConsoleVerification = ""
   # SEO (og:image auto-falls back to static/og-default.png)
+
+  # Giscus comments (using SiteFactory repo Discussions)
+  [params.giscus]
+    enabled = true
+    repo = "zyan-repository/SiteFactory"
+    repoId = "R_kgDORSx8FQ"
+    category = "General"
+    categoryId = "DIC_kwDORSx8Fc4C3qJF"
 
 [markup]
   [markup.goldmark]

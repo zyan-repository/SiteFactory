@@ -76,6 +76,7 @@ fi
 
 # Plan mode: if no topic provided, read from content plan
 PLAN_INDEX=""
+# shellcheck disable=SC2034
 NICHE=""
 SITE_TITLE_CONTEXT=""
 PLAN_FILE="$REPO_ROOT/content-plans/$SITE_NAME.yaml"
@@ -122,6 +123,11 @@ if [[ -z "$TOPIC" ]]; then
     TOPIC="$CANDIDATE"
     KEYWORDS=$(yq "[.topics[] | select(.status == \"pending\")][$idx].keywords // \"\"" "$PLAN_FILE")
     PLAN_SLUG=$(yq "[.topics[] | select(.status == \"pending\")][$idx].slug // \"\"" "$PLAN_FILE")
+    ARCHETYPE=$(yq "[.topics[] | select(.status == \"pending\")][$idx].archetype // \"\"" "$PLAN_FILE")
+    WORD_COUNT_MIN=$(yq "[.topics[] | select(.status == \"pending\")][$idx].word_count_min // \"\"" "$PLAN_FILE")
+    WORD_COUNT_MAX=$(yq "[.topics[] | select(.status == \"pending\")][$idx].word_count_max // \"\"" "$PLAN_FILE")
+    OPENING_STRATEGY=$(yq "[.topics[] | select(.status == \"pending\")][$idx].opening // \"\"" "$PLAN_FILE")
+    CLOSING_STRATEGY=$(yq "[.topics[] | select(.status == \"pending\")][$idx].closing // \"\"" "$PLAN_FILE")
     PLAN_INDEX=$(yq ".topics | to_entries[] | select(.value.title == \"$TOPIC\") | .key" "$PLAN_FILE")
     FOUND=true
     break
@@ -142,6 +148,7 @@ if [[ -z "$TOPIC" ]]; then
 else
   # Manual mode: try to read niche context if available
   if [[ -f "$PLAN_FILE" ]]; then
+    # shellcheck disable=SC2034
     NICHE=$(yq '.niche // ""' "$PLAN_FILE" 2>/dev/null || echo "")
   fi
   if [[ -f "$SITE_YAML" ]]; then
@@ -156,12 +163,7 @@ DATE=$(date +%Y-%m-%d)
 log_info "Generating article: $TOPIC"
 log_info "Provider: $SF_AI_PROVIDER ($SF_AI_MODEL)"
 
-# Build prompts with niche context
-NICHE_CONTEXT=""
-if [[ -n "$NICHE" && "$NICHE" != "null" ]]; then
-  NICHE_CONTEXT=" specializing in ${NICHE}"
-fi
-
+# Build prompts with site context
 SITE_CONTEXT=""
 if [[ -n "$SITE_TITLE_CONTEXT" && "$SITE_TITLE_CONTEXT" != "null" ]]; then
   SITE_CONTEXT=" You are writing for the website '${SITE_TITLE_CONTEXT}'."
@@ -183,46 +185,149 @@ if [[ -f "$SITES_YAML" ]] && command -v yq &>/dev/null; then
   fi
 fi
 
-SYSTEM_PROMPT="You are an expert SEO content writer${NICHE_CONTEXT}. Generate a high-quality, SEO-optimized blog article in Markdown format.${SITE_CONTEXT} The article MUST begin with Hugo-compatible YAML frontmatter enclosed in --- delimiters. Follow these rules:
+# Build archetype-specific instructions
+ARCHETYPE_INSTRUCTIONS=""
+case "${ARCHETYPE:-}" in
+  personal-test-report)
+    ARCHETYPE_INSTRUCTIONS="Structure: Open with what prompted you to test this. Describe your testing setup (devices, duration, scenarios). Present findings with specific data (tables, scores). Share surprises and disappointments honestly. End with your personal verdict and who this is best for."
+    ;;
+  head-to-head)
+    ARCHETYPE_INSTRUCTIONS="Structure: Brief intro stating what you are comparing and why. Create a detailed comparison table (6+ columns if possible). Go through each contender with pros/cons. Declare a winner for different use cases. Include specific metrics or scores you observed."
+    ;;
+  step-by-step-tutorial)
+    ARCHETYPE_INSTRUCTIONS="Structure: State the end goal clearly. List prerequisites. Walk through numbered steps with expected output at each stage. Include code blocks for commands or queries. Add troubleshooting tips for common mistakes. End with the completed result."
+    ;;
+  problem-solution)
+    ARCHETYPE_INSTRUCTIONS="Structure: Open with a specific frustrating scenario the reader will recognize. Explain why the usual approaches fail. Present the solution step by step. Show before/after comparison. End with the specific improvement achieved."
+    ;;
+  definitive-resource)
+    ARCHETYPE_INSTRUCTIONS="Structure: Position this as the most comprehensive resource on the topic. Include multiple data tables, reference lists, and categorized sections. Make it bookmarkable. Use H2/H3 heavily for navigation. Include a quick-reference summary at the end."
+    ;;
+  quick-fire-tips)
+    ARCHETYPE_INSTRUCTIONS="Structure: Short intro (2-3 sentences max). Numbered tips, each 2-4 sentences. No sub-headings within tips. Mix obvious and non-obvious advice. End abruptly after the last tip (no conclusion section)."
+    ;;
+  myth-buster)
+    ARCHETYPE_INSTRUCTIONS="Structure: Open with a common misconception. For each myth: state it, explain why people believe it, then present the reality with evidence. Use a tabular myth-vs-reality format for at least one section. End with what actually matters."
+    ;;
+  beginners-roadmap)
+    ARCHETYPE_INSTRUCTIONS="Structure: Acknowledge that the topic can feel overwhelming. Present a clear learning path: start here, then this, then that. Each stage should have one specific action and one resource. Include a visual progression (table or numbered steps). End with what competence looks like."
+    ;;
+esac
 
-1. Frontmatter must include: title, date (use ${DATE}), description (compelling meta description under 160 chars), tags (array of relevant tags), categories (array), draft: false
-2. Use proper heading hierarchy (H2, H3 - never H1 since the title serves as H1)
-3. Include a compelling introduction that hooks the reader
-4. Use short paragraphs (2-3 sentences) for readability
-5. Include bullet points and numbered lists where appropriate
-6. Add a conclusion with a call-to-action
-7. Naturally incorporate the provided keywords without keyword stuffing
-8. You MUST write between ${WORD_COUNT} and 5000 words. This is a hard requirement, not a suggestion. Articles under ${MIN_WORD_COUNT} words will be rejected
-9. Write in a professional yet accessible tone
-10. Vary article structure — use a MIX of: listicles, how-to guides, comparisons, deep dives, problem-solution. Do NOT always follow the same template
-11. Include 2-3 internal links to related articles from this site using markdown links (format: [text](/posts/slug/)). I will provide a list of existing article slugs
-12. Write with a personal voice — use \"I\" occasionally, share brief observations from testing. Avoid generic AI prose patterns like \"In today's digital world\" or \"In this comprehensive guide\"
-13. Include 1-2 data points or statistics with approximate attribution
-14. If any available tools on the site network are relevant to the topic, mention and link to them naturally"
+# Build word count range
+WC_MIN="${WORD_COUNT_MIN:-${WORD_COUNT}}"
+WC_MAX="${WORD_COUNT_MAX:-5000}"
+# Clean null values from yq
+[[ "$WC_MIN" == "null" || -z "$WC_MIN" ]] && WC_MIN="${WORD_COUNT}"
+[[ "$WC_MAX" == "null" || -z "$WC_MAX" ]] && WC_MAX="5000"
 
-USER_PROMPT="Write a blog article about the following topic:
+# Build opening/closing instructions
+OPENING_INST=""
+case "${OPENING_STRATEGY:-}" in
+  statistic) OPENING_INST="Open with a specific, sourced statistic that hooks the reader." ;;
+  personal_anecdote) OPENING_INST="Open with a brief personal anecdote (2-3 sentences) that led you to explore this topic." ;;
+  direct_question) OPENING_INST="Open by asking the reader a direct, relatable question." ;;
+  contrarian_claim) OPENING_INST="Open with a bold or contrarian claim that challenges common assumptions." ;;
+  micro_story) OPENING_INST="Open with 'Last week I...' or 'A few months ago I...' — a specific micro-story." ;;
+  scenario) OPENING_INST="Open by painting a specific scenario the reader will recognize (e.g., 'You are staring at a PDF...')." ;;
+esac
+
+CLOSING_INST=""
+case "${CLOSING_STRATEGY:-}" in
+  specific_action) CLOSING_INST="End with one specific, actionable next step the reader can take right now (not a generic CTA)." ;;
+  reader_challenge) CLOSING_INST="End by challenging the reader to try one thing from the article today." ;;
+  reflection) CLOSING_INST="End with a brief, thoughtful reflection. No call-to-action." ;;
+  what_id_change) CLOSING_INST="End with 'What I would do differently' or 'What I wish I knew starting out'." ;;
+  no_conclusion) CLOSING_INST="Do NOT write a conclusion section. End immediately after the last substantive point." ;;
+esac
+
+SYSTEM_PROMPT="You are Arron Zhou, a frontend engineer and productivity enthusiast writing for Search123 (search123.top).${SITE_CONTEXT} Generate a blog article in Markdown format with Hugo-compatible YAML frontmatter (--- delimiters).
+
+## IDENTITY
+Write as a real person who tests tools hands-on. Use first person ('I') naturally. Share specific observations from testing — mention dates, version numbers, device used. Your tone is professional but conversational, like explaining something to a smart colleague.
+
+## FRONTMATTER REQUIREMENTS
+Include: title, date (use ${DATE}), lastmod (use ${DATE}), description (under 160 chars, compelling), tags (array), categories (array), image (leave as empty string \"\"), draft: false
+
+## ANTI-PATTERNS (CRITICAL — violating these will cause the article to be rejected)
+NEVER start the article with any of these patterns:
+- 'In today's...' / 'In the vast...' / 'In an era of...' / 'In a world of...'
+- 'In the ever-changing...' / 'In this comprehensive...'
+- Any sentence beginning with 'In' followed by a prepositional phrase about modernity
+
+NEVER end the article with:
+- '**Ready to...**' / 'Start your journey...' / 'Bookmark Search123...'
+- Any bold-formatted call-to-action as the final paragraph
+
+NEVER use these structural patterns:
+- Repeated 'Key Features / Best For / Why It's Great' sub-headings
+- More than 2 consecutive bullet-point lists without prose paragraphs between them
+- 'Why [Topic] Matters' as your first H2 heading
+
+## REQUIRED ELEMENTS
+1. At least ONE markdown comparison table (| Column | Column |)
+2. At least ONE code block showing a command, query, URL, or configuration
+3. At least ONE personal observation starting with phrases like 'When I tested...' or 'I noticed that...' or 'In my experience...'
+4. At least 2 specific data points with named sources (not 'studies show')
+5. At least ONE honest limitation, downside, or caveat about the topic
+6. Specific version numbers, dates, or pricing when discussing tools
+7. 3-4 internal links to other articles (I will provide the list)
+
+## WORD COUNT
+Write between ${WC_MIN} and ${WC_MAX} words. Articles under ${MIN_WORD_COUNT} words will be rejected.
+
+## HEADING HIERARCHY
+Use H2 and H3 only (never H1). Vary heading styles — not all H2s should be questions, not all should start with 'How to'.
+
+${ARCHETYPE_INSTRUCTIONS:+## STRUCTURE
+${ARCHETYPE_INSTRUCTIONS}}
+
+${OPENING_INST:+## OPENING
+${OPENING_INST}}
+
+${CLOSING_INST:+## CLOSING
+${CLOSING_INST}}"
+
+USER_PROMPT="Write a blog article about:
 
 Topic: ${TOPIC}
 Target keywords: ${KEYWORDS}
-Target word count: ${WORD_COUNT}"
+Word count target: ${WC_MIN}-${WC_MAX} words"
 
-# Add existing article slugs for internal linking
+# Add existing article slugs for internal linking (full titles for context)
 if [[ -n "$EXISTING_SLUGS" ]]; then
-  USER_PROMPT="${USER_PROMPT}
+  # Build a list of article titles with their slugs for better internal linking
+  ARTICLE_LIST=""
+  if [[ -d "$POST_DIR" ]]; then
+    while IFS= read -r article_file; do
+      [[ "$(basename "$article_file")" == "_index.md" ]] && continue
+      article_slug=$(basename "$article_file" .md)
+      article_title=$(grep '^title:' "$article_file" 2>/dev/null | head -1 | sed 's/^title: *"*//;s/"*$//')
+      if [[ -n "$article_title" ]]; then
+        ARTICLE_LIST="${ARTICLE_LIST}
+- [${article_title}](/posts/${article_slug}/)"
+      fi
+    done < <(find "$POST_DIR" -name "*.md" -not -name "_index.md" 2>/dev/null)
+  fi
 
-Existing articles on this site (use for internal links where relevant): ${EXISTING_SLUGS}"
+  if [[ -n "$ARTICLE_LIST" ]]; then
+    USER_PROMPT="${USER_PROMPT}
+
+Existing articles on this site (include 3-4 contextual internal links within paragraphs, NOT in a separate 'Related' section):
+${ARTICLE_LIST}"
+  fi
 fi
 
 # Add tool references
 if [[ -n "$TOOLS_INFO" ]]; then
   USER_PROMPT="${USER_PROMPT}
 
-Available tools on the site network (link if relevant to the topic): ${TOOLS_INFO}"
+Interactive tools on our site (link naturally if relevant): ${TOOLS_INFO}"
 fi
 
 USER_PROMPT="${USER_PROMPT}
 
-Please output ONLY the markdown content (with frontmatter). No explanations or extra text."
+Output ONLY the markdown content with frontmatter. No explanations."
 
 # Call LLM
 log_step "Calling ${SF_AI_PROVIDER} API..."
@@ -239,6 +344,22 @@ fi
 
 # Strip markdown code fences if AI wrapped the output
 MARKDOWN=$(echo "$MARKDOWN" | sed '/^```.*$/d')
+
+# Validate output: check for banned patterns
+BODY=$(echo "$MARKDOWN" | sed -n '/^---$/,/^---$/!p' | sed '1,/^---$/d')
+FIRST_LINE=$(echo "$BODY" | head -20 | grep -m1 '[A-Za-z]' || true)
+BANNED_FOUND=""
+if echo "$FIRST_LINE" | grep -qiE '^In (today|the vast|an era|a world|the ever)'; then
+  BANNED_FOUND="Banned opening detected: $FIRST_LINE"
+fi
+LAST_BOLD=$(echo "$BODY" | tail -10 | grep -oE '\*\*[^*]+\*\*' | tail -1 || true)
+if echo "$LAST_BOLD" | grep -qiE '(Ready to|Start your journey|Bookmark Search123)'; then
+  BANNED_FOUND="${BANNED_FOUND:+$BANNED_FOUND; }Banned closing detected: $LAST_BOLD"
+fi
+if [[ -n "$BANNED_FOUND" ]]; then
+  log_warn "Anti-pattern detected: $BANNED_FOUND"
+  log_warn "Article will be saved but may need manual editing"
+fi
 
 # Ensure frontmatter exists
 if [[ ! "$MARKDOWN" == ---* ]]; then

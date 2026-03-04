@@ -2,9 +2,23 @@
 {{ if eq .Section "posts" }}
 {{ with .Site.Params.authorBio }}
 <div class="author-box">
-  <div class="author-label">Written by</div>
-  <div class="author-name">{{ $.Site.Params.author }}</div>
-  <div class="author-bio">{{ . }}</div>
+  <div class="author-box-inner">
+    {{ with $.Site.Params.authorAvatar }}
+    <img class="author-avatar" src="{{ . }}" alt="{{ $.Site.Params.author }}" loading="lazy" width="64" height="64">
+    {{ end }}
+    <div class="author-info">
+      <div class="author-label">Written by</div>
+      <div class="author-name">
+        <a href="{{ "about/" | absURL }}">{{ $.Site.Params.author }}</a>
+      </div>
+      <div class="author-bio">{{ . }}</div>
+      <div class="author-links">
+        {{ with $.Site.Params.authorGithub }}<a href="{{ . }}" rel="noopener" target="_blank">GitHub</a>{{ end }}
+        {{ with $.Site.Params.authorLinkedin }}<a href="{{ . }}" rel="noopener" target="_blank">LinkedIn</a>{{ end }}
+        <a href="{{ "about/" | absURL }}">More about me</a>
+      </div>
+    </div>
+  </div>
 </div>
 {{ end }}
 {{ end }}

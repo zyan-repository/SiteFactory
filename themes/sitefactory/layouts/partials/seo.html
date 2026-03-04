@@ -8,6 +8,9 @@
   "datePublished": "{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}",
   "dateModified": "{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}",
   "wordCount": {{ .WordCount }},
+  {{- with .Params.image }}
+  "image": "{{ . | absURL }}",
+  {{- end }}
   "author": {
     "@type": "Person",
     "name": "{{ .Site.Params.author }}",
@@ -23,6 +26,45 @@
   }
 }
 </script>
+{{- with .Params.faq }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {{- range $i, $faq := . }}
+    {{ if $i }},{{ end }}{
+      "@type": "Question",
+      "name": {{ $faq.question | jsonify }},
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": {{ $faq.answer | jsonify }}
+      }
+    }
+    {{- end }}
+  ]
+}
+</script>
+{{ end -}}
+{{- with .Params.howto }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": {{ $.Title | jsonify }},
+  "description": {{ with $.Description }}{{ . | jsonify }}{{ else }}{{ $.Summary | plainify | truncate 160 | jsonify }}{{ end }},
+  "step": [
+    {{- range $i, $step := . }}
+    {{ if $i }},{{ end }}{
+      "@type": "HowToStep",
+      "name": {{ $step.name | jsonify }},
+      "text": {{ $step.text | jsonify }}
+    }
+    {{- end }}
+  ]
+}
+</script>
+{{ end -}}
 {{ else if .IsHome }}
 <script type="application/ld+json">
 {

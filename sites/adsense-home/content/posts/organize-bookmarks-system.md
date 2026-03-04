@@ -1,11 +1,11 @@
 ---
 title: "How I Organize 200+ Bookmarks Without Going Crazy"
-date: 2026-03-04
-lastmod: 2026-03-04
+date: 2026-01-08
+lastmod: 2026-01-08
 description: "A hands-on guide to building a sustainable, searchable bookmark management system that actually gets used, not just stored."
 tags: ["productivity", "bookmark management", "organization", "browser tips"]
 categories: ["guides", "productivity"]
-image: ""
+image: "/images/posts/bookmarks.jpg"
 draft: false
 ---
 
@@ -14,6 +14,9 @@ You are staring at your browser's bookmark bar. It's a solid, multi-colored bloc
 This was my reality until about six months ago. My collection had ballooned past 200 bookmarks, rendering the native browser manager useless. I was wasting more time sifting through my own digital hoard than I was saving by having the links saved. The breaking point came when I spent 15 minutes trying to relocate a [niche search engine for academic papers](/posts/top-10-niche-search-engines-you-probably-dont-know/) I *knew* I had saved. That's when I decided to build a system from the ground up. Here’s the process that transformed my chaotic list into a functional, searchable knowledge base.
 
 ## Why Default Bookmark Systems Fail Us
+
+\![How I Organize 200+ Bookmarks Without Going Crazy](/images/posts/bookmarks.jpg)
+
 
 Browser bookmarks were designed for a simpler web. They excel at saving a handful of frequent destinations—your email, bank, social media. They are not built for knowledge curation. The primary failure modes are:
 

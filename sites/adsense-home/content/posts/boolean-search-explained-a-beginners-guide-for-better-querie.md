@@ -1,11 +1,11 @@
 ---
 title: "Boolean Search Explained: A Beginner's Guide for Better Queries"
-date: 2026-03-04
-lastmod: 2026-03-04
+date: 2025-11-04
+lastmod: 2026-01-15
 description: "Stop guessing what to type. Learn how Boolean logic with AND, OR, NOT, and parentheses can transform your search results from overwhelming to precise."
 tags: ["boolean search", "search operators", "productivity", "research", "tutorial"]
 categories: ["guides", "productivity"]
-image: ""
+image: "/images/posts/boolean-search.jpg"
 draft: false
 ---
 
@@ -16,6 +16,9 @@ That’s the power of Boolean search. It’s not a new, complex technology—it�
 This guide will demystify Boolean logic and give you the practical tools to write searches that work for you, not against you.
 
 ## What is Boolean Search? (It’s Simpler Than It Sounds)
+
+![Article illustration](/images/posts/boolean-search.jpg)
+
 
 Boolean search is a method of combining keywords with logical operators—primarily AND, OR, and NOT—to produce more relevant and focused results. It’s named after George Boole, a 19th-century mathematician who developed the system of logic upon which modern computing is built.
 

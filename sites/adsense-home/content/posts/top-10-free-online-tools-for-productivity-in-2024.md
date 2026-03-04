@@ -1,11 +1,11 @@
 ---
 title: "The 10 Free Online Tools That Actually Boosted My Productivity in 2024"
-date: 2026-03-04
-lastmod: 2026-03-04
+date: 2025-11-12
+lastmod: 2025-11-12
 description: "After testing dozens of apps, here are the free online productivity tools that delivered real results in 2024, based on hands-on use."
 tags: ["free online productivity tools", "best productivity tools 2024", "productivity apps", "task management", "free software"]
 categories: ["Productivity", "Software Reviews"]
-image: ""
+image: "/images/posts/productivity-tools.jpg"
 draft: false
 ---
 
@@ -14,6 +14,9 @@ A few months ago, I hit a wall. My project management was a mess of sticky notes
 I tested each tool on my M2 MacBook Air (macOS Sonoma 14.5) and my iPhone 15 Pro, using them for real tasks over a period of 3-5 days each. I looked for clean interfaces, reliable performance, and features that actually saved me time. Here are the ten that made the cut, along with the specific scenarios where they shined and where they fell short.
 
 ## 1. Obsidian: For Connecting Thoughts, Not Just Writing Them
+
+\![The 10 Free Online Tools That Actually Boosted My Productivity in 2024](/images/posts/productivity-tools.jpg)
+
 
 While many praise it as a note-taking app, Obsidian’s real power is as a free-form knowledge base. It stores all your notes as plain Markdown files in a local folder, giving you complete ownership. The game-changer is the graph view, which visually maps the connections between your notes.
 

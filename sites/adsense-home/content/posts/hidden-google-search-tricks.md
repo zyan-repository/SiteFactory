@@ -1,11 +1,11 @@
 ---
 title: "My 10 Favorite Google Search Tricks Nobody Talks About"
-date: 2026-03-04
-lastmod: 2026-03-04
+date: 2026-02-12
+lastmod: 2026-02-12
 description: "Beyond basic operators, I tested these lesser-known Google search tricks that can save you time and surface hidden information."
 tags: ["google search", "search tips", "productivity", "research"]
 categories: ["Tutorials", "Productivity"]
-image: ""
+image: "/images/posts/google-tricks.jpg"
 draft: false
 ---
 
@@ -14,6 +14,9 @@ Last week, I was trying to find a specific, old version of a software manual. A 
 Here are my 10 favorite hidden Google search tricks, confirmed through hands-on testing on March 3rd, 2026, using Chrome 128 on macOS.
 
 ## 1. The Wildcard for Forgotten Lyrics or Code Snippets
+
+\![My 10 Favorite Google Search Tricks Nobody Talks About](/images/posts/google-tricks.jpg)
+
 
 Everyone knows the asterisk (`*`) as a wildcard, but its power in specific contexts is underrated. It's not just for single words. I use it most for finding song lyrics when I only remember a phrase and the tune, or for locating a code snippet when I've forgotten a function name.
 

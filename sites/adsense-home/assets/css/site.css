@@ -1,18 +1,25 @@
 /* adsense-home site-specific styles */
 
+/* Brand color override */
+:root {
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+}
+
 /* Homepage hero */
 .homepage-hero {
   text-align: center;
-  padding: 2.5rem 0 2rem;
-  margin-bottom: 1.5rem;
+  padding: 3rem 0 2rem;
+  margin-bottom: 1rem;
 }
 .homepage-hero h1 {
-  font-size: 2rem;
+  font-size: 2.25rem;
   margin: 0 0 0.5rem;
+  letter-spacing: -0.02em;
 }
 .homepage-hero .tagline {
   color: var(--muted);
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   margin: 0;
   line-height: 1.5;
 }
@@ -26,19 +33,150 @@
 }
 .homepage-intro h3 { font-size: 1.05rem; margin-top: 1.2em; }
 
-/* Latest articles section */
-.latest-articles { margin-top: 1rem; }
-.latest-articles h2 {
+/* Home sections */
+.home-section {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+.home-section-title {
   font-size: 1.3rem;
-  margin-top: 0;
-  padding-bottom: 0.5rem;
-  border-bottom: 2px solid var(--accent);
-  display: inline-block;
-  margin-bottom: 1rem;
+  margin: 0 0 0.25rem;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.home-section-desc {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin: 0 0 1rem;
+}
+.home-section-more {
+  margin-top: 1rem;
+  font-size: 0.9rem;
 }
 
-/* Responsive overrides */
+/* Tool cards grid */
+.tool-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+.tool-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--text);
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+}
+.tool-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+.tool-card-icon {
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+  line-height: 1;
+}
+.tool-card strong {
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+.tool-card span:last-child {
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+/* Pillar cards grid */
+.pillar-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+.pillar-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  border-left: 4px solid var(--accent);
+  text-decoration: none;
+  color: var(--text);
+  transition: box-shadow 0.2s;
+}
+.pillar-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  text-decoration: none;
+}
+.pillar-card strong {
+  font-size: 1.05rem;
+  margin-bottom: 0.25rem;
+}
+.pillar-card span {
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+/* Newsletter CTA */
+.newsletter-cta {
+  text-align: center;
+  background: var(--surface);
+  padding: 2rem 1.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  margin-top: 2.5rem;
+}
+.newsletter-cta .home-section-title { margin-bottom: 0.5rem; }
+.newsletter-cta p { color: var(--muted); font-size: 0.95rem; margin-bottom: 1rem; }
+.newsletter-form {
+  display: flex;
+  gap: 0.5rem;
+  max-width: 420px;
+  margin: 0 auto;
+}
+.newsletter-form input {
+  flex: 1;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+.newsletter-form input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+.newsletter-form button {
+  padding: 0.6rem 1.25rem;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.newsletter-form button:hover { background: var(--accent-hover); }
+.newsletter-note {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-top: 0.75rem;
+}
+
+/* Responsive */
 @media (max-width: 600px) {
-  .homepage-hero h1 { font-size: 1.6rem; }
+  .homepage-hero h1 { font-size: 1.75rem; }
   .homepage-hero .tagline { font-size: 1rem; }
+  .tool-cards { grid-template-columns: 1fr; }
+  .pillar-cards { grid-template-columns: 1fr; }
+  .newsletter-form { flex-direction: column; }
 }

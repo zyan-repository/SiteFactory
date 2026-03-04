@@ -12,6 +12,11 @@
     <span class="reading-time">{{ .ReadingTime }} {{ i18n "minRead" }}</span>
   </div>
   {{ end }}
+  {{ with .Params.image }}
+  <div class="featured-image">
+    <img src="{{ . }}" alt="{{ $.Title }}" loading="eager">
+  </div>
+  {{ end }}
   {{ with .Params.tags }}
   <div class="tags">
     {{ range . }}<a href="{{ "tags/" | absURL }}{{ . | urlize }}/">{{ . }}</a> {{ end }}
@@ -28,7 +33,19 @@
   <div class="content">
     {{ .Content }}
   </div>
+  {{- with .Params.faq }}
+  <section class="faq-section">
+    <h2>Frequently Asked Questions</h2>
+    {{ range . }}
+    <details class="faq-item">
+      <summary>{{ .question }}</summary>
+      <div class="faq-answer">{{ .answer | markdownify }}</div>
+    </details>
+    {{ end }}
+  </section>
+  {{ end -}}
   {{ partial "author.html" . }}
+  {{ partial "comments.html" . }}
   {{ partial "related.html" . }}
 </article>
 {{ end }}

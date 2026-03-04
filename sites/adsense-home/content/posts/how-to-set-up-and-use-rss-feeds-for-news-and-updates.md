@@ -1,17 +1,20 @@
 ---
 title: "How to Set Up and Use RSS Feeds for News and Updates"
-date: 2026-03-04
-lastmod: 2026-03-04
+date: 2026-02-24
+lastmod: 2026-02-24
 description: "A hands-on guide to setting up an RSS reader, finding feeds, and managing your information intake without algorithm-driven feeds."
 tags: ["rss", "productivity", "news", "information management"]
 categories: ["guides", "productivity"]
-image: ""
+image: "/images/posts/rss-feeds.jpg"
 draft: false
 ---
 
 Do you ever feel like you're missing important updates from your favorite blogs or news sites, or that your social media feeds are showing you everything *except* what you actually want to see? I did, which is why I recently revisited the world of RSS. It’s a direct pipeline from publisher to you, with no algorithm in the middle deciding what you should see. Here’s how I set it up and what I learned.
 
 ## Choosing and Setting Up Your RSS Reader
+
+\![How to Set Up and Use RSS Feeds for News and Updates](/images/posts/rss-feeds.jpg)
+
 
 The first step is picking a reader. I tested several in March 2026, focusing on free tiers and cross-platform availability. The landscape has shifted from the old Google Reader days, with modern apps offering clean interfaces and sync across devices.
 

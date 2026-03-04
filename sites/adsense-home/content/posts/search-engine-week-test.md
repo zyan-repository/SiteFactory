@@ -5,13 +5,16 @@ lastmod: 2026-03-04
 description: "A hands-on, data-driven comparison of Google, Bing, DuckDuckGo, Kagi, and Brave Search based on 250 real queries. See the raw scores."
 tags: ["search engine comparison test", "Google vs Bing real test", "productivity", "privacy", "data"]
 categories: ["Software", "Productivity", "Reviews"]
-image: ""
+image: "/images/posts/search-engine-test.jpg"
 draft: false
 ---
 
 Last week, I got tired of the endless, anecdotal "Google vs. Bing" debates. As a frontend engineer, I wanted data, not opinions. So, I decided to run my own controlled experiment. From February 24th to March 2nd, 2026, I used five different search engines as my primary tool for every single query I had. I logged the results, scored them, and ended up with a spreadsheet of over 250 data points. Here’s exactly what I found.
 
 ## My Testing Methodology
+
+![Article illustration](/images/posts/search-engine-test.jpg)
+
 
 I wanted this to reflect real-world use, not just a sterile lab test. My setup was my daily driver: a 2024 MacBook Pro (M3 Pro, 18GB RAM) running macOS Sequoia 15.4. I used the latest versions of Chrome (v.128) and Firefox (v.131) in their default configurations, with no search-related extensions enabled. I cleared cookies and cache between each engine test to prevent personalization from skewing the results.
 
