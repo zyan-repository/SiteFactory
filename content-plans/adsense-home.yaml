@@ -4,7 +4,7 @@
 site: adsense-home
 niche: "search123"
 publishing_schedule: "weekly"
-last_generated: "2026-02-26"
+last_generated: "2026-03-04"
 target_keywords:
   - advanced search operators
   - beginner boolean search guide
@@ -17,78 +17,244 @@ target_keywords:
   - browser extensions for search
   - create custom search engine
 topics:
+  # === PUBLISHED ARTICLES (to be rewritten with new prompts) ===
   - title: "How to Use Advanced Search Operators for Better Results"
     keywords: "advanced search operators, Google search tips, better search results"
+    archetype: "step-by-step-tutorial"
+    word_count_min: 2500
+    word_count_max: 3500
+    opening: "personal_anecdote"
+    closing: "specific_action"
     status: published
   - title: "Top 10 Free Online Tools for Productivity in 2024"
     keywords: "free online productivity tools, best productivity tools 2024"
-    status: published
+    archetype: "personal-test-report"
+    word_count_min: 1500
+    word_count_max: 2000
+    opening: "micro_story"
+    closing: "reader_challenge"
+    status: pending
   - title: "A Complete Guide to Reverse Image Search on Any Device"
     keywords: "how to reverse image search, reverse image search guide"
-    status: published
+    archetype: "step-by-step-tutorial"
+    word_count_min: 1200
+    word_count_max: 1600
+    opening: "scenario"
+    closing: "specific_action"
+    status: pending
   - title: "Boolean Search Explained: A Beginner's Guide for Better Queries"
     keywords: "boolean search explained, beginner boolean search guide"
-    status: published
+    archetype: "definitive-resource"
+    word_count_min: 2000
+    word_count_max: 2800
+    opening: "direct_question"
+    closing: "what_id_change"
+    status: pending
   - title: "How to Search the Deep Web Safely and Effectively"
     keywords: "how to search deep web, deep web search safely"
-    status: published
+    archetype: "myth-buster"
+    word_count_min: 1200
+    word_count_max: 1800
+    opening: "contrarian_claim"
+    closing: "reflection"
+    status: pending
   - title: "Best Free Alternatives to Popular Paid Software Tools"
     keywords: "free alternatives to paid software, best free software tools"
-    status: published
+    archetype: "head-to-head"
+    word_count_min: 2000
+    word_count_max: 2800
+    opening: "statistic"
+    closing: "reader_challenge"
+    status: pending
   - title: "How to Create Custom Search Engines for Your Projects"
     keywords: "create custom search engine, custom Google search engine"
-    status: published
+    archetype: "step-by-step-tutorial"
+    word_count_min: 1200
+    word_count_max: 1600
+    opening: "scenario"
+    closing: "no_conclusion"
+    status: pending
   - title: "Top 5 Online Calculators for Finance and Everyday Math"
     keywords: "best online calculators, free finance calculators"
-    status: published
+    archetype: "quick-fire-tips"
+    word_count_min: 600
+    word_count_max: 900
+    opening: "direct_question"
+    closing: "no_conclusion"
+    status: pending
   - title: "How to Use Search to Fact-Check Information Online"
     keywords: "fact-check with search, verify information online"
-    status: published
+    archetype: "myth-buster"
+    word_count_min: 1000
+    word_count_max: 1500
+    opening: "statistic"
+    closing: "reader_challenge"
+    status: pending
   - title: "A Guide to Using Wayback Machine and Internet Archives"
     keywords: "how to use Wayback Machine, search internet archives"
-    status: published
+    archetype: "beginners-roadmap"
+    word_count_min: 1000
+    word_count_max: 1500
+    opening: "micro_story"
+    closing: "specific_action"
+    status: pending
   - title: "Best Browser Extensions to Enhance Your Search Experience"
     keywords: "browser extensions for search, enhance search extensions"
-    status: published
+    archetype: "quick-fire-tips"
+    word_count_min: 600
+    word_count_max: 900
+    opening: "contrarian_claim"
+    closing: "no_conclusion"
+    status: pending
   - title: "How to Find Academic Papers and Research for Free"
     keywords: "find free academic papers, search scholarly articles"
-    status: published
+    archetype: "beginners-roadmap"
+    word_count_min: 1200
+    word_count_max: 1800
+    opening: "scenario"
+    closing: "what_id_change"
+    status: pending
   - title: "Comparing Top Search Engines: Google, Bing, DuckDuckGo"
     keywords: "search engine comparison, Google vs Bing vs DuckDuckGo"
-    status: published
+    archetype: "head-to-head"
+    word_count_min: 1500
+    word_count_max: 2000
+    opening: "personal_anecdote"
+    closing: "reflection"
+    status: pending
   - title: "How to Set Up and Use RSS Feeds for News and Updates"
     keywords: "how to use RSS feeds, set up RSS feed reader"
-    status: published
+    archetype: "quick-fire-tips"
+    word_count_min: 600
+    word_count_max: 900
+    opening: "direct_question"
+    closing: "no_conclusion"
+    status: pending
   - title: "Top 10 Niche Search Engines You Probably Don't Know"
     keywords: "niche search engines, lesser-known search engines"
-    status: published
+    archetype: "quick-fire-tips"
+    word_count_min: 800
+    word_count_max: 1100
+    opening: "statistic"
+    closing: "no_conclusion"
+    status: pending
   - title: "How to Search for Government Data and Public Records"
     keywords: "search government data, find public records online"
-    status: published
+    archetype: "definitive-resource"
+    word_count_min: 1800
+    word_count_max: 2500
+    opening: "personal_anecdote"
+    closing: "specific_action"
+    status: pending
+  - title: "10 Email Productivity Hacks to Save Hours Every Week"
+    keywords: "email productivity hacks, email management tips"
+    archetype: "problem-solution"
+    word_count_min: 1000
+    word_count_max: 1400
+    opening: "statistic"
+    closing: "reader_challenge"
+    status: pending
   - title: "Best Free Online File Converters for Documents and Media"
     keywords: "free online file converter, document and media converter"
+    archetype: "head-to-head"
+    word_count_min: 1500
+    word_count_max: 2000
+    opening: "scenario"
+    closing: "specific_action"
     status: pending
+  - title: "Complete Guide to Password Managers"
+    keywords: "password manager guide, best password managers"
+    archetype: "personal-test-report"
+    word_count_min: 1800
+    word_count_max: 2500
+    opening: "statistic"
+    closing: "what_id_change"
+    status: pending
+  - title: "How to Choose and Use a VPN for Online Privacy"
+    keywords: "how to choose VPN, VPN for online privacy"
+    archetype: "personal-test-report"
+    word_count_min: 1800
+    word_count_max: 2500
+    opening: "micro_story"
+    closing: "reflection"
+    status: pending
+  # online-tools-and-productivity-tips: DELETED (duplicate of top-10-free-online-tools)
+  # === NEW HIGH-ORIGINALITY ARTICLES ===
+  - title: "I Tested 5 Search Engines for a Week — Here's My Raw Data"
+    keywords: "search engine comparison test, Google vs Bing real test"
+    slug: "search-engine-week-test"
+    archetype: "personal-test-report"
+    word_count_min: 2500
+    word_count_max: 3500
+    opening: "micro_story"
+    closing: "reflection"
+    status: pending
+  - title: "My 10 Favorite Google Search Tricks Nobody Talks About"
+    keywords: "hidden Google search tricks, advanced Google tips"
+    slug: "hidden-google-search-tricks"
+    archetype: "quick-fire-tips"
+    word_count_min: 1200
+    word_count_max: 1800
+    opening: "personal_anecdote"
+    closing: "no_conclusion"
+    status: pending
+  - title: "How I Organize 200+ Bookmarks Without Going Crazy"
+    keywords: "organize bookmarks, bookmark management system"
+    slug: "organize-bookmarks-system"
+    archetype: "problem-solution"
+    word_count_min: 1500
+    word_count_max: 2000
+    opening: "scenario"
+    closing: "what_id_change"
+    status: pending
+  - title: "The Real Cost of Free VPNs: What Happens to Your Data"
+    keywords: "free VPN risks, free VPN data collection"
+    slug: "real-cost-free-vpns"
+    archetype: "myth-buster"
+    word_count_min: 1800
+    word_count_max: 2500
+    opening: "contrarian_claim"
+    closing: "specific_action"
+    status: pending
+  - title: "Building a Research Workflow from Scratch: My Step-by-Step Process"
+    keywords: "research workflow, systematic research process"
+    slug: "research-workflow-from-scratch"
+    archetype: "beginners-roadmap"
+    word_count_min: 2000
+    word_count_max: 2800
+    opening: "personal_anecdote"
+    closing: "reader_challenge"
+    status: pending
+  # === REMAINING PENDING (original plan) ===
   - title: "How to Use Voice Search Effectively on All Your Devices"
     keywords: "how to use voice search, effective voice search tips"
+    archetype: "step-by-step-tutorial"
+    word_count_min: 1000
+    word_count_max: 1400
+    opening: "scenario"
+    closing: "specific_action"
     status: pending
   - title: "A Guide to Using Alerts and Notifications for Web Monitoring"
     keywords: "set up Google Alerts, web monitoring notifications"
+    archetype: "step-by-step-tutorial"
+    word_count_min: 1200
+    word_count_max: 1600
+    opening: "micro_story"
+    closing: "no_conclusion"
     status: pending
   - title: "How to Find and Use Open Data Sources for Analysis"
     keywords: "find open data sources, use open data for analysis"
-    status: pending
-  - title: "Top Free Online Collaboration Tools for Remote Teams"
-    keywords: "free online collaboration tools, tools for remote teams"
+    archetype: "definitive-resource"
+    word_count_min: 1800
+    word_count_max: 2500
+    opening: "statistic"
+    closing: "reflection"
     status: pending
   - title: "How to Search for and Verify the Source of an Image"
     keywords: "verify image source, find original image online"
-    status: pending
-  - title: "Best Online Grammar and Writing Assistant Tools"
-    keywords: "best grammar checker online, free writing assistant tools"
-    status: pending
-  - title: "How to Perform a Comprehensive People Search Online"
-    keywords: "how to people search online, find someone online"
-    status: pending
-  - title: "Essential Keyboard Shortcuts for Faster Web Browsing and Search"
-    keywords: "keyboard shortcuts for browsing, web search shortcuts"
+    archetype: "problem-solution"
+    word_count_min: 1000
+    word_count_max: 1500
+    opening: "scenario"
+    closing: "specific_action"
     status: pending
