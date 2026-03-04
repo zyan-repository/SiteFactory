@@ -81,7 +81,7 @@ topics:
     word_count_max: 900
     opening: "direct_question"
     closing: "no_conclusion"
-    status: pending
+    status: published
   - title: "How to Use Search to Fact-Check Information Online"
     keywords: "fact-check with search, verify information online"
     archetype: "myth-buster"
