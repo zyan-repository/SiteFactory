@@ -97,7 +97,7 @@ topics:
     word_count_max: 1500
     opening: "micro_story"
     closing: "specific_action"
-    status: pending
+    status: published
   - title: "Best Browser Extensions to Enhance Your Search Experience"
     keywords: "browser extensions for search, enhance search extensions"
     archetype: "quick-fire-tips"
