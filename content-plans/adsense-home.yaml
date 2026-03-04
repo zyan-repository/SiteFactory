@@ -145,7 +145,7 @@ topics:
     word_count_max: 2500
     opening: "personal_anecdote"
     closing: "specific_action"
-    status: pending
+    status: published
   - title: "10 Email Productivity Hacks to Save Hours Every Week"
     keywords: "email productivity hacks, email management tips"
     archetype: "problem-solution"
