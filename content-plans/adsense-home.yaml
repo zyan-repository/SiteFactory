@@ -121,7 +121,7 @@ topics:
     word_count_max: 2000
     opening: "personal_anecdote"
     closing: "reflection"
-    status: pending
+    status: published
   - title: "How to Set Up and Use RSS Feeds for News and Updates"
     keywords: "how to use RSS feeds, set up RSS feed reader"
     archetype: "quick-fire-tips"
