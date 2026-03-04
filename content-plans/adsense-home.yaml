@@ -49,7 +49,7 @@ topics:
     word_count_max: 2800
     opening: "direct_question"
     closing: "what_id_change"
-    status: pending
+    status: published
   - title: "How to Search the Deep Web Safely and Effectively"
     keywords: "how to search deep web, deep web search safely"
     archetype: "myth-buster"
