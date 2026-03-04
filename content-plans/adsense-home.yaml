@@ -137,7 +137,7 @@ topics:
     word_count_max: 1100
     opening: "statistic"
     closing: "no_conclusion"
-    status: pending
+    status: published
   - title: "How to Search for Government Data and Public Records"
     keywords: "search government data, find public records online"
     archetype: "definitive-resource"
