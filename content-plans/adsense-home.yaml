@@ -73,7 +73,7 @@ topics:
     word_count_max: 1600
     opening: "scenario"
     closing: "no_conclusion"
-    status: pending
+    status: published
   - title: "Top 5 Online Calculators for Finance and Everyday Math"
     keywords: "best online calculators, free finance calculators"
     archetype: "quick-fire-tips"
