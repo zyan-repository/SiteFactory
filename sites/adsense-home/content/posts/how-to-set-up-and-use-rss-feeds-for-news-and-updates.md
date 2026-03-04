@@ -37,7 +37,7 @@ When I tested this on March 4th, 2026, using Chrome on my MacBook, I right-click
 
 ## Organizing Your Feeds Effectively
 
-Dumping 100 feeds into one folder is a recipe for overwhelm. I categorize mine into folders like `Tech News`, `Web Dev`, `Productivity Tools`, and `Must-Read`. This mirrors the organizational principle behind building [a custom search engine for your project or team](/posts/how-to-build-a-custom-search-engine-for-your-project-or-team/)—segmenting information streams by purpose.
+Dumping 100 feeds into one folder is a recipe for overwhelm. I categorize mine into folders like `Tech News`, `Web Dev`, `Productivity Tools`, and `Must-Read`. This mirrors the organizational principle behind building [a custom search engine for your project or team](/posts/how-to-create-custom-search-engines-for-your-projects/)—segmenting information streams by purpose.
 
 In my experience, the real power comes from using rules. In Inoreader, I set up a rule to automatically tag any article from my `Web Dev` feeds that contains the word "React" with a `#framework` tag. This is a form of automated filtering that goes beyond basic [Boolean search operators](/posts/boolean-search-explained-a-beginners-guide-for-better-querie/), acting on the content as it arrives.
 
@@ -53,6 +53,6 @@ RSS is incredibly versatile. You can subscribe to:
 * **YouTube channels**: Get notifications for new uploads without relying on YouTube's subscription box.
 * **Podcasts**: Most podcast apps are just specialized RSS readers.
 * **GitHub repositories**: Follow releases or commits for projects you depend on.
-* **Custom searches**: Some sites, like Craigslist or even Google Alerts (via RSS), let you turn a search query into a feed. This is a powerful technique for monitoring topics, similar to using [advanced search operators for precision results](/posts/beyond-the-search-bar-mastering-advanced-operators-for-precision-results/).
+* **Custom searches**: Some sites, like Craigslist or even Google Alerts (via RSS), let you turn a search query into a feed. This is a powerful technique for monitoring topics, similar to using [advanced search operators for precision results](/posts/how-to-use-advanced-search-operators-for-better-results/).
 
 When I tested a GitHub release feed for a project I follow, I got version update notifications faster and more reliably than through my cluttered email inbox. It turned my reader into a dedicated dashboard for proactive updates, cutting out the noise completely.

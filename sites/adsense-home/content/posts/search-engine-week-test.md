@@ -77,7 +77,7 @@ Searches like "Federal Reserve interest rate decision March 2026" or "latest Spa
 
 *   **Winner: Google (Avg: 9.0).** The featured snippet or "answer box" at the top often provides the direct answer, pulling from reputable sources like Healthline or government sites. For quick facts, it's incredibly efficient.
 *   **Kagi (Avg: 8.5)** and **Bing (Avg: 8.4)** were competitive. Bing's AI-powered "Copilot" summary can be useful but sometimes feels like it's paraphrasing a Wikipedia paragraph.
-*   **An Honest Limitation:** Google's answer boxes, while convenient, can stop the search journey prematurely. I've found they are sometimes outdated or oversimplified. For important health or financial info, you *must* click through to the source. This is where [mastering advanced search operators](/posts/beyond-the-search-bar-mastering-advanced-operators-for-precision-results/) to limit results to `.gov` or `.edu` domains becomes critical.
+*   **An Honest Limitation:** Google's answer boxes, while convenient, can stop the search journey prematurely. I've found they are sometimes outdated or oversimplified. For important health or financial info, you *must* click through to the source. This is where [mastering advanced search operators](/posts/how-to-use-advanced-search-operators-for-better-results/) to limit results to `.gov` or `.edu` domains becomes critical.
 
 ### 5. Open-Ended Research
 Broad queries like "causes of urban sprawl" or "history of cryptography."

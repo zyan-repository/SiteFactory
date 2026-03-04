@@ -33,7 +33,7 @@ This isn't a web page index; it's a computational engine. You ask factual or com
 **Note:** Its free tier has query limits; for heavy use, a Pro subscription ($7.25/month as of 2026) is needed.
 
 ## 4. The Wayback Machine: Searching Web History
-Operated by the Internet Archive, this tool lets you search and browse over 800 billion archived web pages. It's not just for viewing a single old page; you can *search* the text of all archived pages. This is invaluable for finding content that has been deleted or changed. I recently used it to recover the technical specifications for a discontinued piece of hardware. For more on this powerful tool, see our [A Practical Guide to Using Wayback Machine and Internet Archives](/posts/a-guide-to--using-wayback-machine-and-internet-archives/).
+Operated by the Internet Archive, this tool lets you search and browse over 800 billion archived web pages. It's not just for viewing a single old page; you can *search* the text of all archived pages. This is invaluable for finding content that has been deleted or changed. I recently used it to recover the technical specifications for a discontinued piece of hardware. For more on this powerful tool, see our [A Practical Guide to Using Wayback Machine and Internet Archives](/posts/a-guide-to-using-wayback-machine-and-internet-archives/).
 
 **Best for:** Researchers, journalists, digital historians.
 **Caveat:** Not every page on every site is archived, so coverage can be spotty.

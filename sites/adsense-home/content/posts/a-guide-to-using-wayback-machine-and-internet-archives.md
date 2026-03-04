@@ -39,7 +39,7 @@ You’ll be presented with a calendar view. Blue circles on specific dates indic
 Once you're comfortable with basic lookups, you can start using the archive for more sophisticated tasks.
 
 ### 1. Fact-Checking and Content Verification
-This is where the Wayback Machine shines. Let's say you're reading a controversial claim online and the source link is dead. Don't just take someone's word for it. Find the original URL and plug it into the archive. You can see exactly what was published and when, which is a foundational step in [how to fact-check information online using search engines](/posts/how-to-fact-check-information-online/).
+This is where the Wayback Machine shines. Let's say you're reading a controversial claim online and the source link is dead. Don't just take someone's word for it. Find the original URL and plug it into the archive. You can see exactly what was published and when, which is a foundational step in [how to fact-check information online using search engines](/posts/how-to-use-search-to-fact-check-information-online/).
 
 I recently used this to verify a change in a software company's terms of service. By comparing snapshots from January and June, I could pinpoint the exact paragraph that was altered.
 

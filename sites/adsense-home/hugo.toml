@@ -5,6 +5,7 @@ languageCode = "en"
 title = "Search123"
 
 # Performance
+buildFuture = true
 enableRobotsTXT = true
 enableEmoji = false
 enableGitInfo = false
@@ -60,7 +61,7 @@ disableHugoGeneratorInject = true
   category = "categories"
 
 [permalinks]
-  posts = "/posts/:slug/"
+  posts = "/posts/:filename/"
 
 [minify]
   disableCSS = false

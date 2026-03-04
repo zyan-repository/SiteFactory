@@ -62,7 +62,7 @@ For frequent, repetitive replies, templates are non-negotiable. Gmail and Outloo
 When I tested this, I saved an estimated 45 seconds per use. With 10 such emails a day, that's over 30 minutes a week saved on typing alone.
 
 **5. Embrace the Short, Scannable Format.**
-People skim. Structure your emails for it. Use clear subject lines, bullet points, and bold text for key questions or action items. Avoid long paragraphs. A well-structured email reduces back-and-forth clarification, saving multiple rounds of communication. Think of it as applying the principles of a good **search query**—clarity and specificity—to your communication, much like I discussed in [Boolean Search Explained](/posts/boolean-search-explanged-a-beginners-guide-for-better-querie/).
+People skim. Structure your emails for it. Use clear subject lines, bullet points, and bold text for key questions or action items. Avoid long paragraphs. A well-structured email reduces back-and-forth clarification, saving multiple rounds of communication. Think of it as applying the principles of a good **search query**—clarity and specificity—to your communication, much like I discussed in [Boolean Search Explained](/posts/boolean-search-explained-a-beginners-guide-for-better-querie/).
 
 **6. Schedule Emails to Send Later.**
 If you're processing emails outside standard business hours, use the "Schedule Send" feature. This prevents you from inadvertently setting off a chain of replies at 11 PM and helps manage recipients' expectations and your own work-life boundaries.

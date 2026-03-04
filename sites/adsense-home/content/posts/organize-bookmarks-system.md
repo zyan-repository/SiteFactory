@@ -72,7 +72,7 @@ This is the heart of the system. I use a **shallow folder structure for broad ca
 *   `Workflows`: Step-by-step guides for complex tasks (e.g., "How to publish a blog post").
 
 **My Tagging Schema:**
-Tags are where the magic happens. They are multi-dimensional. A single bookmark for a [guide to finding government data](/posts/how-to-search-for-government-data-and-public-records-online/) might have these tags:
+Tags are where the magic happens. They are multi-dimensional. A single bookmark for a [guide to finding government data](/posts/how-to-search-for-government-data-and-public-records/) might have these tags:
 *   `#search-technique`
 *   `#research`
 *   `#public-data`
