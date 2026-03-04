@@ -197,7 +197,7 @@ topics:
     word_count_max: 1800
     opening: "personal_anecdote"
     closing: "no_conclusion"
-    status: pending
+    status: published
   - title: "How I Organize 200+ Bookmarks Without Going Crazy"
     keywords: "organize bookmarks, bookmark management system"
     slug: "organize-bookmarks-system"
