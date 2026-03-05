@@ -22,6 +22,26 @@ jobs:
           echo "| Site | URL | Status | Code |" >> "$GITHUB_STEP_SUMMARY"
           echo "|------|-----|--------|------|" >> "$GITHUB_STEP_SUMMARY"
 
+          # Curl with retry: tries up to 3 times with 5s between attempts
+          check_url() {
+            local url="$1"
+            local attempt
+            for attempt in 1 2 3; do
+              local code
+              code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 15 "$url" 2>/dev/null || echo "000")
+              if [ "$code" -ge 200 ] && [ "$code" -lt 400 ]; then
+                echo "$code"
+                return 0
+              fi
+              if [ "$attempt" -lt 3 ]; then
+                echo "  Retry $attempt for $url (got $code)" >&2
+                sleep 5
+              fi
+            done
+            echo "$code"
+            return 1
+          }
+
           for site_dir in sites/*/; do
             name=$(basename "$site_dir")
             [[ "$name" == "_template" ]] && continue
@@ -30,7 +50,7 @@ jobs:
 
             TOTAL=$((TOTAL + 1))
             URL="https://${name}.${SF_DOMAIN}"
-            HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 15 "$URL" 2>/dev/null || echo "000")
+            HTTP_CODE=$(check_url "$URL")
 
             if [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 400 ]; then
               echo "OK   ($HTTP_CODE): $URL"
@@ -51,7 +71,7 @@ jobs:
             if [ -n "$ROOT_SITE" ]; then
               TOTAL=$((TOTAL + 1))
               ROOT_URL="https://${SF_DOMAIN}"
-              HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 15 "$ROOT_URL" 2>/dev/null || echo "000")
+              HTTP_CODE=$(check_url "$ROOT_URL")
               if [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 400 ]; then
                 echo "OK   ($HTTP_CODE): $ROOT_URL (root -> $ROOT_SITE)"
                 echo "| ${ROOT_SITE} (root) | $ROOT_URL | OK | $HTTP_CODE |" >> "$GITHUB_STEP_SUMMARY"
