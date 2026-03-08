@@ -4,7 +4,7 @@
 site: legal-tips
 niche: "legal tips"
 publishing_schedule: "weekly"
-last_generated: "2026-03-01"
+last_generated: "2026-03-08"
 target_keywords:
   - becoming a legal guardian
   - business partnership agreement template
@@ -46,7 +46,7 @@ topics:
     status: published
   - title: "A Guide to Understanding and Responding to a Cease and Desist Letter"
     keywords: "how to respond to cease and desist letter, what is a cease and desist, cease and desist legal advice"
-    status: pending
+    status: published
   - title: "Your Rights as a Consumer: Returning Faulty Goods and Services"
     keywords: "consumer rights faulty products, returning defective items, legal rights for bad service"
     status: pending
