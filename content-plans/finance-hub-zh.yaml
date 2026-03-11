@@ -4,7 +4,7 @@
 site: finance-hub-zh
 niche: "理财攻略"
 publishing_schedule: "weekly"
-last_generated: "2026-03-04"
+last_generated: "2026-03-11"
 target_keywords:
   - ETF基金
   - ETF交易规则
@@ -25,7 +25,7 @@ topics:
     status: published
   - title: "银行存款、货币基金、国债哪个更安全"
     keywords: "低风险理财, 银行存款, 货币基金, 国债"
-    status: pending
+    status: published
   - title: "基金定投完全指南：从入门到精通"
     keywords: "基金定投, 基金投资指南, 定投策略"
     status: pending
