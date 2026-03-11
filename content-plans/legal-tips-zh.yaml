@@ -4,7 +4,7 @@
 site: legal-tips-zh
 niche: "法律小知识"
 publishing_schedule: "weekly"
-last_generated: "2026-03-04"
+last_generated: "2026-03-11"
 target_keywords:
   - 12315投诉流程
   - 被骗钱如何报警
@@ -25,7 +25,7 @@ topics:
     status: published
   - title: "交通事故责任认定流程详解"
     keywords: "交通事故责任认定, 交通事故处理流程, 交警定责步骤"
-    status: pending
+    status: published
   - title: "离婚冷静期具体规定与操作指南"
     keywords: "离婚冷静期规定, 离婚冷静期如何计算, 协议离婚流程"
     status: pending
