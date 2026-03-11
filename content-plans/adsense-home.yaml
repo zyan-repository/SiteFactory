@@ -4,7 +4,7 @@
 site: adsense-home
 niche: "search123"
 publishing_schedule: "weekly"
-last_generated: "2026-03-04"
+last_generated: "2026-03-11"
 target_keywords:
   - advanced search operators
   - beginner boolean search guide
@@ -233,7 +233,7 @@ topics:
     word_count_max: 1400
     opening: "scenario"
     closing: "specific_action"
-    status: pending
+    status: published
   - title: "A Guide to Using Alerts and Notifications for Web Monitoring"
     keywords: "set up Google Alerts, web monitoring notifications"
     archetype: "step-by-step-tutorial"
