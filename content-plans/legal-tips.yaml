@@ -4,7 +4,7 @@
 site: legal-tips
 niche: "legal tips"
 publishing_schedule: "weekly"
-last_generated: "2026-03-08"
+last_generated: "2026-03-15"
 target_keywords:
   - becoming a legal guardian
   - business partnership agreement template
@@ -49,7 +49,7 @@ topics:
     status: published
   - title: "Your Rights as a Consumer: Returning Faulty Goods and Services"
     keywords: "consumer rights faulty products, returning defective items, legal rights for bad service"
-    status: pending
+    status: published
   - title: "How to Start the Divorce Process: A Step-by-Step Overview"
     keywords: "how to file for divorce, starting divorce proceedings, divorce process for beginners"
     status: pending
