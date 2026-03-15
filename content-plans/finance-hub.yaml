@@ -4,7 +4,7 @@
 site: finance-hub
 niche: "finance hub"
 publishing_schedule: "weekly"
-last_generated: "2026-03-08"
+last_generated: "2026-03-15"
 target_keywords:
   - 401k vs ira vs hsa
   - 50 30 20 budget rule
@@ -40,7 +40,7 @@ topics:
     status: published
   - title: "High-Yield Savings Accounts vs Money Market Accounts: Pros and Cons"
     keywords: "high yield savings vs money market account, best place for emergency fund"
-    status: pending
+    status: published
   - title: "A Complete Guide to Debt Snowball vs Debt Avalanche Methods"
     keywords: "debt snowball vs avalanche, which debt repayment method is best"
     status: pending
