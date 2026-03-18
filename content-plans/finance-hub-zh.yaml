@@ -4,7 +4,7 @@
 site: finance-hub-zh
 niche: "理财攻略"
 publishing_schedule: "weekly"
-last_generated: "2026-03-11"
+last_generated: "2026-03-18"
 target_keywords:
   - ETF基金
   - ETF交易规则
@@ -28,7 +28,7 @@ topics:
     status: published
   - title: "基金定投完全指南：从入门到精通"
     keywords: "基金定投, 基金投资指南, 定投策略"
-    status: pending
+    status: published
   - title: "股票开户与交易入门基础知识"
     keywords: "股票开户, 股票入门, 股票交易基础"
     status: pending
