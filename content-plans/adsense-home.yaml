@@ -4,7 +4,7 @@
 site: adsense-home
 niche: "search123"
 publishing_schedule: "weekly"
-last_generated: "2026-03-11"
+last_generated: "2026-03-18"
 target_keywords:
   - advanced search operators
   - beginner boolean search guide
@@ -241,7 +241,7 @@ topics:
     word_count_max: 1600
     opening: "micro_story"
     closing: "no_conclusion"
-    status: pending
+    status: published
   - title: "How to Find and Use Open Data Sources for Analysis"
     keywords: "find open data sources, use open data for analysis"
     archetype: "definitive-resource"
