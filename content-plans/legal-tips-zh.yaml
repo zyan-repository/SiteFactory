@@ -4,7 +4,7 @@
 site: legal-tips-zh
 niche: "法律小知识"
 publishing_schedule: "weekly"
-last_generated: "2026-03-11"
+last_generated: "2026-03-18"
 target_keywords:
   - 12315投诉流程
   - 被骗钱如何报警
@@ -28,7 +28,7 @@ topics:
     status: published
   - title: "离婚冷静期具体规定与操作指南"
     keywords: "离婚冷静期规定, 离婚冷静期如何计算, 协议离婚流程"
-    status: pending
+    status: published
   - title: "如何撰写一份有效的借条？"
     keywords: "借条怎么写才有效, 正规借条范本, 个人借条注意事项"
     status: pending
