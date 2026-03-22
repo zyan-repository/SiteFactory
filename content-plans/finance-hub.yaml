@@ -4,7 +4,7 @@
 site: finance-hub
 niche: "finance hub"
 publishing_schedule: "weekly"
-last_generated: "2026-03-15"
+last_generated: "2026-03-22"
 target_keywords:
   - 401k vs ira vs hsa
   - 50 30 20 budget rule
@@ -43,7 +43,7 @@ topics:
     status: published
   - title: "A Complete Guide to Debt Snowball vs Debt Avalanche Methods"
     keywords: "debt snowball vs avalanche, which debt repayment method is best"
-    status: pending
+    status: published
   - title: "How to Read a Stock Chart for Beginners: Key Terms and Patterns"
     keywords: "how to read a stock chart, beginner stock chart analysis"
     status: pending
