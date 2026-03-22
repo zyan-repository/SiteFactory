@@ -4,7 +4,7 @@
 site: legal-tips
 niche: "legal tips"
 publishing_schedule: "weekly"
-last_generated: "2026-03-15"
+last_generated: "2026-03-22"
 target_keywords:
   - becoming a legal guardian
   - business partnership agreement template
@@ -52,7 +52,7 @@ topics:
     status: published
   - title: "How to Start the Divorce Process: A Step-by-Step Overview"
     keywords: "how to file for divorce, starting divorce proceedings, divorce process for beginners"
-    status: pending
+    status: published
   - title: "Understanding Non-Disclosure Agreements (NDAs) for Small Businesses"
     keywords: "what is an NDA, non-disclosure agreement explained, how to use an NDA"
     status: pending
