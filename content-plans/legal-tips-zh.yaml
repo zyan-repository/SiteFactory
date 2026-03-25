@@ -4,7 +4,7 @@
 site: legal-tips-zh
 niche: "法律小知识"
 publishing_schedule: "weekly"
-last_generated: "2026-03-18"
+last_generated: "2026-03-25"
 target_keywords:
   - 12315投诉流程
   - 被骗钱如何报警
@@ -31,7 +31,7 @@ topics:
     status: published
   - title: "如何撰写一份有效的借条？"
     keywords: "借条怎么写才有效, 正规借条范本, 个人借条注意事项"
-    status: pending
+    status: published
   - title: "消费者权益受到侵害如何维权？"
     keywords: "消费者维权途径, 12315投诉流程, 买到假货怎么办"
     status: pending
