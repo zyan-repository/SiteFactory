@@ -4,7 +4,7 @@
 site: finance-hub
 niche: "finance hub"
 publishing_schedule: "weekly"
-last_generated: "2026-03-22"
+last_generated: "2026-03-29"
 target_keywords:
   - 401k vs ira vs hsa
   - 50 30 20 budget rule
@@ -46,7 +46,7 @@ topics:
     status: published
   - title: "How to Read a Stock Chart for Beginners: Key Terms and Patterns"
     keywords: "how to read a stock chart, beginner stock chart analysis"
-    status: pending
+    status: published
   - title: "What is a Health Savings Account (HSA) and How to Maximize Its Benefits"
     keywords: "what is an hsa, how to use a health savings account"
     status: pending
