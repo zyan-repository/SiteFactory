@@ -4,7 +4,7 @@
 site: adsense-home
 niche: "search123"
 publishing_schedule: "daily"
-last_generated: "2026-03-28"
+last_generated: "2026-03-29"
 target_keywords:
   - academic research search
   - accessing deep web
@@ -36,7 +36,7 @@ topics:
   - title: "Top 10 Search Engine Shortcuts to Save Time"
     keywords: "search engine shortcuts, time-saving search tips, quick search commands"
     slug: "top-search-engine-shortcuts-save-time"
-    status: pending
+    status: published
   - title: "How to Use Google Scholar for Academic Research"
     keywords: "google scholar guide, academic research search, scholarly search tips"
     slug: "how-to-use-google-scholar-academic-research"
