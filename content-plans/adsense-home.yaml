@@ -4,7 +4,7 @@
 site: adsense-home
 niche: "search123"
 publishing_schedule: "daily"
-last_generated: "2026-03-29"
+last_generated: "2026-03-30"
 target_keywords:
   - academic research search
   - accessing deep web
@@ -40,7 +40,7 @@ topics:
   - title: "How to Use Google Scholar for Academic Research"
     keywords: "google scholar guide, academic research search, scholarly search tips"
     slug: "how-to-use-google-scholar-academic-research"
-    status: pending
+    status: published
   - title: "How to Search the Deep Web Safely and Legally"
     keywords: "deep web search, search deep web safely, accessing deep web"
     slug: "how-to-search-deep-web-safely-legally"
