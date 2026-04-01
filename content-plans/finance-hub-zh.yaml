@@ -4,7 +4,7 @@
 site: finance-hub-zh
 niche: "理财攻略"
 publishing_schedule: "weekly"
-last_generated: "2026-03-25"
+last_generated: "2026-04-01"
 target_keywords:
   - ETF基金
   - ETF交易规则
@@ -34,7 +34,7 @@ topics:
     status: published
   - title: "如何建立个人紧急备用金"
     keywords: "紧急备用金, 应急资金, 个人财务安全"
-    status: pending
+    status: published
   - title: "信用卡使用技巧与避坑指南"
     keywords: "信用卡技巧, 信用卡避坑, 信用卡管理"
     status: pending
