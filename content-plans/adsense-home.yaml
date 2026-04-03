@@ -4,7 +4,7 @@
 site: adsense-home
 niche: "search123"
 publishing_schedule: "daily"
-last_generated: "2026-04-02"
+last_generated: "2026-04-03"
 target_keywords:
   - academic research search
   - accessing deep web
@@ -56,7 +56,7 @@ topics:
   - title: "How to Use Search to Find Free Online Courses and Certifications"
     keywords: "find free online courses, search for certifications, free learning resources search"
     slug: "how-to-search-free-online-courses-certifications"
-    status: pending
+    status: published
   - title: "How to Search for Government Documents and Public Records"
     keywords: "search government documents, find public records, official records search"
     slug: "how-to-search-government-documents-public-records"
