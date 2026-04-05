@@ -4,7 +4,7 @@
 site: legal-tips
 niche: "legal tips"
 publishing_schedule: "weekly"
-last_generated: "2026-03-29"
+last_generated: "2026-04-05"
 target_keywords:
   - becoming a legal guardian
   - business partnership agreement template
@@ -58,7 +58,7 @@ topics:
     status: published
   - title: "What to Do If You're Being Sued: A First-Time Defendant's Guide"
     keywords: "what to do if you are being sued, responding to a lawsuit, first time defendant advice"
-    status: pending
+    status: published
   - title: "How to Legally Change Your Name: The Complete Process"
     keywords: "legal name change process, how to change your name legally, name change petition steps"
     status: pending
