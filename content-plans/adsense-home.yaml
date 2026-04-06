@@ -4,7 +4,7 @@
 site: adsense-home
 niche: "search123"
 publishing_schedule: "daily"
-last_generated: "2026-04-05"
+last_generated: "2026-04-06"
 target_keywords:
   - academic research search
   - accessing deep web
@@ -68,7 +68,7 @@ topics:
   - title: "How to Search Social Media Platforms Effectively for Information"
     keywords: "search social media effectively, social media search tips, find information on social media"
     slug: "how-to-search-social-media-platforms-effectively"
-    status: pending
+    status: published
   - title: "How to Protect Your Search History from Tracking"
     keywords: "protect search history, prevent search tracking, private browsing search"
     slug: "how-to-protect-search-history-from-tracking"
