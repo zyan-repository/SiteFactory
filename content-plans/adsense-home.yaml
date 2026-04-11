@@ -4,7 +4,7 @@
 site: adsense-home
 niche: "search123"
 publishing_schedule: "daily"
-last_generated: "2026-04-10"
+last_generated: "2026-04-11"
 target_keywords:
   - academic research search
   - accessing deep web
@@ -88,7 +88,7 @@ topics:
   - title: "How to Use Search to Compare Products and Prices Online"
     keywords: "compare products online search, price comparison search, shopping search tips"
     slug: "how-to-search-compare-products-prices-online"
-    status: pending
+    status: published
   - title: "How to Search for Local Business Information and Reviews"
     keywords: "search local business info, find business reviews, local search strategies"
     slug: "how-to-search-local-business-information-reviews"
