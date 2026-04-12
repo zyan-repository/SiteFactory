@@ -4,7 +4,7 @@
 site: finance-hub
 niche: "finance hub"
 publishing_schedule: "weekly"
-last_generated: "2026-04-05"
+last_generated: "2026-04-12"
 target_keywords:
   - 401k vs ira vs hsa
   - 50 30 20 budget rule
@@ -52,7 +52,7 @@ topics:
     status: published
   - title: "How to Calculate Your Net Worth and Why It Matters"
     keywords: "how to calculate net worth, why is net worth important"
-    status: pending
+    status: published
   - title: "Best Personal Finance Apps for Budgeting and Tracking Expenses in 2024"
     keywords: "best personal finance apps, top budgeting apps 2024"
     status: pending
