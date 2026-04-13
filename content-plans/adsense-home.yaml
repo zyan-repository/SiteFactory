@@ -4,7 +4,7 @@
 site: adsense-home
 niche: "search123"
 publishing_schedule: "daily"
-last_generated: "2026-04-12"
+last_generated: "2026-04-13"
 target_keywords:
   - academic research search
   - accessing deep web
@@ -96,7 +96,7 @@ topics:
   - title: "How to Use Search to Plan Travel and Find Deals"
     keywords: "search travel planning, find travel deals online, trip planning search"
     slug: "how-to-use-search-plan-travel-find-deals"
-    status: pending
+    status: published
   - title: "How to Search for Medical Information Safely and Accurately"
     keywords: "search medical information safely, accurate health information search, medical research online"
     slug: "how-to-search-medical-information-safely-accurately"
