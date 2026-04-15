@@ -4,7 +4,7 @@
 site: finance-hub-zh
 niche: "理财攻略"
 publishing_schedule: "weekly"
-last_generated: "2026-04-08"
+last_generated: "2026-04-15"
 target_keywords:
   - ETF基金
   - ETF交易规则
@@ -40,7 +40,7 @@ topics:
     status: published
   - title: "保险怎么买？家庭保险配置全攻略"
     keywords: "家庭保险配置, 保险怎么买, 保险攻略"
-    status: pending
+    status: published
   - title: "房贷提前还款划算吗？详细计算与分析"
     keywords: "房贷提前还款, 提前还款计算, 房贷划算"
     status: pending
