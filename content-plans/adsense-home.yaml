@@ -4,7 +4,7 @@
 site: adsense-home
 niche: "search123"
 publishing_schedule: "daily"
-last_generated: "2026-04-14"
+last_generated: "2026-04-15"
 target_keywords:
   - academic research search
   - accessing deep web
@@ -104,7 +104,7 @@ topics:
   - title: "How to Use Search to Learn New Skills and Hobbies"
     keywords: "search learn new skills, find hobby resources online, skill development search"
     slug: "how-to-use-search-learn-new-skills-hobbies"
-    status: pending
+    status: published
   - title: "How to Search for Open Source Software and Tools"
     keywords: "find open source software, search for free tools, open source search guide"
     slug: "how-to-search-open-source-software-tools"
