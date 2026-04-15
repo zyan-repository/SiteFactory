@@ -4,7 +4,7 @@
 site: legal-tips-zh
 niche: "法律小知识"
 publishing_schedule: "weekly"
-last_generated: "2026-04-08"
+last_generated: "2026-04-15"
 target_keywords:
   - 12315投诉流程
   - 被骗钱如何报警
@@ -40,7 +40,7 @@ topics:
     status: published
   - title: "遗产继承顺序与份额分配法律指南"
     keywords: "遗产继承顺序, 第一顺序继承人, 遗产分配比例"
-    status: pending
+    status: published
   - title: "遭遇网络诈骗后的正确应对步骤"
     keywords: "网络诈骗怎么办, 被骗钱如何报警, 电信诈骗维权"
     status: pending
