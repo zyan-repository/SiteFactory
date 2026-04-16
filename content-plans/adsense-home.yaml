@@ -4,7 +4,7 @@
 site: adsense-home
 niche: "search123"
 publishing_schedule: "daily"
-last_generated: "2026-04-15"
+last_generated: "2026-04-16"
 target_keywords:
   - academic research search
   - accessing deep web
@@ -108,7 +108,7 @@ topics:
   - title: "How to Search for Open Source Software and Tools"
     keywords: "find open source software, search for free tools, open source search guide"
     slug: "how-to-search-open-source-software-tools"
-    status: pending
+    status: published
   - title: "How to Use Search to Manage Your Online Reputation"
     keywords: "manage online reputation search, monitor your name online, reputation management search"
     slug: "how-to-use-search-manage-online-reputation"
