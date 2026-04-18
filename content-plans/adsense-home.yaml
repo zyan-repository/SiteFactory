@@ -4,7 +4,7 @@
 site: adsense-home
 niche: "search123"
 publishing_schedule: "daily"
-last_generated: "2026-04-17"
+last_generated: "2026-04-18"
 target_keywords:
   - academic search engines
   - academic search with google scholar
@@ -24,7 +24,7 @@ topics:
   - title: "Best Search Engines for Academic Research in 2024"
     keywords: "best search engines for academic research, academic search engines, scholarly search engines"
     slug: "best-search-engines-academic-research-2024"
-    status: pending
+    status: published
   - title: "How to Create Strong and Memorable Passwords"
     keywords: "how to create strong passwords, memorable password tips, strong password generator"
     slug: "how-to-create-strong-memorable-passwords"
