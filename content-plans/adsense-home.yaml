@@ -4,7 +4,7 @@
 site: adsense-home
 niche: "search123"
 publishing_schedule: "daily"
-last_generated: "2026-04-18"
+last_generated: "2026-04-19"
 target_keywords:
   - academic search engines
   - academic search with google scholar
@@ -28,7 +28,7 @@ topics:
   - title: "How to Create Strong and Memorable Passwords"
     keywords: "how to create strong passwords, memorable password tips, strong password generator"
     slug: "how-to-create-strong-memorable-passwords"
-    status: pending
+    status: published
   - title: "A Beginner's Guide to Using Boolean Search"
     keywords: "boolean search guide, boolean operators for beginners, how to use boolean search"
     slug: "beginner-guide-using-boolean-search"
