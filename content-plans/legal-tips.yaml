@@ -4,7 +4,7 @@
 site: legal-tips
 niche: "legal tips"
 publishing_schedule: "weekly"
-last_generated: "2026-04-12"
+last_generated: "2026-04-19"
 target_keywords:
   - becoming a legal guardian
   - business partnership agreement template
@@ -64,7 +64,7 @@ topics:
     status: published
   - title: "Understanding Copyright Law for Content Creators"
     keywords: "copyright basics for creators, how to copyright your work, copyright law explained"
-    status: pending
+    status: published
   - title: "A Renter's Guide to Security Deposit Laws and Getting Your Money Back"
     keywords: "security deposit laws, how to get security deposit back, tenant rights security deposit"
     status: pending
