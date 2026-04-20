@@ -4,7 +4,7 @@
 site: adsense-home
 niche: "search123"
 publishing_schedule: "daily"
-last_generated: "2026-04-19"
+last_generated: "2026-04-20"
 target_keywords:
   - academic search engines
   - academic search with google scholar
@@ -32,7 +32,7 @@ topics:
   - title: "A Beginner's Guide to Using Boolean Search"
     keywords: "boolean search guide, boolean operators for beginners, how to use boolean search"
     slug: "beginner-guide-using-boolean-search"
-    status: pending
+    status: published
   - title: "How to Spot Fake News and Misinformation Online"
     keywords: "how to spot fake news, identify misinformation online, fake news detection"
     slug: "how-to-spot-fake-news-misinformation-online"
