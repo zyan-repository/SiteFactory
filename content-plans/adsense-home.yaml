@@ -4,7 +4,7 @@
 site: adsense-home
 niche: "search123"
 publishing_schedule: "daily"
-last_generated: "2026-04-20"
+last_generated: "2026-04-21"
 target_keywords:
   - academic search engines
   - academic search with google scholar
@@ -36,7 +36,7 @@ topics:
   - title: "How to Spot Fake News and Misinformation Online"
     keywords: "how to spot fake news, identify misinformation online, fake news detection"
     slug: "how-to-spot-fake-news-misinformation-online"
-    status: pending
+    status: published
   - title: "Top 10 Productivity Chrome Extensions for 2024"
     keywords: "productivity chrome extensions, best chrome extensions for work, top chrome extensions 2024"
     slug: "top-10-productivity-chrome-extensions-2024"
