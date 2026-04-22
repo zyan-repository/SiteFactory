@@ -4,7 +4,7 @@
 site: finance-hub-zh
 niche: "理财攻略"
 publishing_schedule: "weekly"
-last_generated: "2026-04-15"
+last_generated: "2026-04-22"
 target_keywords:
   - ETF基金
   - ETF交易规则
@@ -43,7 +43,7 @@ topics:
     status: published
   - title: "房贷提前还款划算吗？详细计算与分析"
     keywords: "房贷提前还款, 提前还款计算, 房贷划算"
-    status: pending
+    status: published
   - title: "指数基金与主动型基金的区别与选择"
     keywords: "指数基金, 主动型基金, 基金选择"
     status: pending
