@@ -4,7 +4,7 @@
 site: adsense-home
 niche: "search123"
 publishing_schedule: "daily"
-last_generated: "2026-04-22"
+last_generated: "2026-04-23"
 target_keywords:
   - academic search engines
   - academic search with google scholar
@@ -44,7 +44,7 @@ topics:
   - title: "How to Use Google Sheets for Project Management"
     keywords: "google sheets project management, project management with google sheets, free project management tools"
     slug: "how-to-use-google-sheets-project-management"
-    status: pending
+    status: published
   - title: "Complete Guide to Two-Factor Authentication (2FA)"
     keywords: "two-factor authentication guide, what is 2fa, how to set up two-factor authentication"
     slug: "complete-guide-two-factor-authentication-2fa"
