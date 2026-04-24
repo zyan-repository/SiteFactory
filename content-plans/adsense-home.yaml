@@ -4,7 +4,7 @@
 site: adsense-home
 niche: "search123"
 publishing_schedule: "daily"
-last_generated: "2026-04-23"
+last_generated: "2026-04-24"
 target_keywords:
   - academic search engines
   - academic search with google scholar
@@ -48,7 +48,7 @@ topics:
   - title: "Complete Guide to Two-Factor Authentication (2FA)"
     keywords: "two-factor authentication guide, what is 2fa, how to set up two-factor authentication"
     slug: "complete-guide-two-factor-authentication-2fa"
-    status: pending
+    status: published
   - title: "How to Search for Images Without Copyright Issues"
     keywords: "search for copyright-free images, free stock image search, how to find royalty-free images"
     slug: "how-to-search-images-without-copyright-issues"
