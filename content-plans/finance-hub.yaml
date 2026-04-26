@@ -4,7 +4,7 @@
 site: finance-hub
 niche: "finance hub"
 publishing_schedule: "weekly"
-last_generated: "2026-04-19"
+last_generated: "2026-04-26"
 target_keywords:
   - 401k vs ira vs hsa
   - 50 30 20 budget rule
@@ -58,7 +58,7 @@ topics:
     status: published
   - title: "How to Start a Side Hustle to Pay Off Debt Faster"
     keywords: "side hustles to pay off debt, best side jobs for extra income"
-    status: pending
+    status: published
   - title: "Understanding Asset Allocation for Different Life Stages"
     keywords: "asset allocation by age, investment portfolio for your age"
     status: pending
