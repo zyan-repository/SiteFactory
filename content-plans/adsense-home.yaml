@@ -4,7 +4,7 @@
 site: adsense-home
 niche: "search123"
 publishing_schedule: "daily"
-last_generated: "2026-04-25"
+last_generated: "2026-04-26"
 target_keywords:
   - academic search engines
   - academic search with google scholar
@@ -56,7 +56,7 @@ topics:
   - title: "Best Keyboard Shortcuts for Windows and Mac to Work Faster"
     keywords: "keyboard shortcuts for productivity, windows mac keyboard shortcuts, work faster shortcuts"
     slug: "best-keyboard-shortcuts-windows-mac-work-faster"
-    status: pending
+    status: published
   - title: "How to Clear Your Digital Footprint and Protect Privacy"
     keywords: "clear digital footprint, protect online privacy, reduce online tracking"
     slug: "how-to-clear-digital-footprint-protect-privacy"
