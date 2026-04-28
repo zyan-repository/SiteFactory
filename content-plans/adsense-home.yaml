@@ -4,7 +4,7 @@
 site: adsense-home
 niche: "search123"
 publishing_schedule: "daily"
-last_generated: "2026-04-27"
+last_generated: "2026-04-28"
 target_keywords:
   - academic search engines
   - academic search with google scholar
@@ -64,7 +64,7 @@ topics:
   - title: "How to Use Google Alerts for News and Brand Monitoring"
     keywords: "how to use google alerts, google alerts for news, brand monitoring with google alerts"
     slug: "how-to-use-google-alerts-news-brand-monitoring"
-    status: pending
+    status: published
   - title: "DuckDuckGo vs Google: Privacy and Search Comparison"
     keywords: "duckduckgo vs google, privacy search engine comparison, google alternative duckduckgo"
     slug: "duckduckgo-vs-google-privacy-search-comparison"
