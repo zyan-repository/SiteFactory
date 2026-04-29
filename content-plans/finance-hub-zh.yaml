@@ -4,7 +4,7 @@
 site: finance-hub-zh
 niche: "理财攻略"
 publishing_schedule: "weekly"
-last_generated: "2026-04-22"
+last_generated: "2026-04-29"
 target_keywords:
   - ETF基金
   - ETF交易规则
@@ -46,7 +46,7 @@ topics:
     status: published
   - title: "指数基金与主动型基金的区别与选择"
     keywords: "指数基金, 主动型基金, 基金选择"
-    status: pending
+    status: published
   - title: "个人养老金账户是什么？如何开户与投资"
     keywords: "个人养老金账户, 养老金开户, 养老金投资"
     status: pending
