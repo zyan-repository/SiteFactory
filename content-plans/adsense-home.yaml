@@ -4,7 +4,7 @@
 site: adsense-home
 niche: "search123"
 publishing_schedule: "daily"
-last_generated: "2026-04-29"
+last_generated: "2026-04-30"
 target_keywords:
   - academic search engines
   - academic search with google scholar
@@ -72,7 +72,7 @@ topics:
   - title: "How to Organize Your Bookmarks and Save Time Browsing"
     keywords: "how to organize bookmarks, browser bookmark organization, save time browsing tips"
     slug: "how-to-organize-bookmarks-save-time-browsing"
-    status: pending
+    status: published
   - title: "A Guide to Using VPNs for Secure Browsing"
     keywords: "guide to using vpns, secure browsing with vpn, best vpn for privacy"
     slug: "guide-using-vpns-secure-browsing"
