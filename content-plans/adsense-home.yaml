@@ -4,7 +4,7 @@
 site: adsense-home
 niche: "search123"
 publishing_schedule: "daily"
-last_generated: "2026-04-30"
+last_generated: "2026-05-01"
 target_keywords:
   - academic search engines
   - academic search with google scholar
@@ -76,7 +76,7 @@ topics:
   - title: "A Guide to Using VPNs for Secure Browsing"
     keywords: "guide to using vpns, secure browsing with vpn, best vpn for privacy"
     slug: "guide-using-vpns-secure-browsing"
-    status: pending
+    status: published
   - title: "How to Find Reliable Sources for Research Papers"
     keywords: "find reliable sources for research, credible sources online, evaluating source credibility"
     slug: "how-to-find-reliable-sources-research-papers"
