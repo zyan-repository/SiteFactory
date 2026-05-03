@@ -4,7 +4,7 @@
 site: legal-tips
 niche: "legal tips"
 publishing_schedule: "weekly"
-last_generated: "2026-04-26"
+last_generated: "2026-05-03"
 target_keywords:
   - becoming a legal guardian
   - business partnership agreement template
@@ -70,7 +70,7 @@ topics:
     status: published
   - title: "How to Create a Simple Business Partnership Agreement"
     keywords: "business partnership agreement template, starting a partnership legal steps, partnership contract basics"
-    status: pending
+    status: published
   - title: "What is Probate and How Does the Process Work?"
     keywords: "probate process explained, what is probate court, understanding probate administration"
     status: pending
