@@ -4,7 +4,7 @@
 site: adsense-home
 niche: "search123"
 publishing_schedule: "daily"
-last_generated: "2026-05-02"
+last_generated: "2026-05-03"
 target_keywords:
   - academic search engines
   - academic search with google scholar
@@ -84,7 +84,7 @@ topics:
   - title: "Top 7 Time Management Techniques for Remote Workers"
     keywords: "time management techniques for remote work, remote work productivity, best time management methods"
     slug: "top-7-time-management-techniques-remote-workers"
-    status: pending
+    status: published
   - title: "How to Search the Deep Web Safely and Legally"
     keywords: "search the deep web safely, what is the deep web, legal deep web access"
     slug: "how-to-search-deep-web-safely-legally"
