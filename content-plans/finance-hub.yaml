@@ -4,7 +4,7 @@
 site: finance-hub
 niche: "finance hub"
 publishing_schedule: "weekly"
-last_generated: "2026-04-26"
+last_generated: "2026-05-03"
 target_keywords:
   - 401k vs ira vs hsa
   - 50 30 20 budget rule
@@ -61,7 +61,7 @@ topics:
     status: published
   - title: "Understanding Asset Allocation for Different Life Stages"
     keywords: "asset allocation by age, investment portfolio for your age"
-    status: pending
+    status: published
   - title: "How to Negotiate a Lower Interest Rate on Your Credit Card"
     keywords: "how to lower credit card interest rate, negotiate credit card apr"
     status: pending
