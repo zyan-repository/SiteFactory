@@ -4,7 +4,7 @@
 site: adsense-home
 niche: "search123"
 publishing_schedule: "daily"
-last_generated: "2026-05-04"
+last_generated: "2026-05-05"
 target_keywords:
   - academic search engines
   - academic search with google scholar
@@ -92,7 +92,7 @@ topics:
   - title: "How to Securely Wipe Data Before Selling Your Computer"
     keywords: "securely wipe data before selling computer, how to erase hard drive completely, data destruction guide"
     slug: "how-to-securely-wipe-data-before-selling-computer"
-    status: pending
+    status: published
   - title: "How to Use Google Scholar Like a Pro"
     keywords: "how to use google scholar, google scholar tips and tricks, academic search with google scholar"
     slug: "how-to-use-google-scholar-like-pro"
