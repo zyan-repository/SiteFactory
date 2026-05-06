@@ -4,7 +4,7 @@
 site: finance-hub-zh
 niche: "理财攻略"
 publishing_schedule: "weekly"
-last_generated: "2026-04-29"
+last_generated: "2026-05-06"
 target_keywords:
   - ETF基金
   - ETF交易规则
@@ -49,7 +49,7 @@ topics:
     status: published
   - title: "个人养老金账户是什么？如何开户与投资"
     keywords: "个人养老金账户, 养老金开户, 养老金投资"
-    status: pending
+    status: published
   - title: "如何分析一家公司的股票是否值得投资"
     keywords: "股票分析, 公司分析, 选股方法"
     status: pending
