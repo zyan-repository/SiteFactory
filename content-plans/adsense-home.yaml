@@ -4,7 +4,7 @@
 site: adsense-home
 niche: "search123"
 publishing_schedule: "daily"
-last_generated: "2026-05-06"
+last_generated: "2026-05-07"
 target_keywords:
   - academic search engines
   - academic search with google scholar
@@ -104,7 +104,7 @@ topics:
   - title: "How to Master Your Email Inbox with Gmail Filters"
     keywords: "master email inbox gmail filters, gmail filter setup guide, organize gmail inbox"
     slug: "how-to-master-email-inbox-gmail-filters"
-    status: pending
+    status: published
   - title: "How to Recognize and Avoid Phishing Scams"
     keywords: "how to recognize phishing scams, avoid email phishing, phishing scam protection"
     slug: "how-to-recognize-avoid-phishing-scams"
