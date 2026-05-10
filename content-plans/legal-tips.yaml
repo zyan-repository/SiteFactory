@@ -4,7 +4,7 @@
 site: legal-tips
 niche: "legal tips"
 publishing_schedule: "weekly"
-last_generated: "2026-05-03"
+last_generated: "2026-05-10"
 target_keywords:
   - becoming a legal guardian
   - business partnership agreement template
@@ -73,7 +73,7 @@ topics:
     status: published
   - title: "What is Probate and How Does the Process Work?"
     keywords: "probate process explained, what is probate court, understanding probate administration"
-    status: pending
+    status: published
   - title: "How to Deal with Debt Collectors: Know Your Rights"
     keywords: "rights when dealing with debt collectors, how to handle debt collection calls, fair debt collection practices"
     status: pending
