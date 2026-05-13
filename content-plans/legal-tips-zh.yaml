@@ -4,7 +4,7 @@
 site: legal-tips-zh
 niche: "法律小知识"
 publishing_schedule: "weekly"
-last_generated: "2026-05-06"
+last_generated: "2026-05-13"
 target_keywords:
   - 12315投诉流程
   - 被骗钱如何报警
@@ -52,7 +52,7 @@ topics:
     status: published
   - title: "婚前财产与婚后财产的界定方法"
     keywords: "婚前财产如何界定, 婚前财产公证, 夫妻共同财产认定"
-    status: pending
+    status: published
   - title: "试用期被辞退有补偿吗？"
     keywords: "试用期辞退补偿, 试用期被开除, 劳动法试用期规定"
     status: pending
