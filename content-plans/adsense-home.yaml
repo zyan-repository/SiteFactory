@@ -4,7 +4,7 @@
 site: adsense-home
 niche: "search123"
 publishing_schedule: "daily"
-last_generated: "2026-05-12"
+last_generated: "2026-05-13"
 target_keywords:
   - Amazon search tricks
   - Firefox security
@@ -28,7 +28,7 @@ topics:
   - title: "How to Remove Yourself from People Search Sites"
     keywords: "remove personal info from web, people search sites opt out, delete online data, privacy removal"
     slug: "remove-yourself-from-people-search-sites"
-    status: pending
+    status: published
   - title: "Google Search vs DuckDuckGo: Which Is More Private?"
     keywords: "google vs duckduckgo, search engine privacy comparison, private google alternative"
     slug: "google-search-vs-duckduckgo-privacy-comparison"
