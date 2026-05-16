@@ -4,7 +4,7 @@
 site: adsense-home
 niche: "search123"
 publishing_schedule: "daily"
-last_generated: "2026-05-15"
+last_generated: "2026-05-16"
 target_keywords:
   - Amazon search tricks
   - Firefox security
@@ -40,7 +40,7 @@ topics:
   - title: "7 Search Tricks to Find Job Listings That Others Miss"
     keywords: "find hidden job listings, advanced job search, Google for jobs tips, search queries employment"
     slug: "search-tricks-find-hidden-job-listings"
-    status: pending
+    status: published
   - title: "How to Use Reverse Image Search for Fact-Checking and Research"
     keywords: "reverse image search, Google Images search, verify photos online, fact check images"
     slug: "reverse-image-search-fact-checking-research"
