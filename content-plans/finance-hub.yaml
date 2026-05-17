@@ -4,7 +4,7 @@
 site: finance-hub
 niche: "finance hub"
 publishing_schedule: "weekly"
-last_generated: "2026-05-10"
+last_generated: "2026-05-17"
 target_keywords:
   - 401k vs ira vs hsa
   - 50 30 20 budget rule
@@ -67,7 +67,7 @@ topics:
     status: published
   - title: "A Beginner's Guide to Dividend Investing for Passive Income"
     keywords: "beginner guide to dividend investing, how to start dividend investing"
-    status: pending
+    status: published
   - title: "Term Life Insurance vs Whole Life Insurance: Which Should You Choose?"
     keywords: "term vs whole life insurance, difference between term and whole life"
     status: pending
