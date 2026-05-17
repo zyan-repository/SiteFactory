@@ -4,7 +4,7 @@
 site: legal-tips
 niche: "legal tips"
 publishing_schedule: "weekly"
-last_generated: "2026-05-10"
+last_generated: "2026-05-17"
 target_keywords:
   - becoming a legal guardian
   - business partnership agreement template
@@ -76,7 +76,7 @@ topics:
     status: published
   - title: "How to Deal with Debt Collectors: Know Your Rights"
     keywords: "rights when dealing with debt collectors, how to handle debt collection calls, fair debt collection practices"
-    status: pending
+    status: published
   - title: "A Guide to Prenuptial Agreements: Are They Right for You?"
     keywords: "what is a prenuptial agreement, pros and cons of prenup, how to get a prenup"
     status: pending
