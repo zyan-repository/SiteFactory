@@ -4,7 +4,7 @@
 site: adsense-home
 niche: "search123"
 publishing_schedule: "daily"
-last_generated: "2026-05-17"
+last_generated: "2026-05-18"
 target_keywords:
   - Amazon search tricks
   - Firefox security
@@ -48,7 +48,7 @@ topics:
   - title: "The Ultimate Guide to Searching Academic Papers and Research"
     keywords: "Google Scholar tips, academic search engines, find research papers, scholarly articles search"
     slug: "ultimate-guide-searching-academic-papers"
-    status: pending
+    status: published
   - title: "How to Search for Cheap Flights Using Advanced Google Tricks"
     keywords: "find cheap flights, Google Flight search, advanced flight search, flight pricing tips"
     slug: "search-cheap-flights-google-tricks"
