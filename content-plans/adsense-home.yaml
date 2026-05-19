@@ -4,7 +4,7 @@
 site: adsense-home
 niche: "search123"
 publishing_schedule: "daily"
-last_generated: "2026-05-18"
+last_generated: "2026-05-19"
 target_keywords:
   - Amazon search tricks
   - Firefox security
@@ -52,7 +52,7 @@ topics:
   - title: "How to Search for Cheap Flights Using Advanced Google Tricks"
     keywords: "find cheap flights, Google Flight search, advanced flight search, flight pricing tips"
     slug: "search-cheap-flights-google-tricks"
-    status: pending
+    status: published
   - title: "Is Incognito Mode Really Private? Myths vs Facts"
     keywords: "incognito mode privacy, private browsing myths, incognito vs private, tracking incognito"
     slug: "incognito-mode-private-myths-facts"
