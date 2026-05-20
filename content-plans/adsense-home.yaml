@@ -4,7 +4,7 @@
 site: adsense-home
 niche: "search123"
 publishing_schedule: "daily"
-last_generated: "2026-05-19"
+last_generated: "2026-05-20"
 target_keywords:
   - Amazon search tricks
   - Firefox security
@@ -56,7 +56,7 @@ topics:
   - title: "Is Incognito Mode Really Private? Myths vs Facts"
     keywords: "incognito mode privacy, private browsing myths, incognito vs private, tracking incognito"
     slug: "incognito-mode-private-myths-facts"
-    status: pending
+    status: published
   - title: "How to Search for Legal Documents and Court Records Online"
     keywords: "court records public search, legal documents online, PACER search, find court cases"
     slug: "search-legal-documents-court-records"
