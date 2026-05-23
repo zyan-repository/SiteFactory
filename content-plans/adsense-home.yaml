@@ -4,7 +4,7 @@
 site: adsense-home
 niche: "search123"
 publishing_schedule: "daily"
-last_generated: "2026-05-22"
+last_generated: "2026-05-23"
 target_keywords:
   - Amazon search tricks
   - Firefox security
@@ -68,7 +68,7 @@ topics:
   - title: "How to Find Old Websites and Pages Using Wayback Machine"
     keywords: "Wayback Machine search, view old websites, internet archive, find deleted pages"
     slug: "find-old-websites-wayback-machine"
-    status: pending
+    status: published
   - title: "7 Search Hacks for Job Hunters to Find Remote Roles"
     keywords: "find remote jobs, remote work search, digital job hunt, telecommuting queries"
     slug: "search-hacks-find-remote-jobs"
