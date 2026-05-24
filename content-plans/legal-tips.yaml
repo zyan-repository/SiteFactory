@@ -4,7 +4,7 @@
 site: legal-tips
 niche: "legal tips"
 publishing_schedule: "weekly"
-last_generated: "2026-05-17"
+last_generated: "2026-05-24"
 target_keywords:
   - becoming a legal guardian
   - business partnership agreement template
@@ -79,7 +79,7 @@ topics:
     status: published
   - title: "A Guide to Prenuptial Agreements: Are They Right for You?"
     keywords: "what is a prenuptial agreement, pros and cons of prenup, how to get a prenup"
-    status: pending
+    status: published
   - title: "How to File a Complaint Against a Company or Professional"
     keywords: "how to file a complaint against a business, reporting a bad contractor, consumer complaint process"
     status: pending
