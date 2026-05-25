@@ -4,7 +4,7 @@
 site: adsense-home
 niche: "search123"
 publishing_schedule: "daily"
-last_generated: "2026-05-24"
+last_generated: "2026-05-25"
 target_keywords:
   - Amazon search tricks
   - Firefox security
@@ -76,7 +76,7 @@ topics:
   - title: "How to Spot Fake News Using Advanced Fact-Checking Searches"
     keywords: "fact check fake news, search for misinformation, verify news online, credibility checks"
     slug: "spot-fake-news-advanced-fact-checking"
-    status: pending
+    status: published
   - title: "Complete Guide to Setting Up a Secure Home Browser (Chrome, Firefox, Edge)"
     keywords: "secure browser setup, privacy settings Chrome, Firefox security, safe browsing home"
     slug: "secure-home-browser-guide"
