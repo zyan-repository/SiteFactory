@@ -4,7 +4,7 @@
 site: adsense-home
 niche: "search123"
 publishing_schedule: "daily"
-last_generated: "2026-05-26"
+last_generated: "2026-05-27"
 target_keywords:
   - Amazon search tricks
   - Firefox security
@@ -84,7 +84,7 @@ topics:
   - title: "How to Find Your Own Data Online: Audit Your Digital Footprint"
     keywords: "digital footprint audit, find personal data, online account search, data broker info"
     slug: "find-your-data-online-audit-digital-footprint"
-    status: pending
+    status: published
   - title: "Top 10 Productivity Browser Extensions for Faster Research"
     keywords: "productivity extensions, browser tools research, search faster, bookmark manager extensions"
     slug: "top-productivity-browser-extensions-research"
