@@ -4,7 +4,7 @@
 site: adsense-home
 niche: "search123"
 publishing_schedule: "daily"
-last_generated: "2026-05-29"
+last_generated: "2026-05-30"
 target_keywords:
   - Amazon search tricks
   - Firefox security
@@ -96,7 +96,7 @@ topics:
   - title: "Should You Use a Password Manager? Security Pros and Risks"
     keywords: "password manager review, password security, keep passwords safe, search security tools"
     slug: "password-manager-security-pros-risks"
-    status: pending
+    status: published
   - title: "How to Search for Open Source Tools and Software Alternatives"
     keywords: "open source alternatives, find free software, open source tools search, replace paid apps"
     slug: "search-open-source-software-alternatives"
