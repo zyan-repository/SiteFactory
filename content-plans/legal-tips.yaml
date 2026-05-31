@@ -4,7 +4,7 @@
 site: legal-tips
 niche: "legal tips"
 publishing_schedule: "weekly"
-last_generated: "2026-05-24"
+last_generated: "2026-05-31"
 target_keywords:
   - becoming a legal guardian
   - business partnership agreement template
@@ -82,7 +82,7 @@ topics:
     status: published
   - title: "How to File a Complaint Against a Company or Professional"
     keywords: "how to file a complaint against a business, reporting a bad contractor, consumer complaint process"
-    status: pending
+    status: published
   - title: "Understanding Your Miranda Rights and What They Really Mean"
     keywords: "what are miranda rights, miranda rights explained, when are miranda rights read"
     status: pending
