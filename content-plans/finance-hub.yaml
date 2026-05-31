@@ -4,7 +4,7 @@
 site: finance-hub
 niche: "finance hub"
 publishing_schedule: "weekly"
-last_generated: "2026-05-24"
+last_generated: "2026-05-31"
 target_keywords:
   - 401k vs ira vs hsa
   - 50 30 20 budget rule
@@ -73,7 +73,7 @@ topics:
     status: published
   - title: "How to Save for a House Down Payment in 5 Years or Less"
     keywords: "how to save for a down payment, fast down payment savings plan"
-    status: pending
+    status: published
   - title: "What is Dollar-Cost Averaging and How to Use It for Investing"
     keywords: "what is dollar cost averaging, how to dollar cost average"
     status: pending
