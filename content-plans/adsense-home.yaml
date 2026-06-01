@@ -4,7 +4,7 @@
 site: adsense-home
 niche: "search123"
 publishing_schedule: "daily"
-last_generated: "2026-05-31"
+last_generated: "2026-06-01"
 target_keywords:
   - Amazon search tricks
   - Firefox security
@@ -104,7 +104,7 @@ topics:
   - title: "5 Quick Steps to Clean Up Your Browser Search History for Privacy"
     keywords: "clear search history, delete browser data, private browsing cleanup, history privacy"
     slug: "clean-browser-search-history-privacy"
-    status: pending
+    status: published
   - title: "How to Find the Best Deals on Amazon Using Search Modifiers"
     keywords: "Amazon search tricks, find discounts, deal finding search, advanced Amazon query"
     slug: "find-amazon-deals-search-modifiers"
