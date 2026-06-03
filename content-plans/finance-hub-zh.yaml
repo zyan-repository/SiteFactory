@@ -4,7 +4,7 @@
 site: finance-hub-zh
 niche: "理财攻略"
 publishing_schedule: "weekly"
-last_generated: "2026-05-27"
+last_generated: "2026-06-03"
 target_keywords:
   - ETF基金
   - ETF交易规则
@@ -61,7 +61,7 @@ topics:
     status: published
   - title: "可转债打新入门与实战技巧"
     keywords: "可转债打新, 可转债投资, 打新技巧"
-    status: pending
+    status: published
   - title: "月光族如何摆脱月光并开始储蓄"
     keywords: "月光族理财, 摆脱月光, 储蓄方法"
     status: pending
