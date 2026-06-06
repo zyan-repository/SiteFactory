@@ -4,7 +4,7 @@
 site: adsense-home
 niche: "search123"
 publishing_schedule: "daily"
-last_generated: "2026-06-05"
+last_generated: "2026-06-06"
 target_keywords:
   - academic search engines
   - advanced google search
@@ -32,7 +32,7 @@ topics:
   - title: "Best Search Engines for Privacy-Conscious Users"
     keywords: "private search engines, privacy search, secure search engine"
     slug: "best-privacy-search-engines"
-    status: pending
+    status: published
   - title: "How to Search for Academic Papers and Research Articles Online"
     keywords: "academic search engines, research articles, find scholarly papers"
     slug: "search-academic-papers-online"
