@@ -4,7 +4,7 @@
 site: legal-tips
 niche: "legal tips"
 publishing_schedule: "weekly"
-last_generated: "2026-05-31"
+last_generated: "2026-06-07"
 target_keywords:
   - becoming a legal guardian
   - business partnership agreement template
@@ -85,7 +85,7 @@ topics:
     status: published
   - title: "Understanding Your Miranda Rights and What They Really Mean"
     keywords: "what are miranda rights, miranda rights explained, when are miranda rights read"
-    status: pending
+    status: published
   - title: "How to Establish Legal Guardianship for a Child or Adult"
     keywords: "how to get legal guardianship, guardianship process explained, becoming a legal guardian"
     status: pending
