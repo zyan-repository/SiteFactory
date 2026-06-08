@@ -4,7 +4,7 @@
 site: adsense-home
 niche: "search123"
 publishing_schedule: "daily"
-last_generated: "2026-06-07"
+last_generated: "2026-06-08"
 target_keywords:
   - academic search engines
   - advanced google search
@@ -40,7 +40,7 @@ topics:
   - title: "How to Remove Your Personal Information from Search Results"
     keywords: "remove personal info search results, online privacy, data removal"
     slug: "remove-personal-information-search-results"
-    status: pending
+    status: published
   - title: "Voice Search vs Typing: Which Is Faster for Productivity?"
     keywords: "voice search vs typing, search speed, productivity tips"
     slug: "voice-search-vs-typing-productivity"
