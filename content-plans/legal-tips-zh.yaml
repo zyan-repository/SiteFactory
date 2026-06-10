@@ -4,7 +4,7 @@
 site: legal-tips-zh
 niche: "法律小知识"
 publishing_schedule: "weekly"
-last_generated: "2026-06-03"
+last_generated: "2026-06-10"
 target_keywords:
   - 12315投诉流程
   - 被骗钱如何报警
@@ -64,7 +64,7 @@ topics:
     status: published
   - title: "网购商品七日无理由退货规则解读"
     keywords: "七日无理由退货规则, 网购退货条件, 消费者权益保护法退货"
-    status: pending
+    status: published
   - title: "签订购房合同时需要注意哪些细节？"
     keywords: "购房合同注意事项, 买房签合同陷阱, 商品房买卖合同"
     status: pending
