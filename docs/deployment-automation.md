@@ -170,7 +170,7 @@ Go to Actions → "Generate Content" → "Run workflow" and fill in:
 - **Keywords:** comma-separated SEO keywords (optional)
 - **Word count:** target word count (default 1200)
 - **AI provider:** choose from claude, openai, deepseek, gemini, moonshot, zhipu (default: claude)
-- **Model name:** leave empty for provider default, or specify a model (e.g., `deepseek-chat`)
+- **Model name:** leave empty for provider default, or specify a model (e.g., `deepseek-v4-flash`)
 
 The workflow generates the article, commits it, and pushes — which triggers the deploy workflow automatically.
 

@@ -170,7 +170,7 @@ SiteFactory 提供两种部署自动化方式，根据需求选择：
 - **Keywords：** SEO 关键词，逗号分隔（可选）
 - **Word count：** 目标字数（默认 1200）
 - **AI provider：** 选择 claude、openai、deepseek、gemini、moonshot、zhipu（默认 claude）
-- **Model name：** 留空使用 provider 默认模型，或指定模型（如 `deepseek-chat`）
+- **Model name：** 留空使用 provider 默认模型，或指定模型（如 `deepseek-v4-flash`）
 
 工作流自动生成文章、提交到 git、推送 —— 推送会自动触发部署工作流。
 

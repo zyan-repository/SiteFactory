@@ -68,7 +68,7 @@ jobs:
           case "$PROVIDER" in
             claude)   MODEL="${INPUT_MODEL:-claude-sonnet-4-6}"; BASE_URL="" ;;
             openai)   MODEL="${INPUT_MODEL:-gpt-4o}"; BASE_URL="https://api.openai.com/v1" ;;
-            deepseek) MODEL="${INPUT_MODEL:-deepseek-chat}"; BASE_URL="https://api.deepseek.com/v1" ;;
+            deepseek) MODEL="${INPUT_MODEL:-deepseek-v4-flash}"; BASE_URL="https://api.deepseek.com/v1" ;;
             gemini)   MODEL="${INPUT_MODEL:-gemini-2.0-flash}"; BASE_URL="" ;;
             moonshot) MODEL="${INPUT_MODEL:-moonshot-v1-8k}"; BASE_URL="https://api.moonshot.cn/v1" ;;
             zhipu)    MODEL="${INPUT_MODEL:-glm-4-flash}"; BASE_URL="https://open.bigmodel.cn/api/paas/v4" ;;
