@@ -4,7 +4,7 @@
 site: adsense-home
 niche: "search123"
 publishing_schedule: "daily"
-last_generated: "2026-06-10"
+last_generated: "2026-06-11"
 target_keywords:
   - academic search engines
   - advanced google search
@@ -52,7 +52,7 @@ topics:
   - title: "The Ultimate Guide to Reverse Image Search for Fact-Checking"
     keywords: "reverse image search, fact check images, verify photos online"
     slug: "reverse-image-search-fact-checking"
-    status: pending
+    status: published
   - title: "How to Find Deleted or Cached Versions of Web Pages"
     keywords: "find cached pages, view deleted web pages, web archive search"
     slug: "find-deleted-cached-web-pages"
