@@ -167,16 +167,20 @@
   }
 
   function generateReading(isFirst) {
-    setBusy(true, isFirst ? '正在解读命盘，约需半分钟…' : '正在校准更新报告…');
+    setBusy(true, isFirst ? '正在解读命盘，约需半分钟…' : '思考中…');
     return api({
       stage: 'read',
       messages: recentMessages(),
       chart: state.chart,
       reading: state.reading
     }).then(function (data) {
-      state.reading = data.reading;
+      // reading is null when the model decides the report needs no change
+      // (pure follow-up question) — keep the existing one
+      if (data.reading) {
+        state.reading = data.reading;
+        renderReport();
+      }
       pushMessage('assistant', data.reply);
-      renderReport();
       if (isFirst) reportWrap.scrollIntoView({ behavior: 'smooth' });
     });
   }
