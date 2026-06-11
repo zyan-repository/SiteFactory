@@ -26,7 +26,7 @@
   var resetBtn = document.getElementById('reset-btn');
 
   var GREETING = '你好，我是紫微命盘 AI。把你的出生年月日（公历或农历）、出生时间和性别告诉我，' +
-    '我就为你排盘并生成一份可视化命盘解读。例如：「1993年1月27日早上9点17分出生，男」。' +
+    '我就为你排盘并生成一份可视化命盘解读。例如：「1971年6月28日早上7点30分出生，男」。' +
     '报告生成后，你还可以继续跟我聊——回答校准问题、描述手相、追问细节，报告会随对话不断更新。';
 
   // --- Persistence: only the latest session, nothing historical -------------
