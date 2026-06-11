@@ -212,7 +212,7 @@ module.exports = async (req, res) => {
       return;
     }
     const context = [
-      { role: 'user', content: `排盘数据（iztro 精确计算，直接使用，不要重新推算）：\n${chartJson}` }
+      { role: 'user', content: `今天的真实日期：${new Date().toISOString().slice(0, 10)}（流年流日推算以此为准）\n排盘数据（iztro 精确计算，直接使用，不要重新推算）：\n${chartJson}` }
     ];
     if (body.reading && typeof body.reading === 'object') {
       const readingJson = JSON.stringify(body.reading).slice(0, 40000);
@@ -224,14 +224,27 @@ module.exports = async (req, res) => {
     // explicit report request, the model MUST return a full reading. Models
     // tend to take the cheap chat-only path; don't rely on prompt obedience.
     const lastUserMsg = [...messages].reverse().find((m) => m.role === 'user');
+
+    // Hard scope guard: name analysis is not part of the skill, and
+    // prompt-only refusal proved leaky (the model "refuses" then improvises
+    // anyway). Refuse deterministically without calling the model. Only for
+    // update mode — first generation must still produce the report.
+    const NAME_ANALYSIS = /姓名(分析|解析|解读|学)|名字.{0,10}(分析|解析|解读|呼应|共振|怎么样|好不好)|(起|改)个?名/;
+    if (hasPrevious && lastUserMsg && NAME_ANALYSIS.test(lastUserMsg.content)) {
+      res.status(200).json({
+        reply: '姓名分析超出了本工具的能力范围——我只基于紫微斗数命盘做解读，方法论里没有姓名学，硬答只会编造。盘面相关的问题（事业、财运、感情、健康、流年、手相互证等）欢迎继续问我。',
+        reading: null
+      });
+      return;
+    }
     const mustUpdate = !!(lastUserMsg &&
-      /加入|写进|放进|加到|报告|新增|帮我看|看看|分析|姓名|手相|流年|补充|更新|我是|我的职业|结婚|离婚|孩子|子女/.test(lastUserMsg.content));
+      /加入|写进|放进|加到|报告|新增|帮我看|看看|分析|手相|流年|补充|更新|我是|我的职业|结婚|离婚|孩子|子女/.test(lastUserMsg.content));
 
     const convo = [...context, ...messages];
     if (hasPrevious && mustUpdate) {
       convo.push({
         role: 'user',
-        content: '（系统提示：上一条用户消息包含新信息或报告修改请求，本轮必须返回完整 reading 字段——所有旧卡片+修改+新增的卡片，绝不能只回 reply）'
+        content: '（系统提示：上一条用户消息可能包含新信息或报告修改请求。若该请求在紫微斗数命盘解读范围内，必须返回完整 reading 字段——所有旧卡片+修改+新增的卡片，不能只回 reply；若超出能力边界，按规则礼貌拒绝并将 reading 设为 null）'
       });
     }
 
