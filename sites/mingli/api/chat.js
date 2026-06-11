@@ -199,7 +199,11 @@ async function callDeepSeek(systemPrompt, messages, maxTokens, temperature) {
       response_format: { type: 'json_object' },
       max_tokens: maxTokens,
       temperature,
-      thinking: { type: 'disabled' }
+      thinking: { type: 'disabled' },
+      // Stream so bytes flow continuously. A non-streaming call sits idle
+      // for the full 35-90s generation and gets cut by idle-connection
+      // timeouts on the egress path ("Unexpected end of JSON input").
+      stream: true
     })
   });
 
@@ -207,9 +211,33 @@ async function callDeepSeek(systemPrompt, messages, maxTokens, temperature) {
     const text = await resp.text().catch(() => '');
     throw new Error(`DeepSeek HTTP ${resp.status}: ${text.slice(0, 200)}`);
   }
-  const data = await resp.json();
-  const content = data.choices && data.choices[0] && data.choices[0].message.content;
-  if (!content) throw new Error('DeepSeek returned empty content');
+
+  const decoder = new TextDecoder();
+  let buf = '';
+  let content = '';
+  let finishReason = null;
+  for await (const chunk of resp.body) {
+    buf += decoder.decode(chunk, { stream: true });
+    let idx;
+    while ((idx = buf.indexOf('\n')) >= 0) {
+      const line = buf.slice(0, idx).trim();
+      buf = buf.slice(idx + 1);
+      if (!line.startsWith('data:')) continue;
+      const payload = line.slice(5).trim();
+      if (payload === '[DONE]') continue;
+      try {
+        const evt = JSON.parse(payload);
+        const choice = evt.choices && evt.choices[0];
+        if (choice) {
+          if (choice.delta && choice.delta.content) content += choice.delta.content;
+          if (choice.finish_reason) finishReason = choice.finish_reason;
+        }
+      } catch (e) { /* ignore malformed keep-alive lines */ }
+    }
+  }
+
+  if (!content) throw new Error(`DeepSeek returned empty content (finish: ${finishReason})`);
+  if (finishReason === 'length') throw new Error('DeepSeek output truncated at max_tokens');
   try {
     return JSON.parse(content);
   } catch (e) {
