@@ -74,13 +74,31 @@
   }
 
   // --- Report rendering (all client-side: updates show instantly) -----------
+  // The iframe is sandboxed without scripts; allow-same-origin only lets us
+  // measure content height so the report joins the natural page scroll
+  // (nested scrollbars are painful on mobile).
+  function fitReportHeight() {
+    try {
+      var doc = reportFrame.contentDocument;
+      if (doc && doc.body && doc.body.scrollHeight > 400) {
+        reportFrame.style.height = doc.body.scrollHeight + 'px';
+      }
+    } catch (e) { /* keep CSS fallback height */ }
+  }
+
   function renderReport() {
     if (!state.chart || !state.reading || !template) return;
     var html = window.MingliRender.render(template, state.chart, state.reading);
+    reportFrame.onload = function () {
+      fitReportHeight();
+      setTimeout(fitReportHeight, 600); // re-measure after web fonts settle
+    };
     reportFrame.srcdoc = html;
     reportWrap.classList.add('visible');
     downloadBtn.disabled = false;
   }
+
+  window.addEventListener('resize', fitReportHeight);
 
   function downloadReport() {
     if (!state.chart || !state.reading || !template) return;
